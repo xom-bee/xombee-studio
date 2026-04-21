@@ -303,12 +303,6 @@
 
 /* ── 320–360px micro-screen fixes ───────────────────────────────────────────── */
 @media (max-width: 360px) {
-  /* Tighter horizontal padding on all sections using px-6 */
-  .px-6 {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-
   /* Reduce large heading utility classes */
   .text-5xl { font-size: 1.875rem !important; }   /* 30px  */
   .text-6xl { font-size: 2.125rem !important; }   /* 34px  */

@@ -51,7 +51,9 @@ export default function RootLayout({
           Skip to main content
         </a>
         <AudioProvider>
-          {children}
+          <div className="w-full overflow-hidden">
+            {children}
+          </div>
         </AudioProvider>
         <Analytics />
         <Script

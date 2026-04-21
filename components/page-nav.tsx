@@ -29,7 +29,7 @@ export function PageNav() {
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-5 flex items-center justify-between">
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group" style={{ textDecoration: 'none' }}>

@@ -65,7 +65,7 @@ export function LogoSection() {
   const [hoveredId, setHoveredId] = useState<number | null>(null)
 
   return (
-    <section id="logos" className="py-24 px-6" style={{ background: '#0B0B0F' }}>
+    <section id="logos" className="py-24 px-3 sm:px-6 lg:px-12" style={{ background: '#0B0B0F' }}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div ref={ref} className={`mb-10 reveal ${revealed ? 'revealed' : ''}`}>

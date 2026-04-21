@@ -105,6 +105,7 @@ function GlobalAudioPlayer({
       }}
     >
       <div
+        className="relative"
         style={{
           background: hovered ? 'rgba(22,22,28,0.96)' : 'rgba(16,16,20,0.92)',
           backdropFilter: 'blur(28px)',
@@ -155,6 +156,7 @@ function GlobalAudioPlayer({
             alignItems: 'center',
             gap: 'clamp(10px, 3vw, 20px)',
             display: 'grid',
+            paddingRight: 'clamp(40px, 8vw, 48px)',
           }}
         >
           {/* LEFT — cover + text */}
@@ -301,35 +303,26 @@ function GlobalAudioPlayer({
               <span style={{ color: 'rgba(255,255,255,0.28)' }}>{formatTime(duration)}</span>
             </div>
 
-            <button
-              onClick={onClose}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '4px',
-                color: 'rgba(255,255,255,0.25)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'color 0.2s ease, transform 0.2s ease',
-                flexShrink: 0,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'rgba(255,255,255,0.65)'
-                e.currentTarget.style.transform = 'scale(1.15)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'rgba(255,255,255,0.25)'
-                e.currentTarget.style.transform = 'scale(1)'
-              }}
-              aria-label="Close player"
-            >
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-            </button>
           </div>
+        </div>
+
+        {/* Close button — absolute, always at right edge with proper tap area */}
+        <div className="pr-2">
+          <button
+            onClick={onClose}
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2
+                       w-11 h-11 sm:w-10 sm:h-10
+                       flex items-center justify-center
+                       rounded-full
+                       hover:bg-white/10
+                       transition"
+            style={{ color: 'rgba(255,255,255,0.35)', border: 'none', background: 'none', cursor: 'pointer' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.75)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.35)' }}
+            aria-label="Close player"
+          >
+            ✕
+          </button>
         </div>
       </div>
     </div>

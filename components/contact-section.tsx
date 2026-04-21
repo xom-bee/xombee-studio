@@ -83,7 +83,7 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative py-24 px-6 overflow-hidden" style={{ background: '#0B0B0F' }}>
+    <section id="contact" className="relative py-24 px-3 sm:px-6 lg:px-12 overflow-hidden" style={{ background: '#0B0B0F' }}>
       {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"

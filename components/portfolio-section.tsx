@@ -226,7 +226,9 @@ function PreviewCard({ projectId, color, variant }: { projectId: string; color: 
         cursor: 'default',
       }}
     >
-      <ProceduralVisual projectId={projectId} color={color} variant={variant} />
+      <div className="absolute inset-0 scale-95 sm:scale-100 origin-center">
+        <ProceduralVisual projectId={projectId} color={color} variant={variant} />
+      </div>
     </div>
   )
 }
@@ -234,16 +236,17 @@ function PreviewCard({ projectId, color, variant }: { projectId: string; color: 
 function ProjectDetail({ project, onClose }: { project: typeof projects[0]; onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-100 bg-background/98 backdrop-blur-xl overflow-y-auto">
-      <div style={{ maxWidth: '860px', margin: '0 auto', padding: 'clamp(48px, 8vw, 80px) clamp(16px, 4vw, 32px) 120px' }}>
-
+      <div
+        className="max-w-250 mx-auto px-3 sm:px-6 pt-10 sm:pt-16 pb-24 sm:pb-32"
+      >
         {/* Back */}
         <button
           onClick={onClose}
+          className="flex items-center gap-2 mb-8 sm:mb-14"
           style={{
-            display: 'flex', alignItems: 'center', gap: '8px',
             fontSize: '13px', color: 'rgba(255,255,255,0.35)',
             background: 'none', border: 'none', cursor: 'pointer',
-            marginBottom: '64px', transition: 'color 0.2s',
+            transition: 'color 0.2s',
           }}
           onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.80)' }}
           onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.35)' }}
@@ -252,125 +255,120 @@ function ProjectDetail({ project, onClose }: { project: typeof projects[0]; onCl
           Back to work
         </button>
 
-        {/* Header */}
-        <div style={{ marginBottom: '56px' }}>
-          <span style={{ fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, display: 'block', marginBottom: '16px' }}>
-            {project.category}
-          </span>
-          <h2 style={{ fontSize: 'clamp(40px, 7vw, 80px)', fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.02em', color: '#FFFFFF', marginBottom: '12px' }}>
-            {project.title}
-          </h2>
-          <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.40)', lineHeight: 1.6, marginBottom: '24px' }}>
-            {project.tagline}
-          </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            {project.award && (
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: project.accent, border: `1px solid ${project.accent}50`, borderRadius: '999px', padding: '7px 16px', boxShadow: `0 0 10px ${project.accent}1A` }}>
-                <Award size={9} />{project.award}
+        {/* All sections separated by consistent space */}
+        <div className="space-y-6 sm:space-y-10">
+
+          {/* Header */}
+          <div>
+            <span style={{ fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, display: 'block', marginBottom: '16px' }}>
+              {project.category}
+            </span>
+            <h2 style={{ fontSize: 'clamp(32px, 6vw, 72px)', fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.02em', color: '#FFFFFF', marginBottom: '12px' }}>
+              {project.title}
+            </h2>
+            <p className="text-sm sm:text-base" style={{ color: 'rgba(255,255,255,0.40)', lineHeight: 1.6, marginBottom: '20px' }}>
+              {project.tagline}
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+              {project.award && (
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: project.accent, border: `1px solid ${project.accent}50`, borderRadius: '999px', padding: '7px 16px', boxShadow: `0 0 10px ${project.accent}1A` }}>
+                  <Award size={9} />{project.award}
+                </div>
+              )}
+              {project.liveUrl && (
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: project.accent, border: `1px solid ${project.accent}40`, borderRadius: '999px', padding: '7px 16px', textDecoration: 'none' }}>
+                  <ExternalLink size={9} />View Live Site
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* Preview cards */}
+          <div className="grid grid-cols-1 space-y-5 sm:space-y-0 sm:grid-cols-3 sm:gap-8">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="mx-auto w-full max-w-72 sm:max-w-none px-2 sm:px-0">
+                <PreviewCard projectId={project.id} color={project.color} variant={i} />
               </div>
-            )}
-            {project.liveUrl && (
-              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: project.accent, border: `1px solid ${project.accent}40`, borderRadius: '999px', padding: '7px 16px', textDecoration: 'none' }}>
-                <ExternalLink size={9} />View Live Site
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* Preview cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-16" style={{ marginBottom: '72px' }}>
-          {[0, 1, 2].map((i) => (
-            <PreviewCard key={i} projectId={project.id} color={project.color} variant={i} />
-          ))}
-        </div>
-
-        {/* Situation + Action */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 mb-12">
-          <div>
-            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Situation</h3>
-            <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.situation}</p>
-          </div>
-          <div>
-            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Action</h3>
-            <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.action}</p>
-          </div>
-        </div>
-
-        {/* The Problem — pull quote */}
-        <div style={{
-          borderLeft: `2px solid ${project.accent}`,
-          paddingLeft: '24px',
-          marginBottom: '48px',
-        }}>
-          <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Problem</h3>
-          <p style={{ fontSize: '22px', fontWeight: 600, lineHeight: 1.5, color: '#FFFFFF', whiteSpace: 'pre-line' }}>
-            {project.problem}
-          </p>
-        </div>
-
-        {/* The Solution */}
-        <div style={{ marginBottom: '72px' }}>
-          <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Solution</h3>
-          <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.solution}</p>
-        </div>
-
-        {/* Final Outcome */}
-        <div style={{
-          borderRadius: '16px',
-          border: `1px solid rgba(255,255,255,0.07)`,
-          background: 'rgba(255,255,255,0.025)',
-          padding: '40px',
-          marginBottom: '64px',
-        }}>
-          <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '20px' }}>Final Outcome</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {project.result.split('\n').map((line, i) => (
-              <p key={i} style={{
-                fontSize: i === 0 ? '18px' : '16px',
-                fontWeight: i === 0 ? 600 : 400,
-                lineHeight: 1.55,
-                color: i === 0 ? '#FFFFFF' : 'rgba(255,255,255,0.55)',
-              }}>
-                {line.includes('%') ? (
-                  <>
-                    {line.split(/(\d+%)/g).map((part, j) =>
-                      /\d+%/.test(part)
-                        ? <span key={j} style={{ color: project.accent, fontWeight: 700 }}>{part}</span>
-                        : part
-                    )}
-                  </>
-                ) : line}
-              </p>
             ))}
           </div>
-        </div>
 
-        {/* Tools + Team */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-              <Wrench size={12} style={{ color: project.accent }} />
-              <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent }}>Tools Used</h3>
+          {/* Situation + Action */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
+            <div>
+              <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Situation</h3>
+              <p className="text-sm sm:text-base" style={{ lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.situation}</p>
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {project.tools.map((tool) => (
-                <ToolPill key={tool} label={tool} accent={project.accent} />
+            <div>
+              <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Action</h3>
+              <p className="text-sm sm:text-base" style={{ lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.action}</p>
+            </div>
+          </div>
+
+          {/* The Problem — pull quote */}
+          <div style={{ borderLeft: `2px solid ${project.accent}`, paddingLeft: '20px' }}>
+            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Problem</h3>
+            <p className="text-lg sm:text-xl" style={{ fontWeight: 600, lineHeight: 1.5, color: '#FFFFFF', whiteSpace: 'pre-line' }}>
+              {project.problem}
+            </p>
+          </div>
+
+          {/* The Solution */}
+          <div>
+            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Solution</h3>
+            <p className="text-sm sm:text-base" style={{ lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.solution}</p>
+          </div>
+
+          {/* Final Outcome */}
+          <div className="rounded-xl p-4 sm:p-6 shadow-sm" style={{ border: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.025)' }}>
+            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '20px' }}>Final Outcome</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              {project.result.split('\n').map((line, i) => (
+                <p key={i} className={i === 0 ? 'text-base sm:text-lg' : 'text-sm sm:text-base'} style={{
+                  fontWeight: i === 0 ? 600 : 400,
+                  lineHeight: 1.55,
+                  color: i === 0 ? '#FFFFFF' : 'rgba(255,255,255,0.55)',
+                }}>
+                  {line.includes('%') ? (
+                    <>
+                      {line.split(/(\d+%)/g).map((part, j) =>
+                        /\d+%/.test(part)
+                          ? <span key={j} style={{ color: project.accent, fontWeight: 700 }}>{part}</span>
+                          : part
+                      )}
+                    </>
+                  ) : line}
+                </p>
               ))}
             </div>
           </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-              <Users size={12} style={{ color: project.accent }} />
-              <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent }}>Team</h3>
+
+          {/* Tools + Team */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+                <Wrench size={12} style={{ color: project.accent }} />
+                <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent }}>Tools Used</h3>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                {project.tools.map((tool) => (
+                  <ToolPill key={tool} label={tool} accent={project.accent} />
+                ))}
+              </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {project.team.map((member) => (
-                <span key={member} style={{ fontSize: '14px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.5 }}>{member}</span>
-              ))}
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+                <Users size={12} style={{ color: project.accent }} />
+                <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent }}>Team</h3>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {project.team.map((member) => (
+                  <span key={member} className="text-sm" style={{ color: 'rgba(255,255,255,0.45)', lineHeight: 1.5 }}>{member}</span>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   )

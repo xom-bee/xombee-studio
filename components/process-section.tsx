@@ -132,12 +132,12 @@ export function ProcessSection() {
         {/* Timeline */}
         <div>
           {/* Step indicators */}
-          <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '48px', position: 'relative', flexWrap: 'wrap', gap: '8px' }}>
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-4 sm:gap-6" style={{ marginBottom: '48px', position: 'relative' }}>
 
             {/* Background line — hidden on mobile where flex wraps */}
             <div className="hidden sm:block" style={{
               position: 'absolute',
-              top: '27px',
+              top: '24px',
               left: '10%',
               right: '10%',
               height: '1px',
@@ -148,7 +148,7 @@ export function ProcessSection() {
             {/* Glowing progress dot — hidden on mobile */}
             <div className="hidden sm:block" style={{
               position: 'absolute',
-              top: '23px',
+              top: '20px',
               left: `${dotPercent}%`,
               transform: 'translateX(-50%)',
               width: '9px',
@@ -166,29 +166,23 @@ export function ProcessSection() {
               const isPast = activeStep > i
 
               return (
-                <div key={step.number} style={{ display: 'flex', alignItems: 'flex-start', flex: 1 }}>
-                  <button
-                    onClick={() => changeStep(i)}
+                <button
+                  key={step.number}
+                  onClick={() => changeStep(i)}
+                  className="flex flex-col items-center gap-3"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: '0',
+                    opacity: isActive ? 1 : (isPast ? 0.45 : 0.22),
+                    transition: 'opacity 0.4s ease',
+                    width: '100%',
+                  }}
+                >
+                  <div
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0"
                     style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: '14px',
-                      width: '100%',
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      padding: '0',
-                      opacity: isActive ? 1 : (isPast ? 0.45 : 0.22),
-                      transition: 'opacity 0.4s ease',
-                    }}
-                  >
-                    <div style={{
-                      width: 'clamp(40px, 5vw, 56px)', height: 'clamp(40px, 5vw, 56px)',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
                       border: `1px solid ${isActive ? 'oklch(0.78 0.12 55 / 0.9)' : 'rgba(255,255,255,0.07)'}`,
                       background: isActive ? 'oklch(0.78 0.12 55 / 0.12)' : 'rgba(11,11,15,1)',
                       boxShadow: isActive
@@ -196,21 +190,21 @@ export function ProcessSection() {
                         : 'none',
                       transition: 'all 0.4s ease',
                       position: 'relative', zIndex: 1,
-                    }}>
-                      {step.icon}
-                    </div>
-                    <span style={{
-                      fontSize: 'clamp(9px, 2vw, 11px)',
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                      fontWeight: 700,
-                      color: isActive ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.35)',
-                      transition: 'color 0.4s ease',
-                    }}>
-                      {step.title}
-                    </span>
-                  </button>
-                </div>
+                    }}
+                  >
+                    {step.icon}
+                  </div>
+                  <span style={{
+                    fontSize: 'clamp(9px, 2vw, 11px)',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    fontWeight: 700,
+                    color: isActive ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.35)',
+                    transition: 'color 0.4s ease',
+                  }}>
+                    {step.title}
+                  </span>
+                </button>
               )
             })}
           </div>
@@ -241,10 +235,9 @@ export function ProcessSection() {
                 {steps[displayStep].number}
               </div>
               <div>
-                <h3 style={{
+                <h3 className="mb-4 sm:mb-6" style={{
                   fontSize: 'clamp(22px, 2.5vw, 30px)',
                   fontWeight: 700,
-                  marginBottom: '24px',
                   color: '#F4F4F4',
                 }}>
                   {steps[displayStep].title}

@@ -20,7 +20,7 @@ export function AboutSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="about" className="relative py-24 px-6 overflow-hidden" style={{ background: '#0B0B0F' }}>
+    <section ref={sectionRef} id="about" className="relative py-24 px-3 sm:px-6 lg:px-12 overflow-hidden" style={{ background: '#0B0B0F' }}>
       {/* Section background glow */}
       <div style={{
         position: 'absolute', inset: 0,

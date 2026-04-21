@@ -57,7 +57,7 @@ export function HeroSection() {
 
       {/* Main content — slight top offset so it floats in space */}
       <div
-        className="relative z-10 text-center px-6 max-w-4xl mx-auto w-full"
+        className="relative z-10 text-center px-3 sm:px-6 max-w-4xl mx-auto w-full"
         style={{ marginTop: '6vh' }}
       >
 

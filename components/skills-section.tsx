@@ -88,7 +88,7 @@ export function SkillsSection() {
   const [hoveredStrength, setHoveredStrength] = useState<string | null>(null)
 
   return (
-    <section id="skills" className="py-24 px-6" style={{ background: '#0B0B0F' }}>
+    <section id="skills" className="py-24 px-3 sm:px-6 lg:px-12" style={{ background: '#0B0B0F' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         {/* Header */}
         <div ref={ref} className={`mb-16 reveal ${revealed ? 'revealed' : ''}`}>
