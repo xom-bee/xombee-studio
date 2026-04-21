@@ -1,119 +1,264 @@
 'use client'
 
-import { useReveal } from '@/hooks/use-reveal'
+import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
+
+const tags = ['Visual Identity Designer', 'UI/UX Designer', 'Brand Strategist', 'Creative Artist']
 
 export function AboutSection() {
-  const { ref, revealed } = useReveal()
-  const { ref: textRef, revealed: textRevealed } = useReveal()
+  const sectionRef = useRef<HTMLElement>(null)
+  const [visible, setVisible] = useState(false)
+  const [imgHovered, setImgHovered] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.12 }
+    )
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <section id="about" className="relative py-24 px-6 overflow-hidden">
-      {/* Ambient glow */}
-      <div
-        className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.06]"
-        style={{
-          background: 'radial-gradient(circle, oklch(0.78 0.12 55) 0%, transparent 70%)',
-        }}
-      />
+    <section ref={sectionRef} id="about" className="relative py-24 px-6 overflow-hidden" style={{ background: '#0B0B0F' }}>
+      {/* Section background glow */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'radial-gradient(ellipse 80% 60% at 40% 50%, oklch(0.78 0.12 55 / 0.05) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Glow bridge — bleeds from image toward text */}
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '10%',
+        transform: 'translateY(-50%)',
+        width: '55%',
+        height: '60%',
+        background: 'radial-gradient(ellipse at 30% 50%, oklch(0.78 0.12 55 / 0.07) 0%, transparent 65%)',
+        filter: 'blur(40px)',
+        pointerEvents: 'none',
+      }} />
 
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Visual side */}
-          <div ref={ref} className={`reveal ${revealed ? 'revealed' : ''}`}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '0 clamp(32px, 5vw, 72px)', alignItems: 'center' }}
+          className="lg:grid! block">
+
+          {/* Visual side — enters first */}
+          <div style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(32px)',
+            transition: 'opacity 0.9s 0s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s 0s cubic-bezier(0.22, 1, 0.36, 1)',
+          }}>
             <div className="relative">
-              {/* Portrait placeholder with artistic treatment */}
+
+              {/* Portrait */}
               <div
-                className="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-sm mx-auto lg:mx-0"
+                onMouseEnter={() => setImgHovered(true)}
+                onMouseLeave={() => setImgHovered(false)}
+                className="relative overflow-hidden aspect-4/5 max-w-sm mx-auto lg:mx-0"
                 style={{
+                  borderRadius: '20px',
                   background: 'oklch(0.09 0 0)',
-                  border: '1px solid oklch(0.18 0 0)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  boxShadow: imgHovered
+                    ? '0 0 48px oklch(0.78 0.12 55 / 0.14), 0 24px 64px rgba(0,0,0,0.6)'
+                    : '0 0 28px oklch(0.78 0.12 55 / 0.06), 0 20px 48px rgba(0,0,0,0.5)',
+                  transition: 'box-shadow 0.5s ease',
                 }}
               >
-                <img
+                <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/DP-IUvgkwaS1zk02fbi9UmPeZEo3uWO3g.jpg"
-                  alt="Sangay Yoesel — Visual Identity Designer playing acoustic guitar in a studio setting"
-                  loading="lazy"
-                  className="w-full h-full object-cover object-top"
-                />
-                {/* Color overlay */}
-                <div
-                  className="absolute inset-0"
+                  alt="Sangay Yoesel — Visual Identity Designer"
+                  fill
                   style={{
-                    background:
-                      'linear-gradient(to bottom, transparent 40%, oklch(0.06 0 0) 100%), linear-gradient(135deg, oklch(0.78 0.12 55 / 0.1) 0%, transparent 60%)',
+                    objectFit: 'cover', objectPosition: 'top',
+                    transform: imgHovered ? 'scale(1.03)' : 'scale(1)',
+                    transition: 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)',
                   }}
                 />
+                {/* Dark overlay */}
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  background: 'linear-gradient(to bottom, rgba(0,0,0,0.10) 0%, transparent 35%, rgba(6,6,10,0.75) 100%)',
+                  pointerEvents: 'none',
+                }} />
                 {/* Name overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <p className="text-xs tracking-widest uppercase mb-1" style={{ color: 'oklch(0.78 0.12 55)' }}>
+                <div className="absolute bottom-0 left-0 right-0" style={{ padding: '28px 24px 24px' }}>
+                  <p style={{
+                    fontSize: '10px',
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: 'oklch(0.78 0.12 55)',
+                    marginBottom: '6px',
+                    fontWeight: 500,
+                  }}>
                     Visual Identity Designer
                   </p>
-                  <h3 className="font-serif text-2xl font-bold text-foreground">Sangay Yoesel</h3>
+                  <h3 style={{
+                    fontSize: 'clamp(22px, 2.5vw, 28px)',
+                    fontWeight: 700,
+                    fontFamily: 'serif',
+                    color: '#FFFFFF',
+                    textShadow: '0 0 24px oklch(0.78 0.12 55 / 0.30), 0 2px 12px rgba(0,0,0,0.6)',
+                    lineHeight: 1.2,
+                  }}>
+                    Sangay Yoesel
+                  </h3>
                 </div>
               </div>
 
-              {/* Floating stats */}
-              <div
-                className="absolute -right-4 top-12 rounded-xl border border-border/40 px-4 py-3 glow-border animate-float-delay"
-                style={{ background: 'oklch(0.09 0 0)' }}
-              >
-                <p className="text-2xl font-serif font-bold" style={{ color: 'oklch(0.78 0.12 55)' }}>3+</p>
-                <p className="text-xs text-muted-foreground">Years Creating</p>
-              </div>
-              <div
-                className="absolute -left-4 bottom-20 rounded-xl border border-border/40 px-4 py-3 glow-border animate-float"
-                style={{ background: 'oklch(0.09 0 0)' }}
-              >
-                <p className="text-2xl font-serif font-bold" style={{ color: 'oklch(0.78 0.12 55)' }}>10+</p>
-                <p className="text-xs text-muted-foreground">Projects Delivered</p>
-              </div>
+            </div>
 
-              {/* Decorative ring */}
-              <div className="absolute -top-8 -right-8 pointer-events-none animate-spin-slow opacity-20">
-                <svg width="160" height="160" viewBox="0 0 160 160" fill="none">
-                  <circle cx="80" cy="80" r="70" stroke="oklch(0.78 0.12 55)" strokeWidth="0.5" strokeDasharray="4 8" />
-                </svg>
-              </div>
+            {/* Stats row */}
+            <div style={{
+              display: 'flex',
+              gap: '16px',
+              marginTop: '20px',
+              maxWidth: '384px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }} className="lg:mx-0">
+              {[
+                { value: '3+', label: 'Years Creating' },
+                { value: '10+', label: 'Projects Delivered' },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  style={{
+                    flex: 1,
+                    borderRadius: '14px',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                    background: 'rgba(255,255,255,0.025)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    padding: '16px 20px',
+                    textAlign: 'center',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-3px)'
+                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.3), 0 0 20px oklch(0.78 0.12 55 / 0.08)'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.boxShadow = 'none'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)'
+                  }}
+                >
+                  <p style={{
+                    fontSize: '28px', fontWeight: 700, fontFamily: 'serif',
+                    color: 'oklch(0.78 0.12 55)', lineHeight: 1, marginBottom: '6px',
+                  }}>{stat.value}</p>
+                  <p style={{
+                    fontSize: '11px', color: 'rgba(255,255,255,0.28)',
+                    letterSpacing: '0.06em', textTransform: 'uppercase',
+                  }}>{stat.label}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Content side */}
-          <div ref={textRef} className={`reveal ${textRevealed ? 'revealed' : ''}`}>
+          {/* Vertical divider — desktop only */}
+          <div className="hidden lg:block" style={{
+            width: '1px',
+            alignSelf: 'stretch',
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.07) 25%, rgba(255,255,255,0.07) 75%, transparent 100%)',
+          }} />
+
+          {/* Content side — enters with delay */}
+          <div className="mt-12 lg:mt-0" style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(32px)',
+            transition: 'opacity 0.9s 0.28s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s 0.28s cubic-bezier(0.22, 1, 0.36, 1)',
+          }}>
             <span className="text-xs tracking-widest uppercase mb-6 block" style={{ color: 'oklch(0.78 0.12 55)' }}>
               About
             </span>
 
-            <h2 className="font-serif text-5xl md:text-6xl font-bold mb-8 leading-tight text-balance">
-              Where sound becomes <span className="text-glow" style={{ color: 'oklch(0.78 0.12 55)' }}>identity</span>
+            <h2 className="font-serif font-bold mb-8 leading-tight" style={{ fontSize: 'clamp(36px, 4.5vw, 56px)' }}>
+              <span style={{ color: 'rgba(255,255,255,0.45)', display: 'block' }}>Where sound becomes</span>
+              <span
+                className="text-glow"
+                style={{ color: 'oklch(0.78 0.12 55)', display: 'block' }}
+              >
+                identity
+              </span>
             </h2>
 
-            <div className="space-y-5 text-muted-foreground leading-relaxed">
-              <p>
-                I&apos;m <span className="text-foreground font-medium">Sangay Yoesel</span> — an independent artist and designer from Thimphu, Bhutan. Music has always been my first language. Design became how I translated it for the world to see.
-              </p>
-              <p>
-                Growing up immersed in sound, I understood early that music is more than audio — it&apos;s an emotional architecture. When I discovered design, I found the bridge between what artists feel and what the world sees.
-              </p>
-              <p>
-                Today, I work with <span className="text-foreground font-medium">musicians and creatives</span> who refuse to be just another voice in the feed. I translate their sound into visual identity — crafting brands that carry emotional weight, strategic intent, and unmistakable presence.
-              </p>
-              <p>
-                My goal is simple: to help independent artists own their stage, even before the world gives them one.
-              </p>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {[
+                { text: "Music was my first language.", weight: 500, opacity: 0.85, mt: 0 },
+                { text: "Design became how I translated it for the world.", weight: 400, opacity: 0.42, mt: 10 },
+                { text: null, mt: 28 },
+                { text: "I grew up in sound.", weight: 500, opacity: 0.75, mt: 0 },
+                { text: "I learned early that music is not just audio.", weight: 400, opacity: 0.40, mt: 8 },
+                { text: "It is emotion, structure, and identity.", weight: 400, opacity: 0.40, mt: 4 },
+                { text: null, mt: 28 },
+                { text: "When I found design, everything connected.", weight: 500, opacity: 0.75, mt: 0 },
+                { text: "It became the bridge between what artists feel", weight: 400, opacity: 0.40, mt: 8 },
+                { text: "and what the world sees.", weight: 400, opacity: 0.40, mt: 4 },
+                { text: null, mt: 28 },
+                { text: "Today, I work with creatives who want to be seen.", weight: 500, opacity: 0.80, mt: 0 },
+                { text: "I turn their sound into visual identity.", weight: 400, opacity: 0.40, mt: 8 },
+                { text: "Something real, intentional, and lasting.", weight: 400, opacity: 0.40, mt: 4 },
+                { text: null, mt: 28 },
+                { text: "My goal is simple.", weight: 600, opacity: 0.90, mt: 0 },
+                { text: null, mt: 14 },
+                { text: "To help artists own their stage.", weight: 700, opacity: 1, mt: 0, accent: true },
+                { text: "Before the world decides to give them one.", weight: 500, opacity: 0.45, mt: 6 },
+              ].map((line, i) => (
+                line.text === null
+                  ? <div key={i} style={{ height: line.mt }} />
+                  : <p key={i} style={{
+                      fontSize: (line as {accent?: boolean}).accent ? 'clamp(16px, 1.6vw, 20px)' : 'clamp(14px, 1.3vw, 17px)',
+                      fontWeight: line.weight,
+                      color: (line as {accent?: boolean}).accent ? 'oklch(0.82 0.11 55)' : `rgba(255,255,255,${line.opacity})`,
+                      textShadow: (line as {accent?: boolean}).accent ? '0 0 16px oklch(0.78 0.12 55 / 0.18)' : 'none',
+                      lineHeight: 1.85,
+                      marginTop: line.mt,
+                    }}>
+                      {line.text}
+                    </p>
+              ))}
             </div>
 
-            {/* Role badges */}
-            <div className="flex flex-wrap gap-3 mt-8">
-              {['Visual Identity Designer', 'UI/UX Designer', 'Brand Strategist', 'Music Enthusiast'].map((role) => (
+            {/* Tags */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', marginTop: '40px' }}>
+              {tags.map((tag) => (
                 <span
-                  key={role}
-                  className="px-4 py-2 rounded-full text-xs tracking-wide border border-border/50 text-muted-foreground hover:border-primary/40 hover:text-foreground transition-all duration-300"
+                  key={tag}
+                  style={{
+                    padding: '9px 20px',
+                    borderRadius: '999px',
+                    fontSize: '11px',
+                    fontWeight: 500,
+                    letterSpacing: '0.07em',
+                    border: '1px solid rgba(255,255,255,0.07)',
+                    color: 'rgba(255,255,255,0.28)',
+                    transition: 'border-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'oklch(0.78 0.12 55 / 0.35)'
+                    e.currentTarget.style.color = 'rgba(255,255,255,0.72)'
+                    e.currentTarget.style.boxShadow = '0 0 18px oklch(0.78 0.12 55 / 0.10)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
+                    e.currentTarget.style.color = 'rgba(255,255,255,0.28)'
+                    e.currentTarget.style.boxShadow = 'none'
+                  }}
                 >
-                  {role}
+                  {tag}
                 </span>
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </section>

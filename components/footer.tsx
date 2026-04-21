@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { ArrowUp } from 'lucide-react'
 
 export function Footer() {
@@ -7,17 +9,48 @@ export function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const closingRef = useRef<HTMLParagraphElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.5 }
+    )
+    if (closingRef.current) observer.observe(closingRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <footer className="relative border-t border-border/30 overflow-hidden">
+    <footer className="relative overflow-hidden" style={{ background: '#0B0B0F', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
       {/* Top decorative glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none"
         style={{ background: 'linear-gradient(90deg, transparent, oklch(0.78 0.12 55 / 0.4), transparent)' }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">
+      {/* Closing line */}
+      <div style={{ textAlign: 'center', padding: 'clamp(48px, 7vw, 80px) 24px clamp(32px, 5vw, 56px)' }}>
+        <p
+          ref={closingRef}
+          style={{
+            fontSize: 'clamp(18px, 2.5vw, 28px)',
+            fontWeight: 400,
+            color: 'rgba(255,255,255,0.26)',
+            fontFamily: 'serif',
+            letterSpacing: '0.02em',
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(12px)',
+            transition: 'opacity 1.2s cubic-bezier(0.22,1,0.36,1), transform 1.2s cubic-bezier(0.22,1,0.36,1)',
+          }}
+        >
+          Your story deserves a stage.
+        </p>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 pb-8">
         {/* Main footer content */}
-        <div className="grid md:grid-cols-3 gap-12 mb-16">
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
@@ -34,16 +67,16 @@ export function Footer() {
               </svg>
               <span className="font-serif text-2xl font-bold text-foreground">Xom Bee</span>
             </div>
-            <p
-              className="text-sm leading-relaxed max-w-sm mb-6"
-              style={{ color: 'oklch(0.55 0 0)' }}
-            >
+            <p style={{ fontSize: '14px', lineHeight: 1.6, maxWidth: '320px', color: 'rgba(255,255,255,0.42)', marginBottom: '3px' }}>
               Designing identity for artists who want to be felt.
             </p>
-            <div className="flex items-center gap-2 text-muted-foreground text-xs">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <circle cx="5" cy="5" r="4" stroke="oklch(0.78 0.12 55 / 0.6)" strokeWidth="0.8" />
-                <circle cx="5" cy="5" r="1.5" fill="oklch(0.78 0.12 55)" />
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.28)', letterSpacing: '0.01em', marginBottom: '24px' }}>
+              Sound has always deserved a face.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.28)', fontSize: '11px' }}>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ opacity: 0.5 }}>
+                <circle cx="5" cy="5" r="4" stroke="currentColor" strokeWidth="0.8" />
+                <circle cx="5" cy="5" r="1.5" fill="currentColor" />
               </svg>
               Thimphu, Bhutan
             </div>
@@ -59,43 +92,99 @@ export function Footer() {
                 { label: 'About', href: '#about' },
                 { label: 'Skills', href: '#skills' },
                 { label: 'Experience', href: '#experience' },
-                { label: 'Contact', href: '#contact' },
               ].map((link) => (
                 <button
                   key={link.label}
                   onClick={() => document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-sm text-muted-foreground hover:text-foreground text-left transition-colors duration-200 group flex items-center gap-2"
+                  className="text-sm text-left flex items-center gap-2"
+                  style={{ color: 'rgba(255,255,255,0.28)', transition: 'color 0.25s ease', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'oklch(0.78 0.12 55)'
+                    const line = e.currentTarget.querySelector('span') as HTMLElement
+                    if (line) line.style.width = '16px'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'rgba(255,255,255,0.28)'
+                    const line = e.currentTarget.querySelector('span') as HTMLElement
+                    if (line) line.style.width = '0px'
+                  }}
                 >
                   <span
-                    className="w-0 h-px group-hover:w-4 transition-all duration-300"
-                    style={{ background: 'oklch(0.78 0.12 55)' }}
+                    className="w-0 h-px transition-all duration-300"
+                    style={{ background: 'oklch(0.78 0.12 55)', flexShrink: 0 }}
                   />
                   {link.label}
                 </button>
+              ))}
+              {[
+                { label: 'Music', href: '/music' },
+                { label: 'Lyrics', href: '/lyrics' },
+              ].map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm flex items-center gap-2"
+                  style={{ color: 'rgba(255,255,255,0.28)', transition: 'color 0.25s ease', textDecoration: 'none' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'oklch(0.78 0.12 55)'
+                    const line = e.currentTarget.querySelector('span') as HTMLElement
+                    if (line) line.style.width = '16px'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'rgba(255,255,255,0.28)'
+                    const line = e.currentTarget.querySelector('span') as HTMLElement
+                    if (line) line.style.width = '0px'
+                  }}
+                >
+                  <span
+                    className="w-0 h-px transition-all duration-300"
+                    style={{ background: 'oklch(0.78 0.12 55)', flexShrink: 0 }}
+                  />
+                  {link.label}
+                </Link>
               ))}
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-border/20">
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <p className="text-muted-foreground text-xs">
-              &copy; 2026 Xom Bee Studio. All rights reserved.
-            </p>
-            <span className="hidden sm:block w-1 h-1 rounded-full bg-border" />
-            <p className="text-muted-foreground text-xs italic">
-              &ldquo;Your sound deserves to be felt.&rdquo;
-            </p>
-          </div>
-
-          {/* Back to top */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr auto 1fr',
+          alignItems: 'center',
+          paddingTop: '24px',
+          borderTop: '1px solid rgba(255,255,255,0.03)',
+        }}>
+          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)' }}>
+            &copy; 2026 Xom Bee Studio
+          </p>
+          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.30)', fontStyle: 'italic', textAlign: 'center', letterSpacing: '0.04em' }}>
+            &ldquo;Your sound deserves to be felt.&rdquo;
+          </p>
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-2 px-4 py-2 rounded-full border border-border/40 text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all duration-300 group text-xs"
+            style={{
+              display: 'flex', alignItems: 'center', gap: '5px', justifySelf: 'end',
+              fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.22)',
+              background: 'none', border: 'none', cursor: 'pointer',
+              transition: 'color 0.25s ease, transform 0.25s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = 'rgba(255,255,255,0.60)'
+              e.currentTarget.style.transform = 'translateY(-2px)'
+              const arrow = e.currentTarget.querySelector('svg') as SVGElement
+              if (arrow) arrow.style.transform = 'translateY(-3px)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'rgba(255,255,255,0.22)'
+              e.currentTarget.style.transform = 'translateY(0)'
+              const arrow = e.currentTarget.querySelector('svg') as SVGElement
+              if (arrow) arrow.style.transform = 'translateY(0)'
+            }}
           >
-            <ArrowUp size={12} className="group-hover:-translate-y-0.5 transition-transform" />
-            Back to top
+            <ArrowUp size={11} style={{ transition: 'transform 0.25s ease' }} />
+            Top
           </button>
         </div>
       </div>

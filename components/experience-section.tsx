@@ -85,9 +85,9 @@ function SongCard({ artwork }: { artwork: typeof artworks[0] }) {
       <div
         className="group relative rounded-2xl overflow-hidden border border-border/40 transition-all duration-500 cursor-pointer"
         style={{
-          background: hovered ? artwork.bg : 'oklch(0.09 0 0)',
-          borderColor: hovered ? `${artwork.color}40` : undefined,
-          boxShadow: hovered ? `0 0 30px ${artwork.color}20` : undefined,
+          background: hovered ? artwork.bg : 'rgba(255,255,255,0.02)',
+          borderColor: hovered ? `${artwork.color}28` : 'rgba(255,255,255,0.06)',
+          boxShadow: hovered ? `0 8px 24px rgba(0,0,0,0.25), 0 0 16px ${artwork.color}10` : 'none',
           transform: hovered ? 'translateY(-4px)' : 'none',
         }}
         onMouseEnter={() => setHovered(true)}
@@ -114,7 +114,7 @@ function SongCard({ artwork }: { artwork: typeof artworks[0] }) {
               className="w-14 h-14 rounded-full flex items-center justify-center transition-transform duration-200 active:scale-95"
               style={{
                 background: artwork.color,
-                boxShadow: `0 0 20px ${artwork.color}60`,
+                boxShadow: `0 0 10px ${artwork.color}30`,
               }}
             >
               {playing ? (
@@ -137,11 +137,11 @@ function SongCard({ artwork }: { artwork: typeof artworks[0] }) {
 
         {/* Info */}
         <div className="p-5">
-          <h3 className="font-serif font-bold text-foreground text-lg leading-tight mb-1">{artwork.title}</h3>
-          <p className="text-muted-foreground text-xs tracking-wide">{artwork.subtitle}</p>
+          <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'rgba(255,255,255,0.85)', lineHeight: 1.3, marginBottom: '4px' }}>{artwork.title}</h3>
+          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.04em' }}>{artwork.subtitle}</p>
 
           {/* Waveform bars */}
-          <div className="flex items-end gap-[2px] h-6 mt-4 opacity-50">
+          <div className="flex items-end gap-[2px] h-6 mt-4" style={{ opacity: 0.28 }}>
             {WAVEFORM_BARS.map((height, i) => (
               <div
                 key={i}
@@ -165,7 +165,7 @@ export function ExperienceSection() {
   const { ref, revealed } = useReveal()
 
   return (
-    <section id="experience" className="py-24 px-6">
+    <section id="experience" className="py-24 px-6" style={{ background: '#0B0B0F', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div ref={ref} className={`mb-6 reveal ${revealed ? 'revealed' : ''}`}>
@@ -173,37 +173,23 @@ export function ExperienceSection() {
             Experience the Work
           </span>
           <h2 className="font-serif text-5xl md:text-6xl font-bold text-balance">
-            Serkhai Gawa <span className="text-glow" style={{ color: 'oklch(0.78 0.12 55)' }}>EP</span>
+            Serkhai Gawa <span style={{ color: 'oklch(0.78 0.12 55)', textShadow: '0 0 20px oklch(0.78 0.12 55 / 0.25)' }}>EP</span>
           </h2>
         </div>
-        <p className="text-muted-foreground mb-16 max-w-lg leading-relaxed">
-          Album artwork and visual identity created for this EP. Click any track to experience the sound and design together.
+        <p className="mb-16" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.32)', lineHeight: 1.7, maxWidth: '400px' }}>
+          Visual identity and artwork created for this EP.<br />Click a track to hear it.
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <p style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)', marginBottom: '20px' }}>
+          Listen &amp; Feel
+        </p>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {artworks.map((artwork) => (
             <SongCard key={artwork.id} artwork={artwork} />
           ))}
         </div>
 
-        {/* YouTube video */}
-        <div className="mt-16">
-          <p className="text-xs tracking-widest uppercase mb-6 block" style={{ color: 'oklch(0.78 0.12 55)' }}>
-            Official Music Video
-          </p>
-          <div
-            className="relative w-full rounded-2xl overflow-hidden border border-border/40"
-            style={{ paddingBottom: '56.25%' }}
-          >
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/ElnpNEgbtR0"
-              title="Serkhai Gawa — Xom Bee"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
       </div>
     </section>
   )

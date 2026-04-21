@@ -4,16 +4,17 @@ import { useReveal } from '@/hooks/use-reveal'
 import { useState } from 'react'
 
 const designSkills = [
-  { name: 'UI/UX Design', level: 92 },
-  { name: 'Visual Design', level: 95 },
-  { name: 'Wireframing', level: 88 },
-  { name: 'Prototyping', level: 85 },
-  { name: 'Brand Identity', level: 97 },
+  { name: 'Brand Identity', desc: 'Marks and systems built to carry meaning.' },
+  { name: 'UI/UX Design', desc: 'Interfaces that feel intuitive and alive.' },
+  { name: 'Visual Design', desc: 'Every element placed with intention.' },
+  { name: 'Wireframing', desc: 'Structure before style. Clarity first.' },
+  { name: 'Prototyping', desc: 'Ideas made real, fast and testable.' },
 ]
 
 const tools = [
   {
     name: 'Figma',
+    desc: 'Primary tool for UI, identity systems, and prototypes.',
     icon: (
       <svg viewBox="0 0 38 57" fill="none" className="w-6 h-6">
         <path d="M19 28.5A9.5 9.5 0 1 1 28.5 19 9.5 9.5 0 0 1 19 28.5z" fill="oklch(0.78 0.12 55)" />
@@ -26,6 +27,7 @@ const tools = [
   },
   {
     name: 'Illustrator',
+    desc: 'Vector marks, logos, and detailed brand assets.',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-6 h-6">
         <rect width="40" height="40" rx="8" fill="oklch(0.65 0.15 55 / 0.2)" />
@@ -35,6 +37,7 @@ const tools = [
   },
   {
     name: 'Photoshop',
+    desc: 'Image treatment, compositing, and visual polish.',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-6 h-6">
         <rect width="40" height="40" rx="8" fill="oklch(0.6 0.14 220 / 0.2)" />
@@ -44,6 +47,7 @@ const tools = [
   },
   {
     name: 'Canva',
+    desc: 'Rapid content design and client deliverables.',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-6 h-6">
         <rect width="40" height="40" rx="20" fill="oklch(0.65 0.15 190 / 0.2)" />
@@ -52,42 +56,29 @@ const tools = [
     ),
   },
   {
-    name: 'After Effects',
+    name: 'VS Code',
+    desc: 'Building and refining design systems in code.',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-6 h-6">
-        <rect width="40" height="40" rx="8" fill="oklch(0.55 0.12 280 / 0.2)" />
-        <text x="20" y="26" textAnchor="middle" fill="oklch(0.7 0.10 280)" fontSize="13" fontWeight="700">Ae</text>
+        <rect width="40" height="40" rx="8" fill="oklch(0.55 0.14 240 / 0.2)" />
+        <text x="20" y="26" textAnchor="middle" fill="oklch(0.70 0.12 240)" fontSize="11" fontWeight="700">&lt;/&gt;</text>
       </svg>
     ),
   },
 ]
 
 const strengths = [
-  'Creative Thinking',
-  'Problem Solving',
-  'Attention to Detail',
-  'Communication',
-  'Adaptability',
-  'Time Management',
+  'Design with intention',
+  'Listen before creating',
+  'Translate feeling into form',
+  'Deliver with care',
 ]
 
-function SkillBar({ name, level, revealed }: { name: string; level: number; revealed: boolean }) {
+function SkillItem({ name, desc }: { name: string; desc: string }) {
   return (
-    <div className="space-y-2">
-      <div className="flex justify-between items-center">
-        <span className="text-sm text-foreground/80">{name}</span>
-        <span className="text-xs text-muted-foreground">{level}%</span>
-      </div>
-      <div className="h-0.5 bg-border rounded-full overflow-hidden">
-        <div
-          className="h-full rounded-full transition-all duration-1000 ease-out"
-          style={{
-            width: revealed ? `${level}%` : '0%',
-            background: 'oklch(0.78 0.12 55)',
-            boxShadow: '0 0 8px oklch(0.78 0.12 55 / 0.6)',
-          }}
-        />
-      </div>
+    <div>
+      <p style={{ fontSize: '14px', fontWeight: 500, color: 'rgba(255,255,255,0.78)', marginBottom: '5px', letterSpacing: '0.01em' }}>{name}</p>
+      <p style={{ fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.24)', lineHeight: 1.6 }}>{desc}</p>
     </div>
   )
 }
@@ -97,27 +88,27 @@ export function SkillsSection() {
   const [hoveredStrength, setHoveredStrength] = useState<string | null>(null)
 
   return (
-    <section id="skills" className="py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section id="skills" className="py-24 px-6" style={{ background: '#0B0B0F' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
         {/* Header */}
         <div ref={ref} className={`mb-16 reveal ${revealed ? 'revealed' : ''}`}>
           <span className="text-xs tracking-widest uppercase mb-4 block" style={{ color: 'oklch(0.78 0.12 55)' }}>
             Capabilities
           </span>
           <h2 className="font-serif text-5xl md:text-6xl font-bold text-balance">
-            Skills & <span className="text-glow" style={{ color: 'oklch(0.78 0.12 55)' }}>Tools</span>
+            What I Bring to Your <span style={{ color: 'oklch(0.78 0.12 55)', textShadow: '0 0 20px oklch(0.78 0.12 55 / 0.25)' }}>Identity</span>
           </h2>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', alignItems: 'start' }}>
           {/* Design Skills */}
           <SkillsCard revealed={revealed}>
             <h3 className="font-semibold text-foreground mb-6 text-sm tracking-widest uppercase" style={{ color: 'oklch(0.78 0.12 55)' }}>
               Design Skills
             </h3>
-            <div className="space-y-5">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
               {designSkills.map((skill) => (
-                <SkillBar key={skill.name} name={skill.name} level={skill.level} revealed={revealed} />
+                <SkillItem key={skill.name} name={skill.name} desc={skill.desc} />
               ))}
             </div>
           </SkillsCard>
@@ -127,15 +118,18 @@ export function SkillsSection() {
             <h3 className="font-semibold text-foreground mb-6 text-sm tracking-widest uppercase" style={{ color: 'oklch(0.78 0.12 55)' }}>
               Tools
             </h3>
-            <div className="space-y-4">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {tools.map((tool) => (
                 <div
                   key={tool.name}
-                  className="flex items-center gap-3 p-3 rounded-xl border border-border/30 hover:border-primary/30 transition-all duration-300 hover:bg-primary/5 group"
+                  className="flex items-start gap-4 rounded-xl border border-border/30 hover:border-primary/30 transition-all duration-300 hover:bg-primary/5 group"
+                  style={{ padding: '12px 14px' }}
                 >
-                  <div className="flex-shrink-0">{tool.icon}</div>
-                  <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{tool.name}</span>
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="shrink-0 mt-0.5">{tool.icon}</div>
+                  <div>
+                    <p className="text-sm text-foreground/80 group-hover:text-foreground transition-colors font-medium">{tool.name}</p>
+                    <p className="text-xs mt-0.5 transition-colors" style={{ color: 'rgba(255,255,255,0.28)' }}>{tool.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -146,19 +140,25 @@ export function SkillsSection() {
             <h3 className="font-semibold text-foreground mb-6 text-sm tracking-widest uppercase" style={{ color: 'oklch(0.78 0.12 55)' }}>
               Strengths
             </h3>
-            <div className="flex flex-wrap gap-3">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {strengths.map((strength) => (
                 <button
                   key={strength}
                   onMouseEnter={() => setHoveredStrength(strength)}
                   onMouseLeave={() => setHoveredStrength(null)}
-                  className="px-4 py-2.5 rounded-xl text-sm border transition-all duration-300"
                   style={{
-                    background: hoveredStrength === strength ? 'oklch(0.78 0.12 55 / 0.12)' : 'oklch(0.12 0 0)',
-                    borderColor: hoveredStrength === strength ? 'oklch(0.78 0.12 55 / 0.5)' : 'oklch(0.18 0 0)',
-                    color: hoveredStrength === strength ? 'oklch(0.78 0.12 55)' : 'oklch(0.55 0 0)',
-                    transform: hoveredStrength === strength ? 'scale(1.05)' : 'scale(1)',
-                    boxShadow: hoveredStrength === strength ? '0 0 15px oklch(0.78 0.12 55 / 0.15)' : 'none',
+                    padding: '12px 20px',
+                    borderRadius: '12px',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    textAlign: 'left',
+                    border: `1px solid ${hoveredStrength === strength ? 'oklch(0.78 0.12 55 / 0.35)' : 'rgba(255,255,255,0.07)'}`,
+                    background: hoveredStrength === strength ? 'oklch(0.78 0.12 55 / 0.08)' : 'transparent',
+                    color: hoveredStrength === strength ? 'oklch(0.82 0.10 55)' : 'rgba(255,255,255,0.45)',
+                    boxShadow: hoveredStrength === strength ? '0 0 18px oklch(0.78 0.12 55 / 0.10)' : 'none',
+                    transition: 'all 0.3s ease',
+                    cursor: 'default',
+                    width: '100%',
                   }}
                 >
                   {strength}
@@ -174,11 +174,21 @@ export function SkillsSection() {
 
 function SkillsCard({ children, revealed }: { children: React.ReactNode; revealed: boolean }) {
   const { ref, revealed: cardRevealed } = useReveal()
+  const [hovered, setHovered] = useState(false)
   return (
     <div
       ref={ref}
-      className={`rounded-2xl border border-border/40 p-8 reveal ${cardRevealed ? 'revealed' : ''}`}
-      style={{ background: 'oklch(0.09 0 0)' }}
+      className={`rounded-2xl reveal ${cardRevealed ? 'revealed' : ''}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: 'rgba(255,255,255,0.02)',
+        border: `1px solid ${hovered ? 'rgba(200,136,74,0.20)' : 'rgba(255,255,255,0.05)'}`,
+        padding: '36px 32px',
+        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+        boxShadow: hovered ? '0 12px 40px rgba(0,0,0,0.3), 0 0 24px oklch(0.78 0.12 55 / 0.08)' : 'none',
+        transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease',
+      }}
     >
       {children}
     </div>

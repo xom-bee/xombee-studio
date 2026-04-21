@@ -1,6 +1,7 @@
 'use client'
 
 import { useReveal } from '@/hooks/use-reveal'
+import Image from 'next/image'
 
 export function MoodboardSection() {
   const { ref, revealed } = useReveal()
@@ -29,10 +30,11 @@ export function MoodboardSection() {
           className={`reveal ${revealed ? 'revealed' : ''} rounded-3xl overflow-hidden border border-border/40 transition-all duration-700 hover:border-[oklch(0.78_0.12_55_/_0.35)] hover:shadow-[0_0_60px_oklch(0.78_0.12_55_/_0.12)]`}
           style={{ transitionDelay: '0.15s' }}
         >
-          <img
+          <Image
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Moodboard-8JZr1acc0Ewfj6X2DuEQvDxIZBHZ8z.png"
             alt="Xom Bee Studio Moodboard — Atmospheric Palette, Colour Palette, Cinematic Visuals, Typography Pillars, Font Pairings, and Design Mockups"
-            loading="lazy"
+            width={1400}
+            height={900}
             className="w-full h-auto block"
           />
         </div>

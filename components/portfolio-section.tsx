@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
-import { useReveal } from '@/hooks/use-reveal'
-import { X, Award, Users, Wrench, ChevronLeft, ExternalLink } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import Image from 'next/image'
+import { ChevronLeft, ExternalLink, Award, Wrench, Users } from 'lucide-react'
 
-// Procedural SVG visual generator for projects (IP-compliant, no stock images)
+// ─── Procedural visuals (unchanged) ───────────────────────────────────────────
+
 function ProceduralVisual({ projectId, color, variant }: { projectId: string; color: string; variant: number }) {
   const patterns: Record<string, JSX.Element[]> = {
     'scan2dine': [
-      // QR Code aesthetic
       <svg key="0" viewBox="0 0 400 300" className="w-full h-full">
         <defs>
           <linearGradient id="s2d-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -30,7 +30,6 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
         <circle cx="200" cy="200" r="30" stroke={color} strokeWidth="2" fill="url(#s2d-grad)" />
         <path d="M190 200 L200 210 L215 190" stroke={color} strokeWidth="2" fill="none" strokeLinecap="round" />
       </svg>,
-      // Mobile menu interface
       <svg key="1" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
         <rect x="120" y="20" width="160" height="260" rx="20" stroke={color} strokeWidth="2" fill="none" opacity="0.4" />
@@ -42,7 +41,6 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
         <circle cx="200" cy="170" r="15" fill={color} opacity="0.5" />
         <circle cx="200" cy="230" r="15" fill={color} opacity="0.5" />
       </svg>,
-      // Dashboard analytics
       <svg key="2" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
         <rect x="30" y="30" width="340" height="240" rx="12" stroke={color} strokeWidth="1" fill="none" opacity="0.3" />
@@ -56,7 +54,6 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
       </svg>,
     ],
     'druk-art-hub': [
-      // Art gallery grid
       <svg key="0" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
         {[
@@ -72,7 +69,6 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
         <circle cx="320" cy="180" r="40" stroke={color} strokeWidth="2" fill="none" opacity="0.4" />
         <path d="M300 180 L320 160 L340 180 L320 200 Z" fill={color} opacity="0.3" />
       </svg>,
-      // Artist profile
       <svg key="1" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
         <circle cx="200" cy="80" r="40" stroke={color} strokeWidth="2" fill={color} fillOpacity="0.2" />
@@ -82,7 +78,6 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
         <rect x="155" y="200" width="90" height="70" rx="8" fill={color} opacity="0.15" />
         <rect x="260" y="200" width="90" height="70" rx="8" fill={color} opacity="0.15" />
       </svg>,
-      // Marketplace cart
       <svg key="2" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
         <rect x="50" y="50" width="180" height="200" rx="12" stroke={color} strokeWidth="1" fill="none" opacity="0.3" />
@@ -96,7 +91,6 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
       </svg>,
     ],
     'no-q': [
-      // Queue interface
       <svg key="0" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
         <circle cx="200" cy="100" r="50" stroke={color} strokeWidth="3" fill="none" opacity="0.5" />
@@ -106,7 +100,6 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
         <rect x="80" y="200" width="240" height="40" rx="8" stroke={color} strokeWidth="1" fill="none" opacity="0.3" />
         <text x="200" y="225" textAnchor="middle" fill={color} fontSize="12" opacity="0.6">Estimated wait: 12 minutes</text>
       </svg>,
-      // Patient list
       <svg key="1" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
         {[50, 110, 170, 230].map((y, i) => (
@@ -119,7 +112,6 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
           </g>
         ))}
       </svg>,
-      // Notification system
       <svg key="2" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
         <rect x="80" y="40" width="240" height="100" rx="16" fill={color} opacity="0.15" stroke={color} strokeWidth="2" strokeOpacity="0.4" />
@@ -132,9 +124,10 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
       </svg>,
     ],
   }
-  
   return patterns[projectId]?.[variant] || patterns['scan2dine'][0]
 }
+
+// ─── Project data ──────────────────────────────────────────────────────────────
 
 const projects = [
   {
@@ -144,18 +137,22 @@ const projects = [
     tagline: 'QR-Based Digital Menu System',
     award: 'Best Project Award',
     color: 'oklch(0.75 0.15 55)',
-    accent: 'oklch(0.78 0.12 55)',
+    accent: '#C8884A',
     logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scan2Dine%20White-u5zMokeFXdYcPIgXF4HWjFKTdSc02e.png',
-    shortDesc: 'Transforming the dining experience through seamless QR-based menus that eliminate wait times and delight guests.',
-    situation: 'Restaurants struggled with outdated physical menus that were costly to update, unhygienic, and created friction in the ordering experience.',
-    action: 'Designed a clean, intuitive QR-based digital menu system with a focus on usability, accessibility, and visual hierarchy that guides customers naturally.',
-    result: 'Awarded Best Project for exceptional usability and clean UI. Reduced menu update time by 90% and improved customer satisfaction scores.',
-    problem: 'How do you modernize the dining experience without losing warmth and personality?',
-    solution: 'A beautifully crafted digital menu that feels premium, loads instantly, and puts control back into the hands of both restaurant owners and diners.',
+    shortDesc: 'A QR-based digital menu system that removes friction from the dining experience — built for speed, clarity, and delight.',
+    situation: 'Restaurants relied on physical menus that were costly to update.\nHygiene concerns made them increasingly impractical.',
+    action: 'Designed an intuitive QR-based menu system from the ground up.\nFocused on usability, clear hierarchy, and a seamless guest experience.',
+    result: 'Awarded Best Project for exceptional usability.\n90% reduction in menu update time.\nImproved customer satisfaction across all test environments.',
+    problem: 'How do you modernize dining\nwithout losing warmth and human touch?',
+    solution: 'A premium digital menu that feels effortless to use.\nLoads instantly. Puts control in the hands of both owner and guest.',
     tools: ['Figma', 'Adobe Illustrator', 'Prototyping', 'User Research'],
     team: ['Sangay Yoesel – Lead Designer', 'Team of 3 developers'],
-    visuals: 'procedural',
     liveUrl: 'https://scan2dinee.netlify.app/',
+    image: '/images/scan2dine.png',
+    imagePosition: 'center center',
+    ongoing: false,
+    compositeUi: ['/images/scan2dine-ui-1.png', '/images/scan2dine-ui-2.png'],
+    preLine: undefined,
   },
   {
     id: 'druk-art-hub',
@@ -163,18 +160,23 @@ const projects = [
     category: 'Platform Design · Marketplace',
     tagline: 'Platform for artists to buy and sell art',
     award: null,
-    color: 'oklch(0.65 0.14 200)',
-    accent: 'oklch(0.7 0.12 200)',
+    color: 'oklch(0.75 0.15 55)',
+    accent: '#C8884A',
     logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Druk%20Art%20Hub%20White-trOMxor0aJQS5vMDg7UA5eQLGxTDp7.png',
-    shortDesc: 'A digital home for Bhutanese artists — a marketplace where creativity meets commerce and culture is preserved.',
-    situation: 'Local Bhutanese artists lacked a dedicated platform to showcase and monetize their work, limiting reach to only local buyers.',
-    action: 'Created a vibrant, culturally-sensitive marketplace design that celebrates Bhutanese artistry while enabling global discovery and transactions.',
-    result: 'A platform that empowers independent artists to earn sustainably, with an intuitive UI that bridges traditional craft and modern commerce.',
-    problem: 'How do you create a marketplace that feels authentic to Bhutanese culture while being globally accessible?',
-    solution: 'A thoughtfully designed platform with cultural visual cues, accessible navigation, and artist-first features that put creative work at the forefront.',
-    tools: ['Figma', 'Adobe Photoshop', 'Wireframing', 'Brand Identity'],
-    team: ['Sangay Yoesel – UI/UX Lead', 'Collaborative team of 4'],
-    visuals: 'procedural',
+    shortDesc: 'A space for Bhutanese artists to be seen.\nWhere culture meets a wider world.',
+    situation: 'Bhutanese artists had no dedicated platform to reach beyond local buyers.\nTheir work existed. Their audience did not.',
+    action: 'Designed a culturally-sensitive marketplace from scratch.\nCelebrates Bhutanese artistry while enabling global discovery and transactions.',
+    result: 'A platform that empowers independent artists to earn sustainably.\nBridges traditional craft and modern commerce through intentional design.',
+    problem: 'How do you build a marketplace that feels culturally authentic\nwhile remaining globally accessible?',
+    solution: 'Cultural visual cues. Accessible navigation. Artist-first features.\nThe work leads. The platform follows.',
+    tools: ['Figma', 'Adobe Photoshop', 'Wireframing', 'Brand Identity', 'Frontend'],
+    team: ['Sangay Yoesel – UI/UX Lead', 'Collaborative team of 3'],
+    liveUrl: undefined,
+    image: '/images/druk-art-hub.png',
+    imagePosition: '72% center',
+    ongoing: true,
+    compositeUi: undefined,
+    preLine: 'Built for artists who were never seen.',
   },
   {
     id: 'no-q',
@@ -182,178 +184,224 @@ const projects = [
     category: 'Healthcare UX · System Design',
     tagline: 'Queue management system for patients',
     award: null,
-    color: 'oklch(0.7 0.12 150)',
-    accent: 'oklch(0.72 0.11 150)',
+    color: 'oklch(0.65 0.10 185)',
+    accent: '#3D9E8C',
     logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/No%20Q%20White-2jMDdM7Mp0FgKbWUQVmrmhFEA7ab8J.png',
-    shortDesc: 'Eliminating the anxiety of waiting rooms by giving patients a dignified, smart queuing experience.',
-    situation: 'Hospital waiting rooms created stress, confusion, and wasted hours for patients who had no visibility into their wait time or position.',
-    action: 'Designed a digital queue management system with real-time updates, SMS notifications, and a calm, reassuring interface that reduces patient anxiety.',
-    result: 'A system that reclaims patient time, reduces walk-aways, and allows medical staff to manage flow efficiently — improving outcomes for everyone.',
-    problem: 'How do you bring humanity and clarity to an experience that is inherently stressful?',
-    solution: 'A gentle, informative interface that keeps patients in control of their time and relieves the psychological burden of the unknown wait.',
-    tools: ['Figma', 'Canva', 'UX Research', 'Prototyping'],
+    shortDesc: 'Long queues. No clarity. No control.\nBuilt to give patients back their time.',
+    situation: 'Patients faced stressful waiting rooms with no visibility into their position.\nWasted hours. No updates. No system.',
+    action: 'Designed a queue system with real-time updates and SMS notifications.\nA calm interface built to reduce anxiety, not add to it.',
+    result: 'Patients reclaim their time. Walk-aways reduced significantly.\nMedical staff manage flow with ease. Outcomes improve for everyone.',
+    problem: 'How do you bring humanity and clarity\nto an experience that is inherently stressful?',
+    solution: 'A gentle interface that keeps patients in control of their wait.\nClarity replaces uncertainty. Dignity replaces frustration.',
+    tools: ['Figma', 'Canva', 'UX Research', 'Prototyping', 'Backend'],
     team: ['Sangay Yoesel – Design Lead', 'Healthcare consultants', 'Dev team of 2'],
-    visuals: 'procedural',
     liveUrl: 'https://q-leess.netlify.app/',
+    image: '/images/q-less.png',
+    imagePosition: 'center 20%',
+    ongoing: false,
+    compositeUi: undefined,
+    preLine: 'Built for moments that should not feel frustrating.',
   },
 ]
 
-function ProjectDetail({ project, onClose }: { project: typeof projects[0]; onClose: () => void }) {
+// ─── Project detail overlay (unchanged) ───────────────────────────────────────
 
+function PreviewCard({ projectId, color, variant }: { projectId: string; color: string; variant: number }) {
+  const [hovered, setHovered] = useState(false)
   return (
-    <div className="fixed inset-0 z-[100] bg-background/98 backdrop-blur-xl overflow-y-auto">
-      <div className="max-w-5xl mx-auto px-6 py-20">
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        position: 'relative',
+        aspectRatio: '4/3',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        border: `1px solid ${hovered ? 'rgba(200,136,74,0.30)' : 'rgba(255,255,255,0.07)'}`,
+        boxShadow: hovered
+          ? '0 8px 32px rgba(0,0,0,0.55), 0 0 16px rgba(200,136,74,0.12)'
+          : '0 4px 16px rgba(0,0,0,0.40)',
+        transform: hovered ? 'scale(1.025)' : 'scale(1)',
+        transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease',
+        cursor: 'default',
+      }}
+    >
+      <ProceduralVisual projectId={projectId} color={color} variant={variant} />
+    </div>
+  )
+}
+
+function ProjectDetail({ project, onClose }: { project: typeof projects[0]; onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-100 bg-background/98 backdrop-blur-xl overflow-y-auto">
+      <div style={{ maxWidth: '860px', margin: '0 auto', padding: '80px 32px 120px' }}>
+
+        {/* Back */}
         <button
           onClick={onClose}
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm mb-12 transition-colors group"
+          style={{
+            display: 'flex', alignItems: 'center', gap: '8px',
+            fontSize: '13px', color: 'rgba(255,255,255,0.35)',
+            background: 'none', border: 'none', cursor: 'pointer',
+            marginBottom: '64px', transition: 'color 0.2s',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.80)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.35)' }}
         >
-          <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+          <ChevronLeft size={14} />
           Back to work
         </button>
 
         {/* Header */}
-        <div className="mb-12">
-          <span className="text-xs tracking-widest uppercase mb-4 block" style={{ color: project.accent }}>
+        <div style={{ marginBottom: '56px' }}>
+          <span style={{ fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, display: 'block', marginBottom: '16px' }}>
             {project.category}
           </span>
-          <h2 className="font-serif text-5xl md:text-7xl font-bold mb-4">{project.title}</h2>
-          <p className="text-xl text-muted-foreground mb-6">{project.tagline}</p>
-          <div className="flex flex-wrap items-center gap-3">
+          <h2 style={{ fontSize: 'clamp(40px, 7vw, 80px)', fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.02em', color: '#FFFFFF', marginBottom: '12px' }}>
+            {project.title}
+          </h2>
+          <p style={{ fontSize: '17px', color: 'rgba(255,255,255,0.40)', lineHeight: 1.6, marginBottom: '24px' }}>
+            {project.tagline}
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
             {project.award && (
-              <div
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs tracking-wide"
-                style={{ background: `${project.accent}20`, color: project.accent, border: `1px solid ${project.accent}40` }}
-              >
-                <Award size={12} />
-                {project.award}
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: project.accent, border: `1px solid ${project.accent}50`, borderRadius: '999px', padding: '7px 16px', boxShadow: `0 0 10px ${project.accent}1A` }}>
+                <Award size={9} />{project.award}
               </div>
             )}
             {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs tracking-wide transition-all hover:opacity-80"
-                style={{ background: `${project.accent}20`, color: project.accent, border: `1px solid ${project.accent}40` }}
-              >
-                <ExternalLink size={12} />
-                View Live Site
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: project.accent, border: `1px solid ${project.accent}40`, borderRadius: '999px', padding: '7px 16px', textDecoration: 'none' }}>
+                <ExternalLink size={9} />View Live Site
               </a>
             )}
           </div>
         </div>
 
-        {/* Visuals - Procedural SVG designs */}
-        <div className="grid grid-cols-3 gap-3 mb-16">
+        {/* Preview cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '72px' }}>
           {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className="relative aspect-[4/3] rounded-xl overflow-hidden group border border-border/30"
-            >
-              <ProceduralVisual projectId={project.id} color={project.color} variant={i} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
+            <PreviewCard key={i} projectId={project.id} color={project.color} variant={i} />
           ))}
         </div>
 
-        {/* Content grid */}
-        <div className="grid md:grid-cols-2 gap-12 mb-12">
+        {/* Situation + Action */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '48px' }}>
           <div>
-            <h3 className="text-xs tracking-widest uppercase mb-3" style={{ color: project.accent }}>The Situation</h3>
-            <p className="text-muted-foreground leading-relaxed">{project.situation}</p>
+            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Situation</h3>
+            <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.situation}</p>
           </div>
           <div>
-            <h3 className="text-xs tracking-widest uppercase mb-3" style={{ color: project.accent }}>The Action</h3>
-            <p className="text-muted-foreground leading-relaxed">{project.action}</p>
-          </div>
-          <div>
-            <h3 className="text-xs tracking-widest uppercase mb-3" style={{ color: project.accent }}>The Problem</h3>
-            <p className="text-muted-foreground leading-relaxed italic">&ldquo;{project.problem}&rdquo;</p>
-          </div>
-          <div>
-            <h3 className="text-xs tracking-widest uppercase mb-3" style={{ color: project.accent }}>The Solution</h3>
-            <p className="text-muted-foreground leading-relaxed">{project.solution}</p>
+            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Action</h3>
+            <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.action}</p>
           </div>
         </div>
 
-        {/* Result */}
-        <div className="rounded-2xl border border-border/50 p-8 mb-12 glow-border">
-          <h3 className="text-xs tracking-widest uppercase mb-3" style={{ color: project.accent }}>Final Outcome</h3>
-          <p className="text-foreground text-lg leading-relaxed">{project.result}</p>
+        {/* The Problem — pull quote */}
+        <div style={{
+          borderLeft: `2px solid ${project.accent}`,
+          paddingLeft: '24px',
+          marginBottom: '48px',
+        }}>
+          <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Problem</h3>
+          <p style={{ fontSize: '22px', fontWeight: 600, lineHeight: 1.5, color: '#FFFFFF', whiteSpace: 'pre-line' }}>
+            {project.problem}
+          </p>
         </div>
 
-        {/* Tools & Team */}
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* The Solution */}
+        <div style={{ marginBottom: '72px' }}>
+          <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Solution</h3>
+          <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.solution}</p>
+        </div>
+
+        {/* Final Outcome */}
+        <div style={{
+          borderRadius: '16px',
+          border: `1px solid rgba(255,255,255,0.07)`,
+          background: 'rgba(255,255,255,0.025)',
+          padding: '40px',
+          marginBottom: '64px',
+        }}>
+          <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '20px' }}>Final Outcome</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            {project.result.split('\n').map((line, i) => (
+              <p key={i} style={{
+                fontSize: i === 0 ? '18px' : '16px',
+                fontWeight: i === 0 ? 600 : 400,
+                lineHeight: 1.55,
+                color: i === 0 ? '#FFFFFF' : 'rgba(255,255,255,0.55)',
+              }}>
+                {line.includes('%') ? (
+                  <>
+                    {line.split(/(\d+%)/g).map((part, j) =>
+                      /\d+%/.test(part)
+                        ? <span key={j} style={{ color: project.accent, fontWeight: 700 }}>{part}</span>
+                        : part
+                    )}
+                  </>
+                ) : line}
+              </p>
+            ))}
+          </div>
+        </div>
+
+        {/* Tools + Team */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px' }}>
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Wrench size={14} style={{ color: project.accent }} />
-              <h3 className="text-xs tracking-widest uppercase" style={{ color: project.accent }}>Tools Used</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+              <Wrench size={12} style={{ color: project.accent }} />
+              <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent }}>Tools Used</h3>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
               {project.tools.map((tool) => (
-                <span key={tool} className="px-3 py-1 rounded-full text-xs border border-border/60 text-muted-foreground">
-                  {tool}
-                </span>
+                <ToolPill key={tool} label={tool} accent={project.accent} />
               ))}
             </div>
           </div>
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Users size={14} style={{ color: project.accent }} />
-              <h3 className="text-xs tracking-widest uppercase" style={{ color: project.accent }}>Team</h3>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+              <Users size={12} style={{ color: project.accent }} />
+              <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent }}>Team</h3>
             </div>
-            <div className="flex flex-col gap-2">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {project.team.map((member) => (
-                <span key={member} className="text-sm text-muted-foreground">{member}</span>
+                <span key={member} style={{ fontSize: '14px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.5 }}>{member}</span>
               ))}
             </div>
           </div>
         </div>
+
       </div>
     </div>
   )
 }
 
-export function PortfolioSection() {
-  const { ref, revealed } = useReveal()
-  const [activeProject, setActiveProject] = useState<typeof projects[0] | null>(null)
-
+function ToolPill({ label, accent }: { label: string; accent: string }) {
+  const [hovered, setHovered] = useState(false)
   return (
-    <>
-      {activeProject && (
-        <ProjectDetail project={activeProject} onClose={() => setActiveProject(null)} />
-      )}
-
-      <section id="portfolio" className="relative py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div ref={ref} className={`mb-16 reveal ${revealed ? 'revealed' : ''}`}>
-            <span className="text-xs tracking-widest uppercase mb-4 block" style={{ color: 'oklch(0.78 0.12 55)' }}>
-              Selected Work
-            </span>
-            <h2 className="font-serif text-5xl md:text-6xl font-bold text-balance">
-              Projects that <span className="text-glow" style={{ color: 'oklch(0.78 0.12 55)' }}>move</span>
-            </h2>
-          </div>
-
-          {/* Projects */}
-          <div className="space-y-6">
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                index={index}
-                onClick={() => setActiveProject(project)}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
+    <span
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        fontSize: '11px',
+        letterSpacing: '0.06em',
+        color: hovered ? accent : 'rgba(255,255,255,0.45)',
+        border: `1px solid ${hovered ? `${accent}55` : 'rgba(255,255,255,0.12)'}`,
+        borderRadius: '999px',
+        padding: '6px 14px',
+        cursor: 'default',
+        boxShadow: hovered ? `0 0 10px ${accent}20` : 'none',
+        transition: 'color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
+      }}
+    >
+      {label}
+    </span>
   )
 }
 
-function ProjectCard({
+// ─── Project row ───────────────────────────────────────────────────────────────
+
+function ProjectRow({
   project,
   index,
   onClick,
@@ -362,93 +410,429 @@ function ProjectCard({
   index: number
   onClick: () => void
 }) {
-  const { ref, revealed } = useReveal()
-  const [hovered, setHovered] = useState(false)
-  const cardRef = useRef<HTMLButtonElement>(null)
-  const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0 })
+  const rowRef = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  const [imgHovered, setImgHovered] = useState(false)
+  const isReversed = index % 2 !== 0
 
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!cardRef.current) return
-    const rect = cardRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-    const rotateX = ((y - centerY) / centerY) * -4
-    const rotateY = ((x - centerX) / centerX) * 4
-    setTilt({ rotateX, rotateY })
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.12 }
+    )
+    if (rowRef.current) observer.observe(rowRef.current)
+    return () => observer.disconnect()
   }, [])
 
-  const handleMouseLeave = useCallback(() => {
-    setHovered(false)
-    setTilt({ rotateX: 0, rotateY: 0 })
+  return (
+    <div
+      ref={rowRef}
+      style={{
+        display: 'flex',
+        flexDirection: isReversed ? 'row-reverse' : 'row',
+        alignItems: 'center',
+        gap: 'clamp(40px, 6vw, 96px)',
+        padding: 'clamp(48px, 7vw, 80px) 0',
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        flexWrap: 'wrap',
+      }}
+    >
+      {/* Text side */}
+      <div
+        style={{
+          flex: '1 1 320px',
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(24px)',
+          transition: 'opacity 0.75s 0s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s 0s cubic-bezier(0.22, 1, 0.36, 1)',
+        }}
+      >
+        {/* Label */}
+        <div style={{
+          fontSize: '11px',
+          fontWeight: 500,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: project.accent,
+          marginBottom: '20px',
+        }}>
+          {project.category}
+        </div>
+
+        {/* Ongoing badge */}
+        {project.ongoing && (
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '10px',
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: 'rgba(200,136,74,0.80)',
+            border: '1px solid rgba(200,136,74,0.28)',
+            borderRadius: '999px',
+            padding: '7px 16px',
+            marginBottom: '20px',
+            boxShadow: '0 0 12px rgba(200,136,74,0.10), inset 0 0 8px rgba(200,136,74,0.06)',
+          }}>
+            <span style={{
+              width: '5px', height: '5px',
+              borderRadius: '50%',
+              background: '#C8884A',
+              display: 'inline-block',
+              boxShadow: '0 0 6px #C8884A',
+              animation: 'pulse 2s ease-in-out infinite',
+            }} />
+            Ongoing
+          </div>
+        )}
+
+        {/* Award badge */}
+        {project.award && (
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '7px',
+            fontSize: '10px',
+            letterSpacing: '0.16em',
+            textTransform: 'uppercase',
+            color: project.accent,
+            border: `1px solid ${project.accent}50`,
+            borderRadius: '999px',
+            padding: '7px 16px',
+            marginBottom: '20px',
+            boxShadow: `0 0 12px ${project.accent}22, inset 0 0 8px ${project.accent}08`,
+          }}>
+            <Award size={9} />
+            {project.award}
+          </div>
+        )}
+
+        {/* Emotional pre-line */}
+        {project.preLine && (
+          <p style={{
+            fontSize: 'clamp(11px, 1vw, 13px)',
+            fontWeight: 400,
+            letterSpacing: '0.04em',
+            color: 'rgba(255,255,255,0.22)',
+            marginBottom: '10px',
+            lineHeight: 1.5,
+          }}>
+            {project.preLine}
+          </p>
+        )}
+
+        {/* Title */}
+        <h3 style={{
+          fontSize: 'clamp(36px, 5.5vw, 72px)',
+          fontWeight: 700,
+          lineHeight: 1.05,
+          letterSpacing: '-0.02em',
+          color: '#FFFFFF',
+          marginBottom: '24px',
+        }}>
+          {project.title}
+        </h3>
+
+        {/* Description */}
+        <p style={{
+          fontSize: 'clamp(14px, 1.3vw, 16px)',
+          fontWeight: 400,
+          lineHeight: 1.85,
+          color: '#7A7A84',
+          maxWidth: '360px',
+          marginBottom: '40px',
+          whiteSpace: 'pre-line',
+        }}>
+          {project.shortDesc}
+        </p>
+
+        {/* CTA */}
+        <button
+          onClick={onClick}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontSize: '13px',
+            fontWeight: 600,
+            letterSpacing: '0.04em',
+            color: '#FFFFFF',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0,
+            transition: 'gap 0.3s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.gap = '16px'
+            const arrow = e.currentTarget.querySelector('span') as HTMLElement
+            if (arrow) arrow.style.transform = 'translateX(4px)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.gap = '10px'
+            const arrow = e.currentTarget.querySelector('span') as HTMLElement
+            if (arrow) arrow.style.transform = 'translateX(0)'
+          }}
+        >
+          Explore Case Study
+          <span style={{ fontSize: '18px', lineHeight: 1, color: '#C8884A', transition: 'transform 0.3s ease' }}>→</span>
+        </button>
+      </div>
+
+      {/* Visual side */}
+      <div
+        onMouseEnter={() => setImgHovered(true)}
+        onMouseLeave={() => setImgHovered(false)}
+        style={{
+          flex: '1 1 340px',
+          aspectRatio: '4 / 3',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          position: 'relative',
+          background: '#06060A',
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(20px)',
+          transition: 'opacity 0.85s 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s 0.2s cubic-bezier(0.22, 1, 0.36, 1)',
+          boxShadow: project.image
+            ? `0 32px 80px rgba(0,0,0,0.7), 0 0 72px ${project.accent}30, 0 0 0 1px rgba(255,255,255,0.04)`
+            : '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)',
+        }}
+      >
+        {project.image && project.compositeUi ? (
+          <>
+            {/* Background — dining scene, pushed back with more blur */}
+            <Image
+              src={project.image}
+              alt=""
+              fill
+              style={{
+                objectFit: 'cover',
+                objectPosition: project.imagePosition ?? 'center center',
+                filter: 'brightness(0.42) blur(3px) saturate(0.85)',
+              }}
+            />
+
+            {/* Dark warm scrim */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(180deg, rgba(6,5,4,0.50) 0%, rgba(8,6,4,0.25) 100%)',
+              pointerEvents: 'none',
+            }} />
+
+            {/* Gradient plate — dark base behind UI, gives it ground */}
+            <div style={{
+              position: 'absolute',
+              top: '50%', left: '50%',
+              transform: 'translate(-50%, -48%)',
+              width: '82%', height: '70%',
+              background: 'radial-gradient(ellipse at 50% 50%, rgba(10,8,6,0.72) 0%, transparent 75%)',
+              filter: 'blur(12px)',
+              pointerEvents: 'none',
+            }} />
+
+            {/* Secondary UI — smaller, receded, low opacity */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={project.compositeUi[1]}
+              alt=""
+              style={{
+                position: 'absolute',
+                bottom: '8%', right: '4%',
+                width: '42%',
+                borderRadius: '10px',
+                opacity: 0.45,
+                transform: 'rotate(2deg) scale(0.92)',
+                boxShadow: '0 6px 20px rgba(0,0,0,0.55)',
+                filter: 'brightness(0.75)',
+              }}
+            />
+
+            {/* Primary UI — centered with equal breathing room top/bottom */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={project.compositeUi[0]}
+              alt="Product UI"
+              style={{
+                position: 'absolute',
+                top: '50%', left: '50%',
+                width: '72%',
+                transform: 'translate(-50%, -50%) rotate(-0.6deg)',
+                borderRadius: '12px',
+                opacity: 0.96,
+                boxShadow: '0 4px 12px rgba(0,0,0,0.30), 0 24px 64px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.07)',
+                filter: 'brightness(1.02)',
+              }}
+            />
+
+            {/* Amber glow — sits behind primary UI */}
+            <div style={{
+              position: 'absolute',
+              top: '50%', left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '68%', height: '55%',
+              background: `radial-gradient(ellipse at 50% 50%, ${project.accent}1C 0%, transparent 65%)`,
+              filter: 'blur(28px)',
+              pointerEvents: 'none',
+            }} />
+
+            {/* Edge vignette */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(5,5,8,0.68) 100%)',
+              pointerEvents: 'none',
+            }} />
+          </>
+        ) : project.image ? (
+          <>
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              style={{
+                objectFit: 'cover',
+                objectPosition: project.imagePosition ?? 'center center',
+                filter: 'brightness(0.78) contrast(0.92)',
+                transform: imgHovered ? 'scale(1.06)' : 'scale(1)',
+                transition: 'transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
+                transformOrigin: 'center center',
+              }}
+            />
+            {/* Inner dark shadow — top and bottom edges */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(to bottom, rgba(6,6,10,0.28) 0%, transparent 30%, transparent 70%, rgba(6,6,10,0.38) 100%)',
+              pointerEvents: 'none',
+            }} />
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: `radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.52) 100%)`,
+              pointerEvents: 'none',
+            }} />
+            {/* Accent wash */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: `${project.accent}0A`,
+              pointerEvents: 'none',
+            }} />
+
+            {/* Noise texture — cinematic grain */}
+            <svg aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.28, mixBlendMode: 'overlay', pointerEvents: 'none' }}>
+              <filter id="img-grain">
+                <feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="4" stitchTiles="stitch" />
+                <feColorMatrix type="saturate" values="0" />
+              </filter>
+              <rect width="100%" height="100%" filter="url(#img-grain)" />
+            </svg>
+          </>
+        ) : (
+          <>
+            <ProceduralVisual projectId={project.id} color={project.color} variant={0} />
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(6,6,10,0.55) 100%)',
+              pointerEvents: 'none',
+            }} />
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ─── Section header ────────────────────────────────────────────────────────────
+
+function SectionHeader() {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.3 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
   }, [])
 
   return (
     <div
       ref={ref}
-      className={`reveal ${revealed ? 'revealed' : ''}`}
-      style={{ transitionDelay: `${index * 0.1}s`, perspective: '1000px' }}
+      style={{
+        paddingBottom: 'clamp(16px, 3vw, 32px)',
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(20px)',
+        transition: 'opacity 1s 0s cubic-bezier(0.22, 1, 0.36, 1), transform 1s 0s cubic-bezier(0.22, 1, 0.36, 1)',
+      }}
     >
-      <button
-        ref={cardRef}
-        onClick={onClick}
-        onMouseEnter={() => setHovered(true)}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className="w-full text-left group rounded-2xl border border-border/40 overflow-hidden transition-all duration-300 hover:border-primary/30 hover:glow-border"
+      <div style={{
+        fontSize: '11px',
+        fontWeight: 500,
+        letterSpacing: '0.16em',
+        textTransform: 'uppercase',
+        color: '#C8884A',
+        marginBottom: '16px',
+      }}>
+        Selected Work
+      </div>
+      <h2 style={{
+        fontSize: 'clamp(32px, 5vw, 64px)',
+        fontWeight: 700,
+        lineHeight: 1.08,
+        letterSpacing: '-0.02em',
+        color: '#FFFFFF',
+        marginBottom: '16px',
+      }}>
+        Projects that matter.
+      </h2>
+      <p style={{
+        fontSize: 'clamp(13px, 1.2vw, 15px)',
+        fontWeight: 400,
+        color: 'rgba(255,255,255,0.28)',
+        letterSpacing: '0.01em',
+        lineHeight: 1.65,
+      }}>
+        Not just projects.<br />Real problems. Real people. Real impact.
+      </p>
+    </div>
+  )
+}
+
+// ─── Main export ───────────────────────────────────────────────────────────────
+
+export function PortfolioSection() {
+  const [activeProject, setActiveProject] = useState<typeof projects[0] | null>(null)
+
+  return (
+    <>
+      {activeProject && (
+        <ProjectDetail project={activeProject} onClose={() => setActiveProject(null)} />
+      )}
+
+      <section
+        id="portfolio"
         style={{
-          background: hovered
-            ? `linear-gradient(135deg, ${project.accent}08 0%, oklch(0.09 0 0) 100%)`
-            : 'oklch(0.09 0 0)',
-          transform: `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) ${hovered ? 'scale(1.01)' : 'scale(1)'}`,
-          transformStyle: 'preserve-3d',
+          background: '#0B0B0F',
+          padding: 'clamp(56px, 8vw, 96px) clamp(28px, 10vw, 140px) clamp(40px, 6vw, 72px)',
         }}
       >
-        <div className="grid md:grid-cols-[1fr_auto] gap-0">
-          {/* Content */}
-          <div className="p-8 md:p-10">
-            <div className="flex items-start justify-between gap-4 mb-4">
-              <div>
-                <span className="text-xs tracking-widest uppercase mb-2 block" style={{ color: project.accent }}>
-                  {project.category}
-                </span>
-                <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground">{project.title}</h3>
-              </div>
-              {project.award && (
-                <div
-                  className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs whitespace-nowrap flex-shrink-0"
-                  style={{ background: `${project.accent}15`, color: project.accent }}
-                >
-                  <Award size={10} />
-                  {project.award}
-                </div>
-              )}
-            </div>
-            <p className="text-muted-foreground leading-relaxed mb-6 max-w-lg">{project.shortDesc}</p>
-            <div className="flex items-center gap-2 text-xs tracking-widest uppercase transition-all duration-300" style={{ color: project.accent }}>
-              <span>View Project</span>
-              <ChevronLeft size={12} className="rotate-180 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <SectionHeader />
 
-          {/* Logo preview */}
-          <div
-            className="hidden md:flex w-72 items-center justify-center relative overflow-hidden p-10"
-            style={{
-              background: `radial-gradient(ellipse at center, ${project.accent}30 0%, transparent 70%)`,
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent opacity-50" />
-            <img
-              src={project.logo}
-              alt={`${project.title} logo`}
-              loading="lazy"
-              className="relative z-10 w-48 h-48 object-contain transition-all duration-700 group-hover:scale-110 drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]"
+          {projects.map((project, index) => (
+            <ProjectRow
+              key={project.id}
+              project={project}
+              index={index}
+              onClick={() => setActiveProject(project)}
             />
-          </div>
+          ))}
         </div>
-      </button>
-    </div>
+      </section>
+    </>
   )
 }
