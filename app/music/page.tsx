@@ -1,18 +1,12 @@
 'use client'
 
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Play, Pause, ChevronRight, Music2 } from 'lucide-react'
 import { allTracks, featuredEP, type Track } from '@/lib/tracks'
 import { PageNav } from '@/components/page-nav'
-
-function formatTime(s: number): string {
-  if (!s || isNaN(s)) return '0:00'
-  const m = Math.floor(s / 60)
-  const sec = Math.floor(s % 60)
-  return `${m}:${sec.toString().padStart(2, '0')}`
-}
+import { useAudio } from '@/components/audio-provider'
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 
@@ -274,7 +268,7 @@ function FeaturedEP({ onPlayAll }: { onPlayAll: () => void }) {
               </Link>
 
               <Link
-                href="/lyrics"
+                href="/lyrics/original"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -334,16 +328,17 @@ function TrackCard({
         transform: pressing
           ? 'scale(0.97)'
           : isActive
-          ? 'scale(1.02) translateY(-4px)'
+          ? 'scale(1.015) translateY(-3px)'
           : hovered
-          ? 'scale(1.03)'
+          ? 'scale(1.008)'
           : 'scale(1)',
+        filter: !isActive && hovered ? 'brightness(1.08)' : 'brightness(1)',
         transition: pressing
           ? 'transform 0.1s ease'
-          : 'transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease',
+          : 'transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease',
         willChange: 'transform',
         boxShadow: isActive
-          ? `0 0 0 1px ${track.color}55, 0 0 28px ${track.color}28, 0 16px 40px rgba(0,0,0,0.45)`
+          ? `0 0 0 1px color-mix(in srgb, ${track.color} 55%, transparent), 0 0 12px color-mix(in srgb, ${track.color} 10%, transparent), 0 10px 28px rgba(0,0,0,0.35)`
           : 'none',
       }}
       onMouseEnter={() => setHovered(true)}
@@ -388,6 +383,17 @@ function TrackCard({
           }}
         />
 
+        {/* Active color tint — subtle hue wash */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: `color-mix(in srgb, ${track.color} 14%, transparent)`,
+            opacity: isActive ? 1 : 0,
+            transition: 'opacity 0.4s ease',
+          }}
+        />
+
         {/* Play button — consistent position and behavior on every card */}
         <div
           style={{
@@ -403,24 +409,27 @@ function TrackCard({
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
-            background: isActive
-              ? track.color
-              : 'rgba(255,255,255,0.12)',
+            background: isActive ? track.color : 'rgba(255,255,255,0.12)',
             opacity: isActive ? 1 : hovered ? 1 : 0.15,
             transform: hovered || isActive ? 'scale(1)' : 'scale(0.90)',
             boxShadow: isActive
-              ? `0 0 18px ${track.color}55`
+              ? `0 0 20px color-mix(in srgb, ${track.color} 50%, transparent)`
               : hovered
               ? '0 0 12px rgba(255,255,255,0.10)'
               : 'none',
             transition: 'opacity 0.3s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1), background 0.3s ease, box-shadow 0.3s ease',
           }}
         >
-          {isActive && isPlaying ? (
-            <Pause size={12} style={{ color: 'var(--color-bg)' }} />
-          ) : (
-            <Play size={12} style={{ color: isActive ? 'var(--color-bg)' : 'rgba(255,255,255,0.90)', marginLeft: '2px' }} />
-          )}
+          <span
+            key={isActive && isPlaying ? 'pause' : 'play'}
+            style={{ display: 'flex', animation: 'iconPop 0.18s cubic-bezier(0.22,1,0.36,1)' }}
+          >
+            {isActive && isPlaying ? (
+              <Pause size={12} style={{ color: 'var(--color-bg)' }} />
+            ) : (
+              <Play size={12} style={{ color: isActive ? 'var(--color-bg)' : 'rgba(255,255,255,0.90)', marginLeft: '2px' }} />
+            )}
+          </span>
         </div>
 
         {/* Waveform indicator when playing */}
@@ -455,12 +464,13 @@ function TrackCard({
       </div>
 
       {/* Info */}
-      <div style={{ padding: '12px 2px 8px', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '8px' }}>
-        <div style={{ minWidth: 0 }}>
+      <div style={{ padding: '14px 4px 12px 4px', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '8px' }}>
+        <div style={{ minWidth: 0, paddingLeft: '2px', marginBottom: '2px' }}>
           <p
             style={{
               fontSize: '14px',
               fontWeight: 500,
+              lineHeight: 1.3,
               color: isActive ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.78)',
               transition: 'color 0.3s ease',
               whiteSpace: 'nowrap',
@@ -470,10 +480,44 @@ function TrackCard({
           >
             {track.title}
           </p>
-          <p style={{ fontSize: '11px', color: isActive ? `${track.color}` : 'rgba(255,255,255,0.28)', marginTop: '3px', letterSpacing: '0.03em', transition: 'color 0.3s ease' }}>
-            {track.ep}
+          <p style={{ fontSize: '11px', color: isActive && isPlaying ? track.color : 'rgba(255,255,255,0.28)', marginTop: '4px', letterSpacing: '0.03em', transition: 'color 0.3s ease' }}>
+            {isActive && isPlaying ? (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: '5px',
+                    height: '5px',
+                    borderRadius: '50%',
+                    background: track.color,
+                    animation: 'pulse 1.4s ease-in-out infinite',
+                  }}
+                />
+                Playing
+              </span>
+            ) : track.ep}
           </p>
         </div>
+
+        {/* Read lyrics link — appears on hover */}
+        <Link
+          href={`/lyrics/original/${track.slug}`}
+          onClick={(e) => e.stopPropagation()}
+          style={{
+            fontSize: '10px',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            color: 'rgba(255,255,255,0.28)',
+            textDecoration: 'none',
+            flexShrink: 0,
+            opacity: hovered ? 1 : 0,
+            transition: 'opacity 0.25s ease, color 0.2s ease',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.65)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.28)' }}
+        >
+          Lyrics
+        </Link>
 
         {/* Micro waveform — appears on hover or when active */}
         <div
@@ -555,305 +599,19 @@ function TrackGrid({
   )
 }
 
-// ─── Audio Player ─────────────────────────────────────────────────────────────
-
-function AudioPlayer({
-  track,
-  visible,
-  isPlaying,
-  currentTime,
-  duration,
-  onToggle,
-  onSeek,
-  onClose,
-}: {
-  track: Track | null
-  visible: boolean
-  isPlaying: boolean
-  currentTime: number
-  duration: number
-  onToggle: () => void
-  onSeek: (fraction: number) => void
-  onClose: () => void
-}) {
-  const progress = duration > 0 ? currentTime / duration : 0
-
-  const handleBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect()
-    onSeek(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)))
-  }
-
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(100%)',
-        transition: 'opacity 0.4s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1)',
-        pointerEvents: visible ? 'auto' : 'none',
-      }}
-    >
-      <div
-        style={{
-          background: 'rgba(11,11,15,0.94)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
-          borderTop: '1px solid rgba(255,255,255,0.06)',
-          padding: '10px clamp(16px, 5vw, 56px) 14px',
-        }}
-      >
-        {/* Progress bar */}
-        <div
-          style={{
-            height: '2px',
-            background: 'rgba(255,255,255,0.07)',
-            borderRadius: '1px',
-            marginBottom: '14px',
-            cursor: 'pointer',
-            position: 'relative',
-          }}
-          onClick={handleBarClick}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              inset: '0 auto 0 0',
-              width: `${progress * 100}%`,
-              background: track?.color ?? 'oklch(0.78 0.12 55)',
-              borderRadius: '1px',
-              transition: 'width 0.3s linear',
-            }}
-          />
-        </div>
-
-        {/* Controls row */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr auto 1fr',
-            alignItems: 'center',
-            gap: '16px',
-          }}
-        >
-          {/* Track info */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
-            {track && (
-              <div
-                style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '8px',
-                  overflow: 'hidden',
-                  flexShrink: 0,
-                  boxShadow: `0 0 12px ${track.color}35`,
-                }}
-              >
-                <Image
-                  src={track.imgSrc}
-                  alt={track.title}
-                  width={38}
-                  height={38}
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                />
-              </div>
-            )}
-            <div style={{ minWidth: 0 }}>
-              <p
-                style={{
-                  fontSize: '13px',
-                  fontWeight: 500,
-                  color: 'rgba(255,255,255,0.85)',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {track?.title ?? ''}
-              </p>
-              <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)', marginTop: '1px' }}>
-                {track?.ep ?? ''}
-              </p>
-            </div>
-          </div>
-
-          {/* Play / Pause */}
-          <button
-            onClick={onToggle}
-            style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '50%',
-              background: track?.color ?? 'oklch(0.78 0.12 55)',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-              transition: 'transform 0.2s ease',
-              boxShadow: `0 0 18px ${track?.color ?? 'oklch(0.78 0.12 55)'}35`,
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.08)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-          >
-            {isPlaying ? (
-              <Pause size={15} style={{ color: 'var(--color-bg)' }} />
-            ) : (
-              <Play size={15} style={{ color: 'var(--color-bg)', marginLeft: '2px' }} />
-            )}
-          </button>
-
-          {/* Time + Close */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              gap: '14px',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px',
-                fontSize: '11px',
-                fontVariantNumeric: 'tabular-nums',
-                letterSpacing: '0.04em',
-              }}
-            >
-              <span style={{ color: 'rgba(255,255,255,0.55)' }}>{formatTime(currentTime)}</span>
-              <span style={{ color: 'rgba(255,255,255,0.18)' }}>/</span>
-              <span style={{ color: 'rgba(255,255,255,0.28)' }}>{formatTime(duration)}</span>
-            </div>
-            <button
-              onClick={onClose}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                padding: '4px',
-                color: 'rgba(255,255,255,0.28)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.2s ease, transform 0.2s ease',
-                flexShrink: 0,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = 'rgba(255,255,255,0.70)'
-                e.currentTarget.style.transform = 'scale(1.15)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'rgba(255,255,255,0.28)'
-                e.currentTarget.style.transform = 'scale(1)'
-              }}
-              aria-label="Close player"
-            >
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function MusicPage() {
-  const [currentTrack, setCurrentTrack] = useState<Track | null>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(0)
-  const audioRef = useRef<HTMLAudioElement | null>(null)
-
-  useEffect(() => {
-    const audio = new Audio()
-    audioRef.current = audio
-    audio.addEventListener('timeupdate', () => setCurrentTime(audio.currentTime))
-    audio.addEventListener('loadedmetadata', () => setDuration(audio.duration))
-    audio.addEventListener('durationchange', () => setDuration(audio.duration))
-    audio.addEventListener('ended', () => setIsPlaying(false))
-    return () => { audio.pause(); audio.src = '' }
-  }, [])
-
-  const playTrack = useCallback(
-    (track: Track) => {
-      const audio = audioRef.current
-      if (!audio) return
-      if (currentTrack?.id === track.id) {
-        if (isPlaying) { audio.pause(); setIsPlaying(false) }
-        else { audio.play().catch(() => {}); setIsPlaying(true) }
-        return
-      }
-      // Optimistic update — UI responds instantly, audio loads behind it
-      setCurrentTrack(track)
-      setPlayerVisible(true)
-      setIsPlaying(true)
-      setCurrentTime(0)
-      audio.src = track.audioSrc
-      audio.play().catch(() => setIsPlaying(false))
-    },
-    [currentTrack, isPlaying],
-  )
-
-  const togglePlay = useCallback(() => {
-    const audio = audioRef.current
-    if (!audio || !currentTrack) return
-    if (isPlaying) { audio.pause(); setIsPlaying(false) }
-    else { audio.play().catch(() => {}); setIsPlaying(true) }
-  }, [currentTrack, isPlaying])
-
-  const seek = useCallback(
-    (fraction: number) => {
-      const audio = audioRef.current
-      if (!audio || !duration) return
-      const t = Math.max(0, Math.min(1, fraction)) * duration
-      audio.currentTime = t
-      setCurrentTime(t)
-    },
-    [duration],
-  )
-
-  const [playerVisible, setPlayerVisible] = useState(false)
-
-  const closePlayer = useCallback(() => {
-    const audio = audioRef.current
-    if (audio) { audio.pause(); audio.currentTime = 0 }
-    setIsPlaying(false)
-    setPlayerVisible(false)
-    setTimeout(() => {
-      setCurrentTime(0)
-      setDuration(0)
-      setCurrentTrack(null)
-    }, 450)
-  }, [])
+  const { currentTrack, isPlaying, playerVisible, playTrack } = useAudio()
 
   return (
     <div style={{ background: 'var(--color-bg)', minHeight: '100vh' }}>
       <PageNav />
-      <main className="page-enter" style={{ paddingBottom: currentTrack ? '90px' : '0', transition: 'padding-bottom 0.4s ease' }}>
+      <main className="page-enter" style={{ paddingBottom: playerVisible ? '96px' : '0', transition: 'padding-bottom 0.4s ease' }}>
         <Hero />
         <FeaturedEP onPlayAll={() => playTrack(allTracks[0])} />
         <TrackGrid currentTrack={currentTrack} isPlaying={isPlaying} onPlay={playTrack} />
       </main>
-      <AudioPlayer
-        track={currentTrack}
-        visible={playerVisible}
-        isPlaying={isPlaying}
-        currentTime={currentTime}
-        duration={duration}
-        onToggle={togglePlay}
-        onSeek={seek}
-        onClose={closePlayer}
-      />
     </div>
   )
 }

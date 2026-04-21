@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import { Analytics } from '@/components/analytics'
+import { AudioProvider } from '@/components/audio-provider'
 import './globals.css'
 
 const inter = Inter({
@@ -49,7 +50,9 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        {children}
+        <AudioProvider>
+          {children}
+        </AudioProvider>
         <Analytics />
         <Script
           id="clarity-analytics"

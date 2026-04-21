@@ -11,8 +11,6 @@ import { LogoSection } from '@/components/logo-section'
 import { ProcessSection } from '@/components/process-section'
 import { AboutSection } from '@/components/about-section'
 import { SkillsSection } from '@/components/skills-section'
-import { EducationSection } from '@/components/education-section'
-import { ExperienceSection } from '@/components/experience-section'
 import { ContactSection } from '@/components/contact-section'
 import { Footer } from '@/components/footer'
 
@@ -39,8 +37,6 @@ export default function Home() {
 <ProcessSection />
           <AboutSection />
           <SkillsSection />
-          <EducationSection />
-          <ExperienceSection />
           <ContactSection />
         </main>
 
