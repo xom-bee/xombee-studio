@@ -19,8 +19,8 @@ function Hero() {
       style={{
         paddingTop: 'clamp(140px, 20vw, 180px)',
         paddingBottom: 'clamp(40px, 6vw, 64px)',
-        paddingLeft: '24px',
-        paddingRight: '24px',
+        paddingLeft: 'clamp(12px, 4vw, 24px)',
+        paddingRight: 'clamp(12px, 4vw, 24px)',
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
@@ -139,10 +139,9 @@ function FeaturedEP({ onPlayAll }: { onPlayAll: () => void }) {
     >
       <div style={{ maxWidth: '1100px', margin: '0 auto', paddingTop: 'clamp(36px, 5vw, 56px)' }}>
         <div
+          className="grid md:grid-cols-[5fr_6fr]"
           style={{
-            display: 'grid',
-            gridTemplateColumns: '5fr 6fr',
-            gap: 'clamp(48px, 7vw, 88px)',
+            gap: 'clamp(32px, 7vw, 88px)',
             alignItems: 'center',
           }}
         >
@@ -154,6 +153,8 @@ function FeaturedEP({ onPlayAll }: { onPlayAll: () => void }) {
               overflow: 'hidden',
               aspectRatio: '1',
               maxWidth: '420px',
+              margin: '0 auto',
+              width: '100%',
               boxShadow: hovered
                 ? '0 40px 120px rgba(0,0,0,0.7), 0 0 60px oklch(0.78 0.12 55 / 0.12)'
                 : '0 24px 80px rgba(0,0,0,0.5)',
@@ -581,8 +582,8 @@ function TrackGrid({
         </p>
 
         <div
-          className="grid grid-cols-2 md:grid-cols-4"
-          style={{ gap: '24px' }}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          style={{ gap: 'clamp(16px, 3vw, 24px)' }}
         >
           {allTracks.map((track) => (
             <TrackCard
@@ -607,7 +608,7 @@ export default function MusicPage() {
   return (
     <div style={{ background: 'var(--color-bg)', minHeight: '100vh' }}>
       <PageNav />
-      <main className="page-enter" style={{ paddingBottom: playerVisible ? '96px' : '0', transition: 'padding-bottom 0.4s ease' }}>
+      <main className="page-enter" style={{ paddingBottom: playerVisible ? 'clamp(80px, 12vw, 96px)' : '0', transition: 'padding-bottom 0.4s ease' }}>
         <Hero />
         <FeaturedEP onPlayAll={() => playTrack(allTracks[0])} />
         <TrackGrid currentTrack={currentTrack} isPlaying={isPlaying} onPlay={playTrack} />

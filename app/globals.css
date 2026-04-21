@@ -100,9 +100,11 @@
     @apply bg-background text-foreground;
     line-height: 1.75;
     color: oklch(0.88 0 0);
+    overflow-x: hidden;
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
   h1, h2, h3, h4 {
     letter-spacing: -0.025em;
@@ -297,4 +299,31 @@
   .animate-float-delay-2 {
     animation: none;
   }
+}
+
+/* ── 320–360px micro-screen fixes ───────────────────────────────────────────── */
+@media (max-width: 360px) {
+  /* Tighter horizontal padding on all sections using px-6 */
+  .px-6 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Reduce large heading utility classes */
+  .text-5xl { font-size: 1.875rem !important; }   /* 30px  */
+  .text-6xl { font-size: 2.125rem !important; }   /* 34px  */
+
+  /* Reduce form / card panel padding */
+  .p-8 { padding: 20px !important; }
+
+  /* Tighten section vertical padding */
+  .py-24 {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  /* Keep everything inside the viewport */
+  * { box-sizing: border-box; }
+  body { overflow-x: hidden; }
+  img, svg, video { max-width: 100%; }
 }

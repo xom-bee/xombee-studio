@@ -115,17 +115,11 @@ export function ProcessSection() {
           }}>
             My Process
           </span>
-          <h2 style={{
-            fontSize: 'clamp(36px, 5vw, 60px)',
-            fontWeight: 700,
-            lineHeight: 1.15,
-            marginBottom: '16px',
-          }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold" style={{ lineHeight: 1.15, marginBottom: '16px' }}>
             From Silence to{' '}
             <span className="text-glow" style={{ color: 'oklch(0.78 0.12 55)' }}>Identity</span>
           </h2>
-          <p style={{
-            fontSize: 'clamp(13px, 1.2vw, 15px)',
+          <p className="text-sm sm:text-base mt-4 sm:mt-6" style={{
             color: 'rgba(255,255,255,0.38)',
             lineHeight: 1.75,
             maxWidth: '480px',
@@ -138,10 +132,10 @@ export function ProcessSection() {
         {/* Timeline */}
         <div>
           {/* Step indicators */}
-          <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '48px', position: 'relative' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '48px', position: 'relative', flexWrap: 'wrap', gap: '8px' }}>
 
-            {/* Background line */}
-            <div style={{
+            {/* Background line — hidden on mobile where flex wraps */}
+            <div className="hidden sm:block" style={{
               position: 'absolute',
               top: '27px',
               left: '10%',
@@ -151,8 +145,8 @@ export function ProcessSection() {
               pointerEvents: 'none',
             }} />
 
-            {/* Glowing progress dot */}
-            <div style={{
+            {/* Glowing progress dot — hidden on mobile */}
+            <div className="hidden sm:block" style={{
               position: 'absolute',
               top: '23px',
               left: `${dotPercent}%`,
@@ -190,7 +184,7 @@ export function ProcessSection() {
                     }}
                   >
                     <div style={{
-                      width: '56px', height: '56px',
+                      width: 'clamp(40px, 5vw, 56px)', height: 'clamp(40px, 5vw, 56px)',
                       borderRadius: '50%',
                       display: 'flex',
                       alignItems: 'center',
@@ -206,8 +200,8 @@ export function ProcessSection() {
                       {step.icon}
                     </div>
                     <span style={{
-                      fontSize: '11px',
-                      letterSpacing: '0.12em',
+                      fontSize: 'clamp(9px, 2vw, 11px)',
+                      letterSpacing: '0.08em',
                       textTransform: 'uppercase',
                       fontWeight: 700,
                       color: isActive ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.35)',
@@ -233,7 +227,7 @@ export function ProcessSection() {
             transform: cardVisible ? 'translateY(0)' : 'translateY(10px)',
             transition: 'opacity 0.32s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1)',
           }}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '40px' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'clamp(16px, 4vw, 40px)', flexWrap: 'wrap' }}>
               <div style={{
                 fontSize: 'clamp(64px, 7vw, 96px)',
                 fontWeight: 700,

@@ -45,58 +45,52 @@ export function TrustSection() {
       ref={sectionRef}
       style={{
         background: '#0B0B0F',
-        padding: 'clamp(64px, 9vw, 112px) clamp(28px, 10vw, 140px)',
+        padding: 'clamp(64px, 9vw, 112px) clamp(20px, 8vw, 140px)',
       }}
     >
-      <div
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'clamp(40px, 5vw, 72px)',
-        }}
-      >
-        {/* Left: Text */}
-        <div style={{ flex: '1 1 0', minWidth: 0 }}>
-          {blocks.map((block, i) => {
-            if ('gap' in block) {
-              return <div key={i} style={{ height: 'clamp(36px, 4.5vw, 56px)' }} />
-            }
+      <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16" style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
-            return (
-              <div
-                key={i}
-                style={{
-                  opacity: visible ? 1 : 0,
-                  transform: visible ? 'translateX(0)' : 'translateX(-24px)',
-                  transition: `opacity 1.1s ${block.delay}s cubic-bezier(0.22, 1, 0.36, 1),
-                               transform 1.1s ${block.delay}s cubic-bezier(0.22, 1, 0.36, 1)`,
-                }}
-              >
-                {block.lines.map((text, j) => (
-                  <div
-                    key={j}
-                    style={{
-                      fontSize: 'clamp(20px, 2.8vw, 36px)',
-                      fontWeight: block.weight,
-                      lineHeight: 1.55,
-                      color: '#E5E5E5',
-                    }}
-                  >
-                    {text}
-                  </div>
-                ))}
-              </div>
-            )
-          })}
+        {/* Left: Text */}
+        <div className="w-full lg:flex-1" style={{ minWidth: 0 }}>
+          <div className="space-y-6 sm:space-y-8" style={{ maxWidth: '90%' }}>
+            {blocks.map((block, i) => {
+              if ('gap' in block) return null
+
+              return (
+                <div
+                  key={i}
+                  style={{
+                    opacity: visible ? 1 : 0,
+                    transform: visible ? 'translateX(0)' : 'translateX(-24px)',
+                    transition: `opacity 1.1s ${block.delay}s cubic-bezier(0.22, 1, 0.36, 1),
+                                 transform 1.1s ${block.delay}s cubic-bezier(0.22, 1, 0.36, 1)`,
+                  }}
+                >
+                  {block.lines.map((text, j) => (
+                    <div
+                      key={j}
+                      className="text-base sm:text-lg lg:text-xl leading-relaxed"
+                      style={{
+                        fontSize: undefined,
+                        fontWeight: block.weight,
+                        color: '#E5E5E5',
+                      }}
+                    >
+                      {text}
+                    </div>
+                  ))}
+                </div>
+              )
+            })}
+          </div>
         </div>
 
-        {/* Right: Image — height matches text block, width proportional */}
+        {/* Right: Image */}
         <div
+          className="w-full lg:flex-none"
           style={{
-            flex: '0 0 auto',
-            width: 'clamp(200px, 26vw, 360px)',
+            maxWidth: 'min(360px, 100%)',
+            width: '100%',
             aspectRatio: '4 / 5',
             borderRadius: '20px',
             overflow: 'hidden',
@@ -121,14 +115,12 @@ export function TrustSection() {
             }}
           />
 
-          {/* Dark vignette — stronger on edges */}
           <div style={{
             position: 'absolute', inset: 0,
             background: 'radial-gradient(ellipse at 50% 48%, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.72) 100%)',
             pointerEvents: 'none',
           }} />
 
-          {/* Warm tint */}
           <div style={{
             position: 'absolute', inset: 0,
             background: 'rgba(160, 88, 28, 0.07)',
@@ -136,7 +128,6 @@ export function TrustSection() {
             pointerEvents: 'none',
           }} />
 
-          {/* Bottom fade */}
           <div style={{
             position: 'absolute',
             bottom: 0, left: 0, right: 0,
@@ -145,6 +136,7 @@ export function TrustSection() {
             pointerEvents: 'none',
           }} />
         </div>
+
       </div>
     </section>
   )

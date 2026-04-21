@@ -100,7 +100,7 @@ export function SkillsSection() {
           </h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', alignItems: 'start' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" style={{ alignItems: 'start' }}>
           {/* Design Skills */}
           <SkillsCard revealed={revealed}>
             <h3 className="font-semibold text-foreground mb-6 text-sm tracking-widest uppercase" style={{ color: 'oklch(0.78 0.12 55)' }}>
@@ -184,7 +184,7 @@ function SkillsCard({ children, revealed }: { children: React.ReactNode; reveale
       style={{
         background: 'rgba(255,255,255,0.02)',
         border: `1px solid ${hovered ? 'rgba(200,136,74,0.20)' : 'rgba(255,255,255,0.05)'}`,
-        padding: '36px 32px',
+        padding: 'clamp(24px, 3vw, 36px) clamp(18px, 2.5vw, 32px)',
         transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
         boxShadow: hovered ? '0 12px 40px rgba(0,0,0,0.3), 0 0 24px oklch(0.78 0.12 55 / 0.08)' : 'none',
         transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease',

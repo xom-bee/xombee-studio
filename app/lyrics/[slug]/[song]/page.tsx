@@ -92,7 +92,7 @@ export default function SongPage({
           zIndex: 1,
           maxWidth: '820px',
           margin: '0 auto',
-          padding: 'clamp(120px, 18vw, 160px) clamp(28px, 6vw, 80px) 140px',
+          padding: 'clamp(100px, 18vw, 160px) clamp(20px, 5vw, 80px) 120px',
           textAlign: 'center',
         }}
       >
@@ -182,7 +182,7 @@ export default function SongPage({
                 key={i}
                 data-lyric
                 style={{
-                  fontSize: 'clamp(16px, 2.4vw, 20px)',
+                  fontSize: 'clamp(14px, 2.4vw, 20px)',
                   color: 'rgba(255,255,255,0.80)',
                   lineHeight: 2.4,
                   fontWeight: 400,

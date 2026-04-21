@@ -112,7 +112,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
         style={{
           maxWidth: '680px',
           margin: '0 auto',
-          padding: 'clamp(120px, 18vw, 180px) clamp(24px, 5vw, 48px) 100px',
+          padding: 'clamp(100px, 18vw, 180px) clamp(20px, 5vw, 48px) 100px',
         }}
       >
         {/* Back */}

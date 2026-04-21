@@ -234,7 +234,7 @@ function PreviewCard({ projectId, color, variant }: { projectId: string; color: 
 function ProjectDetail({ project, onClose }: { project: typeof projects[0]; onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-100 bg-background/98 backdrop-blur-xl overflow-y-auto">
-      <div style={{ maxWidth: '860px', margin: '0 auto', padding: '80px 32px 120px' }}>
+      <div style={{ maxWidth: '860px', margin: '0 auto', padding: 'clamp(48px, 8vw, 80px) clamp(16px, 4vw, 32px) 120px' }}>
 
         {/* Back */}
         <button
@@ -278,14 +278,14 @@ function ProjectDetail({ project, onClose }: { project: typeof projects[0]; onCl
         </div>
 
         {/* Preview cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '72px' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-16" style={{ marginBottom: '72px' }}>
           {[0, 1, 2].map((i) => (
             <PreviewCard key={i} projectId={project.id} color={project.color} variant={i} />
           ))}
         </div>
 
         {/* Situation + Action */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', marginBottom: '48px' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 mb-12">
           <div>
             <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Situation</h3>
             <p style={{ fontSize: '15px', lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.situation}</p>
@@ -346,7 +346,7 @@ function ProjectDetail({ project, onClose }: { project: typeof projects[0]; onCl
         </div>
 
         {/* Tools + Team */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
               <Wrench size={12} style={{ color: project.accent }} />

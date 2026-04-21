@@ -72,13 +72,12 @@ export function LogoSection() {
           <span className="text-xs tracking-widest uppercase mb-4 block" style={{ color: 'oklch(0.78 0.12 55)' }}>
             Visual Identity
           </span>
-          <h2 className="font-serif text-5xl md:text-6xl font-bold text-balance">
+          <h2 className="font-serif text-2xl sm:text-3xl lg:text-5xl font-bold text-balance">
             Marks that define{' '}
             <span className="text-glow" style={{ color: 'oklch(0.78 0.12 55)' }}>identity</span>
           </h2>
-          <p style={{
+          <p className="text-sm sm:text-base" style={{
             marginTop: '16px',
-            fontSize: 'clamp(13px, 1.2vw, 15px)',
             color: 'rgba(255,255,255,0.30)',
             fontWeight: 400,
             letterSpacing: '0.01em',
@@ -90,7 +89,7 @@ export function LogoSection() {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           {logos.map((logo, i) => {
             const { ref: cardRef, revealed: cardRevealed } = useReveal()
             const isHovered = hoveredId === logo.id
@@ -100,7 +99,7 @@ export function LogoSection() {
               <div
                 key={logo.id}
                 ref={cardRef}
-                className={`reveal ${cardRevealed ? 'revealed' : ''}`}
+                className={`reveal ${cardRevealed ? 'revealed' : ''} w-full max-w-70 mx-auto`}
                 style={{ transitionDelay: `${i * 0.08}s` }}
                 onMouseEnter={() => setHoveredId(logo.id)}
                 onMouseLeave={() => setHoveredId(null)}

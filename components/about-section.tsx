@@ -42,8 +42,8 @@ export function AboutSection() {
       }} />
 
       <div className="max-w-7xl mx-auto">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '0 clamp(32px, 5vw, 72px)', alignItems: 'center' }}
-          className="lg:grid! block">
+        <div style={{ gridTemplateColumns: '1fr 1px 1fr', gap: '0 clamp(32px, 5vw, 72px)', alignItems: 'center' }}
+          className="block lg:grid">
 
           {/* Visual side — enters first */}
           <div style={{
@@ -114,9 +114,9 @@ export function AboutSection() {
             {/* Stats row */}
             <div style={{
               display: 'flex',
-              gap: '16px',
+              gap: 'clamp(8px, 2vw, 16px)',
               marginTop: '20px',
-              maxWidth: '384px',
+              maxWidth: '100%',
               marginLeft: 'auto',
               marginRight: 'auto',
             }} className="lg:mx-0">
@@ -133,7 +133,7 @@ export function AboutSection() {
                     background: 'rgba(255,255,255,0.025)',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
-                    padding: '16px 20px',
+                    padding: 'clamp(12px, 2.5vw, 16px) clamp(12px, 3vw, 20px)',
                     textAlign: 'center',
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
                     cursor: 'default',

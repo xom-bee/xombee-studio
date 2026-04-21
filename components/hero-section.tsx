@@ -65,7 +65,7 @@ export function HeroSection() {
         <div
           className="font-sans font-extrabold leading-[1.06] tracking-tight text-white"
           style={{
-            fontSize: 'clamp(44px, 8vw, 92px)',
+            fontSize: 'clamp(32px, 11vw, 92px)',
             animation: 'fade-in-up 1s 0.15s ease-out forwards',
             opacity: 0,
             marginBottom: '0.08em',
@@ -78,7 +78,7 @@ export function HeroSection() {
         <div
           className="font-sans font-extrabold leading-[1.06] tracking-tight text-white"
           style={{
-            fontSize: 'clamp(44px, 8vw, 92px)',
+            fontSize: 'clamp(32px, 11vw, 92px)',
             animation: 'fade-in-up 1s 0.45s ease-out forwards',
             opacity: 0,
             marginBottom: '64px',

@@ -92,14 +92,16 @@ function GlobalAudioPlayer({
     <div
       style={{
         position: 'fixed',
-        bottom: '16px',
-        left: '16px',
-        right: '16px',
+        bottom: '0',
+        left: '0',
+        right: '0',
         zIndex: 200,
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(calc(100% + 24px))',
+        transform: visible ? 'translateY(0)' : 'translateY(calc(100% + 8px))',
         transition: 'opacity 0.35s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1)',
         pointerEvents: visible ? 'auto' : 'none',
+        padding: 'clamp(0px, 2vw, 16px)',
+        paddingBottom: 'max(env(safe-area-inset-bottom), clamp(0px, 2vw, 16px))',
       }}
     >
       <div
@@ -107,23 +109,52 @@ function GlobalAudioPlayer({
           background: hovered ? 'rgba(22,22,28,0.96)' : 'rgba(16,16,20,0.92)',
           backdropFilter: 'blur(28px)',
           WebkitBackdropFilter: 'blur(28px)',
-          borderRadius: '16px',
+          borderRadius: 'clamp(0px, 2vw, 16px)',
           border: '1px solid rgba(255,255,255,0.06)',
           boxShadow: hovered
             ? '0 12px 48px rgba(0,0,0,0.65), 0 2px 8px rgba(0,0,0,0.30)'
             : '0 8px 40px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.30)',
-          padding: '14px 20px',
+          padding: 'clamp(10px, 2vw, 14px) clamp(12px, 3vw, 20px)',
           transition: 'background 0.25s ease, box-shadow 0.25s ease',
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
+        {/* Mobile: progress bar on top, row below */}
+        {/* Desktop: single 3-column row */}
+
+        {/* Progress bar — always full width on mobile, center col on desktop */}
+        <div className="block md:hidden" style={{ marginBottom: '10px' }}>
+          <div
+            style={{
+              height: '2px',
+              background: 'rgba(255,255,255,0.08)',
+              borderRadius: '2px',
+              cursor: 'pointer',
+              position: 'relative',
+            }}
+            onClick={handleBarClick}
+          >
+            <div
+              style={{
+                position: 'absolute',
+                inset: '0 auto 0 0',
+                width: `${progress * 100}%`,
+                background: track?.color ?? 'oklch(0.78 0.12 55)',
+                borderRadius: '2px',
+                transition: 'width 0.1s linear',
+              }}
+            />
+          </div>
+        </div>
+
         <div
+          className="grid"
           style={{
-            display: 'grid',
             gridTemplateColumns: 'auto 1fr auto',
             alignItems: 'center',
-            gap: '20px',
+            gap: 'clamp(10px, 3vw, 20px)',
+            display: 'grid',
           }}
         >
           {/* LEFT — cover + text */}
@@ -131,17 +162,18 @@ function GlobalAudioPlayer({
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '16px',
+              gap: 'clamp(10px, 2vw, 16px)',
               opacity: infoVisible ? 1 : 0,
               transition: 'opacity 0.15s ease',
+              minWidth: 0,
             }}
           >
             {track && (
               <div
                 style={{
-                  width: '46px',
-                  height: '46px',
-                  borderRadius: '10px',
+                  width: 'clamp(36px, 5vw, 46px)',
+                  height: 'clamp(36px, 5vw, 46px)',
+                  borderRadius: '8px',
                   overflow: 'hidden',
                   flexShrink: 0,
                   boxShadow: `0 0 14px color-mix(in srgb, ${track.color} 35%, transparent)`,
@@ -156,27 +188,27 @@ function GlobalAudioPlayer({
                 />
               </div>
             )}
-            <div>
+            <div style={{ minWidth: 0 }}>
               <p
                 style={{
                   fontSize: '9px',
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
                   color: 'rgba(255,255,255,0.35)',
-                  marginBottom: '4px',
+                  marginBottom: '3px',
                 }}
               >
                 Now Playing
               </p>
               <p
                 style={{
-                  fontSize: '14px',
+                  fontSize: 'clamp(12px, 2vw, 14px)',
                   fontWeight: 500,
                   color: 'rgba(255,255,255,0.88)',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  maxWidth: 'clamp(100px, 20vw, 200px)',
+                  maxWidth: 'clamp(72px, 22vw, 200px)',
                 }}
               >
                 {track?.title ?? ''}
@@ -184,8 +216,9 @@ function GlobalAudioPlayer({
             </div>
           </div>
 
-          {/* CENTER — progress bar with dot */}
+          {/* CENTER — progress bar (hidden on mobile, shown on desktop) */}
           <div
+            className="hidden md:block"
             style={{
               height: '3px',
               background: 'rgba(255,255,255,0.08)',
@@ -224,15 +257,15 @@ function GlobalAudioPlayer({
           </div>
 
           {/* RIGHT — play button + time + close */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(6px, 1.8vw, 14px)', flexShrink: 0 }}>
             <button
               onClick={onToggle}
               onMouseDown={() => setBtnPressing(true)}
               onMouseUp={() => setBtnPressing(false)}
               onMouseLeave={() => setBtnPressing(false)}
               style={{
-                width: '38px',
-                height: '38px',
+                width: 'clamp(32px, 8vw, 38px)',
+                height: 'clamp(32px, 8vw, 38px)',
                 borderRadius: '50%',
                 background: track?.color ?? 'oklch(0.78 0.12 55)',
                 border: 'none',
@@ -254,8 +287,8 @@ function GlobalAudioPlayer({
             </button>
 
             <div
+              className="hidden sm:flex"
               style={{
-                display: 'flex',
                 alignItems: 'center',
                 gap: '3px',
                 fontSize: '11px',
