@@ -7,7 +7,7 @@ import { ChevronLeft, ExternalLink, Award, Wrench, Users } from 'lucide-react'
 // ─── Procedural visuals (unchanged) ───────────────────────────────────────────
 
 function ProceduralVisual({ projectId, color, variant }: { projectId: string; color: string; variant: number }) {
-  const patterns: Record<string, JSX.Element[]> = {
+  const patterns: Record<string, React.ReactNode[]> = {
     'scan2dine': [
       <svg key="0" viewBox="0 0 400 300" className="w-full h-full">
         <defs>

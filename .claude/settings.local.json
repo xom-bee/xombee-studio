@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"c:/Users/sanga/Downloads/Portfolio Website\" ls-files --others --exclude-standard)",
+      "Bash(git -C \"c:/Users/sanga/Downloads/Portfolio Website\" status --short)"
+    ]
+  }
+}
