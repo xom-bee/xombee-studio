@@ -21,7 +21,7 @@ export function MoodboardSection() {
             The <span className="text-glow" style={{ color: 'oklch(0.78 0.12 55)' }}>Moodboard</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-lg leading-relaxed">
-            The visual language, colour palette, typography, and cinematic references that define Xom Bee Studio&apos;s creative identity.
+            The visual language, colour palette, typography, and cinematic references that define Yoesel&apos;s creative identity.
           </p>
         </div>
 
@@ -32,7 +32,7 @@ export function MoodboardSection() {
         >
           <Image
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Moodboard-8JZr1acc0Ewfj6X2DuEQvDxIZBHZ8z.png"
-            alt="Xom Bee Studio Moodboard — Atmospheric Palette, Colour Palette, Cinematic Visuals, Typography Pillars, Font Pairings, and Design Mockups"
+            alt="Yoesel Moodboard — Atmospheric Palette, Colour Palette, Cinematic Visuals, Typography Pillars, Font Pairings, and Design Mockups"
             width={1400}
             height={900}
             className="w-full h-auto block"

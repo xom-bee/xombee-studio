@@ -1,193 +1,199 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
-import { ArrowUp } from 'lucide-react'
 
 export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  const closingRef = useRef<HTMLParagraphElement>(null)
+  const headingRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
-      { threshold: 0.5 }
+      { threshold: 0.2 }
     )
-    if (closingRef.current) observer.observe(closingRef.current)
+    if (headingRef.current) observer.observe(headingRef.current)
     return () => observer.disconnect()
   }, [])
 
   return (
-    <footer className="relative overflow-hidden" style={{ background: '#0B0B0F', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
-      {/* Top decorative glow */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, oklch(0.78 0.12 55 / 0.4), transparent)' }}
-      />
+    <>
+      <style>{`
+.ft-back-top {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 11px;
+          letter-spacing: 0.05em;
+          color: rgba(255,255,255,0.22);
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          transition: color 0.2s ease;
+        }
+        .ft-back-top:hover { color: rgba(255,255,255,0.70); }
+        .ft-back-top:hover .ft-arrow { transform: translateY(-3px); }
+        .ft-arrow {
+          display: inline-block;
+          transition: transform 0.2s ease;
+        }
+      `}</style>
 
-      {/* Closing line */}
-      <div style={{ textAlign: 'center', padding: 'clamp(48px, 7vw, 80px) 24px clamp(32px, 5vw, 56px)' }}>
-        <p
-          ref={closingRef}
+      {/* Thin amber divider */}
+      <div style={{
+        width: '100%',
+        height: '1px',
+        background: 'linear-gradient(90deg, transparent, rgba(230,161,90,0.18) 35%, rgba(230,161,90,0.18) 65%, transparent)',
+      }} />
+
+      <footer style={{ background: 'transparent' }}>
+
+        {/* ── 1. HERO MESSAGE ── */}
+        <div
+          ref={headingRef}
           style={{
-            fontSize: 'clamp(18px, 2.5vw, 28px)',
-            fontWeight: 400,
-            color: 'rgba(255,255,255,0.26)',
-            fontFamily: 'serif',
-            letterSpacing: '0.02em',
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateY(0)' : 'translateY(12px)',
-            transition: 'opacity 1.2s cubic-bezier(0.22,1,0.36,1), transform 1.2s cubic-bezier(0.22,1,0.36,1)',
+            textAlign: 'center',
+            padding: 'clamp(48px, 6vw, 72px) 24px clamp(32px, 4vw, 48px)',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          Your story deserves a stage.
-        </p>
-      </div>
+          {/* Soft ambient glow */}
+          <div style={{
+            position: 'absolute',
+            top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '480px', height: '180px',
+            background: 'radial-gradient(ellipse, rgba(230,161,90,0.06) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
 
-      <div className="max-w-7xl mx-auto px-6 pb-8">
-        {/* Main footer content */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {/* Brand */}
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <svg width="36" height="36" viewBox="0 0 80 80" fill="none">
-                <polygon
-                  points="40,8 70,24 70,56 40,72 10,56 10,24"
-                  stroke="oklch(0.78 0.12 55)"
-                  strokeWidth="1.5"
-                  fill="oklch(0.78 0.12 55 / 0.1)"
-                />
-                <text x="40" y="47" textAnchor="middle" fill="oklch(0.78 0.12 55)" fontSize="20" fontWeight="700">
-                  XB
-                </text>
-              </svg>
-              <span className="font-serif text-2xl font-bold text-foreground">Xom Bee</span>
-            </div>
-            <p style={{ fontSize: '14px', lineHeight: 1.6, maxWidth: '320px', color: 'rgba(255,255,255,0.42)', marginBottom: '3px' }}>
-              Designing identity for artists who want to be felt.
+          <div style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(12px)',
+            transition: 'opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1)',
+          }}>
+            <p style={{
+              fontFamily: 'serif',
+              fontSize: 'clamp(24px, 3.5vw, 40px)',
+              fontWeight: 700,
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+              color: 'rgba(255,255,255,0.85)',
+              textShadow: '0 0 60px rgba(230,161,90,0.10)',
+              marginBottom: '10px',
+            }}>
+              Your story deserves a stage.
             </p>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.28)', letterSpacing: '0.01em', marginBottom: '24px' }}>
-              Sound has always deserved a face.
+            <p style={{
+              fontFamily: 'serif',
+              fontSize: 'clamp(14px, 1.6vw, 18px)',
+              fontWeight: 400,
+              fontStyle: 'italic',
+              lineHeight: 1.4,
+              color: 'rgba(255,255,255,0.28)',
+              letterSpacing: '0.01em',
+            }}>
+              Let&apos;s make it unforgettable.
             </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255,255,255,0.28)', fontSize: '11px' }}>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ opacity: 0.5 }}>
-                <circle cx="5" cy="5" r="4" stroke="currentColor" strokeWidth="0.8" />
-                <circle cx="5" cy="5" r="1.5" fill="currentColor" />
-              </svg>
-              Thimphu, Bhutan
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div>
-            <p className="text-xs tracking-widest uppercase text-muted-foreground mb-5">Navigate</p>
-            <div className="flex flex-col gap-3">
-              {[
-                { label: 'Work', href: '#portfolio' },
-                { label: 'Process', href: '#process' },
-                { label: 'About', href: '#about' },
-                { label: 'Skills', href: '#skills' },
-                { label: 'Experience', href: '#experience' },
-              ].map((link) => (
-                <button
-                  key={link.label}
-                  onClick={() => document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-sm text-left flex items-center gap-2"
-                  style={{ color: 'rgba(255,255,255,0.28)', transition: 'color 0.25s ease', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'oklch(0.78 0.12 55)'
-                    const line = e.currentTarget.querySelector('span') as HTMLElement
-                    if (line) line.style.width = '16px'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255,255,255,0.28)'
-                    const line = e.currentTarget.querySelector('span') as HTMLElement
-                    if (line) line.style.width = '0px'
-                  }}
-                >
-                  <span
-                    className="w-0 h-px transition-all duration-300"
-                    style={{ background: 'oklch(0.78 0.12 55)', flexShrink: 0 }}
-                  />
-                  {link.label}
-                </button>
-              ))}
-              {[
-                { label: 'Music', href: '/music' },
-                { label: 'Lyrics', href: '/lyrics' },
-              ].map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="text-sm flex items-center gap-2"
-                  style={{ color: 'rgba(255,255,255,0.28)', transition: 'color 0.25s ease', textDecoration: 'none' }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'oklch(0.78 0.12 55)'
-                    const line = e.currentTarget.querySelector('span') as HTMLElement
-                    if (line) line.style.width = '16px'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'rgba(255,255,255,0.28)'
-                    const line = e.currentTarget.querySelector('span') as HTMLElement
-                    if (line) line.style.width = '0px'
-                  }}
-                >
-                  <span
-                    className="w-0 h-px transition-all duration-300"
-                    style={{ background: 'oklch(0.78 0.12 55)', flexShrink: 0 }}
-                  />
-                  {link.label}
-                </Link>
-              ))}
-            </div>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr auto 1fr',
-          alignItems: 'center',
-          paddingTop: '24px',
-          borderTop: '1px solid rgba(255,255,255,0.03)',
-        }}>
-          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)' }}>
-            &copy; 2026 Xom Bee Studio
-          </p>
-          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.30)', fontStyle: 'italic', textAlign: 'center', letterSpacing: '0.04em' }}>
-            &ldquo;Your sound deserves to be felt.&rdquo;
-          </p>
-          <button
-            onClick={scrollToTop}
-            style={{
-              display: 'flex', alignItems: 'center', gap: '5px', justifySelf: 'end',
-              fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.22)',
-              background: 'none', border: 'none', cursor: 'pointer',
-              transition: 'color 0.25s ease, transform 0.25s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = 'rgba(255,255,255,0.60)'
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              const arrow = e.currentTarget.querySelector('svg') as SVGElement
-              if (arrow) arrow.style.transform = 'translateY(-3px)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = 'rgba(255,255,255,0.22)'
-              e.currentTarget.style.transform = 'translateY(0)'
-              const arrow = e.currentTarget.querySelector('svg') as SVGElement
-              if (arrow) arrow.style.transform = 'translateY(0)'
-            }}
-          >
-            <ArrowUp size={11} style={{ transition: 'transform 0.25s ease' }} />
-            Top
-          </button>
+        {/* ── 2. MAIN CONTENT ── */}
+        <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+          <div style={{
+            paddingTop: 'clamp(28px, 4vw, 40px)',
+            paddingBottom: 'clamp(28px, 4vw, 40px)',
+            borderTop: '1px solid rgba(255,255,255,0.05)',
+          }}>
+
+            {/* Brand */}
+            <div style={{ maxWidth: '360px' }}>
+              {/* Logo + Name */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                <svg width="26" height="26" viewBox="0 0 80 80" fill="none">
+                  <polygon
+                    points="40,8 70,24 70,56 40,72 10,56 10,24"
+                    stroke="#E6A15A" strokeWidth="1.5"
+                    fill="rgba(230,161,90,0.07)"
+                  />
+                  <text x="40" y="47" textAnchor="middle" fill="#E6A15A" fontSize="18" fontWeight="700" letterSpacing="2">SY</text>
+                </svg>
+                <span style={{
+                  fontFamily: 'serif',
+                  fontSize: '18px',
+                  fontWeight: 700,
+                  letterSpacing: '0.10em',
+                  color: 'rgba(255,255,255,0.85)',
+                }}>
+                  Yoesel
+                </span>
+              </div>
+
+              {/* Role */}
+              <p style={{
+                fontSize: '10px',
+                fontWeight: 600,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: '#E6A15A',
+                opacity: 0.60,
+                marginBottom: '14px',
+              }}>
+                Digital Designer for Creative Artists
+              </p>
+
+              {/* Description */}
+              <p style={{
+                fontSize: '13px',
+                lineHeight: 1.70,
+                color: 'rgba(255,255,255,0.30)',
+                marginBottom: '16px',
+              }}>
+                I design personal websites that help artists be seen and remembered.
+              </p>
+
+              {/* Location */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
+                  <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.20)" strokeWidth="0.8" />
+                  <circle cx="5" cy="5" r="1.4" fill="rgba(255,255,255,0.20)" />
+                </svg>
+                <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.20)', letterSpacing: '0.02em' }}>
+                  Thimphu, Bhutan
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* ── 3. BOTTOM BAR ── */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr auto 1fr',
+            alignItems: 'center',
+            gap: '16px',
+            paddingTop: '16px',
+            paddingBottom: '24px',
+            borderTop: '1px solid rgba(255,255,255,0.04)',
+          }}>
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.18)', letterSpacing: '0.02em' }}>
+              &copy; 2026 Yoesel
+            </p>
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.14)', fontStyle: 'italic', letterSpacing: '0.02em', textAlign: 'center' }}>
+              Your sound deserves to be felt
+            </p>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="ft-back-top"
+              style={{ justifySelf: 'end' }}
+            >
+              Back to top <span className="ft-arrow">↑</span>
+            </button>
+          </div>
         </div>
-      </div>
-    </footer>
+
+      </footer>
+    </>
   )
 }

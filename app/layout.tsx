@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import Script from 'next/script'
 import { Analytics } from '@/components/analytics'
-import { AudioProvider } from '@/components/audio-provider'
+import { Navbar } from '@/components/navbar'
+import { BackgroundLayer } from '@/components/background-layer'
 import './globals.css'
 
 const inter = Inter({
@@ -11,14 +12,14 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Xom Bee Studio — Digital Stages for Independent Artists',
+  title: 'Yoesel — Digital Designer for Creative Artists',
   description:
-    'I design digital stages that turn independent music artists into powerful personal brands. Visual identity, UI/UX, and brand design by Sangay Yoesel.',
-  keywords: ['visual identity', 'music artist branding', 'UI/UX design', 'Bhutan', 'Xom Bee Studio'],
+    'I design personal websites that help artists be seen and remembered. Visual identity, UI/UX, and brand design by Sangay Yoesel.',
+  keywords: ['visual identity', 'music artist branding', 'UI/UX design', 'Bhutan', 'Yoesel', 'Sangay Yoesel'],
   authors: [{ name: 'Sangay Yoesel' }],
   openGraph: {
-    title: 'Xom Bee Studio',
-    description: 'Design and music by Xom Bee',
+    title: 'Yoesel',
+    description: 'Digital designer for creative artists',
     images: [
       {
         url: '/api/og',
@@ -50,11 +51,11 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <AudioProvider>
-          <div className="w-full overflow-hidden">
-            {children}
-          </div>
-        </AudioProvider>
+        <BackgroundLayer />
+        <Navbar />
+        <div className="w-full overflow-hidden">
+          {children}
+        </div>
         <Analytics />
         <Script
           id="clarity-analytics"

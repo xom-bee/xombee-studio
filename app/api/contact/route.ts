@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     const { name, email, message } = await req.json();
 
     const data = await resend.emails.send({
-      from: 'Xom Bee Studio <onboarding@resend.dev>',
+      from: 'Yoesel <onboarding@resend.dev>',
       to: ['sangayyoesel@gmail.com'],
       subject: `New message from ${name}`,
       html: `

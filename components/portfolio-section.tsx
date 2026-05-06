@@ -2,57 +2,13 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { ChevronLeft, ExternalLink, Award, Wrench, Users } from 'lucide-react'
 
 // ─── Procedural visuals (unchanged) ───────────────────────────────────────────
 
 function ProceduralVisual({ projectId, color, variant }: { projectId: string; color: string; variant: number }) {
   const patterns: Record<string, React.ReactNode[]> = {
-    'scan2dine': [
-      <svg key="0" viewBox="0 0 400 300" className="w-full h-full">
-        <defs>
-          <linearGradient id="s2d-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={color} stopOpacity="0.3" />
-            <stop offset="100%" stopColor={color} stopOpacity="0.05" />
-          </linearGradient>
-        </defs>
-        <rect width="400" height="300" fill="oklch(0.09 0 0)" />
-        <rect x="50" y="30" width="60" height="60" rx="8" stroke={color} strokeWidth="2" fill="none" opacity="0.6" />
-        <rect x="60" y="40" width="40" height="40" rx="4" fill={color} opacity="0.3" />
-        <rect x="290" y="30" width="60" height="60" rx="8" stroke={color} strokeWidth="2" fill="none" opacity="0.6" />
-        <rect x="300" y="40" width="40" height="40" rx="4" fill={color} opacity="0.3" />
-        <rect x="50" y="210" width="60" height="60" rx="8" stroke={color} strokeWidth="2" fill="none" opacity="0.6" />
-        <rect x="60" y="220" width="40" height="40" rx="4" fill={color} opacity="0.3" />
-        {Array.from({ length: 8 }).map((_, i) => (
-          <rect key={i} x={140 + (i % 4) * 30} y={80 + Math.floor(i / 4) * 30} width="20" height="20" fill={color} opacity={0.2 + (i * 0.08)} rx="2" />
-        ))}
-        <line x1="180" y1="160" x2="220" y2="160" stroke={color} strokeWidth="3" opacity="0.5" />
-        <circle cx="200" cy="200" r="30" stroke={color} strokeWidth="2" fill="url(#s2d-grad)" />
-        <path d="M190 200 L200 210 L215 190" stroke={color} strokeWidth="2" fill="none" strokeLinecap="round" />
-      </svg>,
-      <svg key="1" viewBox="0 0 400 300" className="w-full h-full">
-        <rect width="400" height="300" fill="oklch(0.09 0 0)" />
-        <rect x="120" y="20" width="160" height="260" rx="20" stroke={color} strokeWidth="2" fill="none" opacity="0.4" />
-        <rect x="140" y="50" width="120" height="20" rx="4" fill={color} opacity="0.3" />
-        <rect x="140" y="85" width="120" height="50" rx="8" fill={color} opacity="0.15" />
-        <rect x="140" y="145" width="120" height="50" rx="8" fill={color} opacity="0.15" />
-        <rect x="140" y="205" width="120" height="50" rx="8" fill={color} opacity="0.15" />
-        <circle cx="200" cy="110" r="15" fill={color} opacity="0.5" />
-        <circle cx="200" cy="170" r="15" fill={color} opacity="0.5" />
-        <circle cx="200" cy="230" r="15" fill={color} opacity="0.5" />
-      </svg>,
-      <svg key="2" viewBox="0 0 400 300" className="w-full h-full">
-        <rect width="400" height="300" fill="oklch(0.09 0 0)" />
-        <rect x="30" y="30" width="340" height="240" rx="12" stroke={color} strokeWidth="1" fill="none" opacity="0.3" />
-        {[80, 140, 200, 260, 320].map((x, i) => (
-          <rect key={i} x={x} y={250 - (40 + i * 25)} width="30" height={40 + i * 25} fill={color} opacity={0.3 + i * 0.1} rx="4" />
-        ))}
-        <path d="M60 200 Q120 150 180 180 T300 120" stroke={color} strokeWidth="2" fill="none" opacity="0.6" />
-        <circle cx="60" cy="200" r="4" fill={color} />
-        <circle cx="180" cy="180" r="4" fill={color} />
-        <circle cx="300" cy="120" r="4" fill={color} />
-      </svg>,
-    ],
     'druk-art-hub': [
       <svg key="0" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
@@ -90,117 +46,99 @@ function ProceduralVisual({ projectId, color, variant }: { projectId: string; co
         <rect x="280" y="200" width="80" height="30" rx="15" fill={color} opacity="0.5" />
       </svg>,
     ],
-    'no-q': [
+    'xom-bee': [
       <svg key="0" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
-        <circle cx="200" cy="100" r="50" stroke={color} strokeWidth="3" fill="none" opacity="0.5" />
-        <text x="200" y="115" textAnchor="middle" fill={color} fontSize="36" fontWeight="bold" opacity="0.8">07</text>
-        <rect x="100" y="170" width="200" height="8" rx="4" fill={color} opacity="0.2" />
-        <rect x="100" y="170" width="120" height="8" rx="4" fill={color} opacity="0.5" />
-        <rect x="80" y="200" width="240" height="40" rx="8" stroke={color} strokeWidth="1" fill="none" opacity="0.3" />
-        <text x="200" y="225" textAnchor="middle" fill={color} fontSize="12" opacity="0.6">Estimated wait: 12 minutes</text>
+        <polygon points="200,40 240,62 240,106 200,128 160,106 160,62" stroke={color} strokeWidth="1.5" fill={color} fillOpacity="0.10" opacity="0.7" />
+        <text x="200" y="93" textAnchor="middle" fill={color} fontSize="22" fontWeight="700" opacity="0.7">XB</text>
+        <rect x="60" y="155" width="280" height="40" rx="20" stroke={color} strokeWidth="1" fill="none" opacity="0.25" />
+        <rect x="60" y="155" width="140" height="40" rx="20" fill={color} opacity="0.18" />
+        <rect x="70" y="210" width="110" height="12" rx="6" fill={color} opacity="0.20" />
+        <rect x="70" y="230" width="80" height="8" rx="4" fill={color} opacity="0.12" />
+        <rect x="220" y="210" width="110" height="12" rx="6" fill={color} opacity="0.20" />
+        <rect x="220" y="230" width="80" height="8" rx="4" fill={color} opacity="0.12" />
       </svg>,
       <svg key="1" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
-        {[50, 110, 170, 230].map((y, i) => (
-          <g key={i}>
-            <rect x="50" y={y} width="300" height="50" rx="8" fill={color} opacity={i === 1 ? 0.25 : 0.1} stroke={color} strokeWidth={i === 1 ? 2 : 1} strokeOpacity="0.3" />
-            <circle cx="85" cy={y + 25} r="15" fill={color} opacity="0.3" />
-            <rect x="115" y={y + 15} width="80" height="8" rx="4" fill={color} opacity="0.4" />
-            <rect x="115" y={y + 28} width="50" height="6" rx="3" fill={color} opacity="0.2" />
-            <rect x="280" y={y + 18} width="50" height="14" rx="7" fill={color} opacity={i === 1 ? 0.6 : 0.3} />
-          </g>
+        <rect x="50" y="50" width="140" height="200" rx="14" stroke={color} strokeWidth="1.5" fill="none" opacity="0.30" />
+        <rect x="70" y="70" width="100" height="70" rx="8" fill={color} opacity="0.18" />
+        <rect x="70" y="155" width="100" height="10" rx="5" fill={color} opacity="0.30" />
+        <rect x="70" y="172" width="70" height="8" rx="4" fill={color} opacity="0.18" />
+        <rect x="70" y="195" width="100" height="30" rx="8" fill={color} opacity="0.14" />
+        {[0,1,2,3,4,5,6,7,8,9].map((i) => (
+          <rect key={i} x={220 + (i % 5) * 32} y={70 + Math.floor(i / 5) * 80} width="24" height="60" rx="8" fill={color} opacity={0.12 + i * 0.03} />
         ))}
+        <rect x="220" y="230" width="152" height="8" rx="4" fill={color} opacity="0.10" />
+        <rect x="220" y="246" width="100" height="6" rx="3" fill={color} opacity="0.08" />
       </svg>,
       <svg key="2" viewBox="0 0 400 300" className="w-full h-full">
         <rect width="400" height="300" fill="oklch(0.09 0 0)" />
-        <rect x="80" y="40" width="240" height="100" rx="16" fill={color} opacity="0.15" stroke={color} strokeWidth="2" strokeOpacity="0.4" />
-        <circle cx="130" cy="90" r="25" fill={color} opacity="0.3" />
-        <path d="M120 90 L130 100 L145 80" stroke={color} strokeWidth="3" fill="none" strokeLinecap="round" />
-        <rect x="170" y="75" width="120" height="10" rx="5" fill={color} opacity="0.5" />
-        <rect x="170" y="95" width="80" height="8" rx="4" fill={color} opacity="0.3" />
-        <rect x="100" y="170" width="200" height="50" rx="12" stroke={color} strokeWidth="1" fill="none" opacity="0.2" />
-        <rect x="100" y="235" width="200" height="50" rx="12" stroke={color} strokeWidth="1" fill="none" opacity="0.2" />
+        {[30,60,44,72,38,55,66,48,36,60,42,70,52,40,58].map((h, i) => (
+          <rect key={i} x={32 + i * 23} y={180 - h} width="14" height={h} rx="3" fill={color} opacity={0.15 + (i % 3) * 0.08} />
+        ))}
+        <circle cx="200" cy="80" r="36" stroke={color} strokeWidth="1.5" fill={color} fillOpacity="0.08" opacity="0.6" />
+        <polygon points="194,68 218,80 194,92" fill={color} opacity="0.55" />
+        <rect x="100" y="210" width="200" height="4" rx="2" fill={color} opacity="0.12" />
+        <rect x="100" y="210" width="90" height="4" rx="2" fill={color} opacity="0.45" />
+        <circle cx="100" cy="212" r="6" fill={color} opacity="0.60" />
       </svg>,
     ],
   }
-  return patterns[projectId]?.[variant] || patterns['scan2dine'][0]
+  return patterns[projectId]?.[variant] ?? patterns['druk-art-hub'][0]
 }
 
 // ─── Project data ──────────────────────────────────────────────────────────────
 
 const projects = [
   {
-    id: 'scan2dine',
-    title: 'Scan2Dine',
-    category: 'UI/UX Design · Digital Product',
-    tagline: 'QR-Based Digital Menu System',
-    award: 'Best Project Award',
-    color: 'oklch(0.75 0.15 55)',
-    accent: '#C8884A',
-    logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scan2Dine%20White-u5zMokeFXdYcPIgXF4HWjFKTdSc02e.png',
-    shortDesc: 'A QR-based digital menu system that removes friction from the dining experience — built for speed, clarity, and delight.',
-    situation: 'Restaurants relied on physical menus that were costly to update.\nHygiene concerns made them increasingly impractical.',
-    action: 'Designed an intuitive QR-based menu system from the ground up.\nFocused on usability, clear hierarchy, and a seamless guest experience.',
-    result: 'Awarded Best Project for exceptional usability.\n90% reduction in menu update time.\nImproved customer satisfaction across all test environments.',
-    problem: 'How do you modernize dining\nwithout losing warmth and human touch?',
-    solution: 'A premium digital menu that feels effortless to use.\nLoads instantly. Puts control in the hands of both owner and guest.',
-    tools: ['Figma', 'Adobe Illustrator', 'Prototyping', 'User Research'],
-    team: ['Sangay Yoesel – Lead Designer', 'Team of 3 developers'],
-    liveUrl: 'https://scan2dinee.netlify.app/',
-    image: '/images/scan2dine.png',
-    imagePosition: 'center center',
-    ongoing: false,
-    compositeUi: ['/images/scan2dine-ui-1.png', '/images/scan2dine-ui-2.png'],
-    preLine: undefined,
-  },
-  {
     id: 'druk-art-hub',
     title: 'Druk Art Hub',
-    category: 'Platform Design · Marketplace',
-    tagline: 'Platform for artists to buy and sell art',
+    category: 'UI/UX Design · Branding',
+    tagline: 'A digital platform for Bhutanese artists',
     award: null,
     color: 'oklch(0.75 0.15 55)',
     accent: '#C8884A',
     logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Druk%20Art%20Hub%20White-trOMxor0aJQS5vMDg7UA5eQLGxTDp7.png',
-    shortDesc: 'A space for Bhutanese artists to be seen.\nWhere culture meets a wider world.',
+    shortDesc: 'A digital platform for Bhutanese artists to showcase and connect through art.\nFocused on cultural identity and creative community.',
     situation: 'Bhutanese artists had no dedicated platform to reach beyond local buyers.\nTheir work existed. Their audience did not.',
     action: 'Designed a culturally-sensitive marketplace from scratch.\nCelebrates Bhutanese artistry while enabling global discovery and transactions.',
     result: 'A platform that empowers independent artists to earn sustainably.\nBridges traditional craft and modern commerce through intentional design.',
-    problem: 'How do you build a marketplace that feels culturally authentic\nwhile remaining globally accessible?',
+    problem: 'How do you build a platform that feels culturally authentic\nwhile remaining globally accessible?',
     solution: 'Cultural visual cues. Accessible navigation. Artist-first features.\nThe work leads. The platform follows.',
     tools: ['Figma', 'Adobe Photoshop', 'Wireframing', 'Brand Identity', 'Frontend'],
     team: ['Sangay Yoesel – UI/UX Lead', 'Collaborative team of 3'],
     liveUrl: undefined,
+    caseStudyHref: '/work/druk-art-hub',
     image: '/images/druk-art-hub.png',
     imagePosition: '72% center',
     ongoing: true,
     compositeUi: undefined,
-    preLine: 'Built for artists who were never seen.',
+    preLine: 'Designed to help artists express identity and be seen',
   },
   {
-    id: 'no-q',
-    title: 'Q-Less',
-    category: 'Healthcare UX · System Design',
-    tagline: 'Queue management system for patients',
+    id: 'xom-bee',
+    title: 'Xom Bee Official',
+    category: 'UI/UX Design · Frontend Development',
+    tagline: 'Personal website for a music artist',
     award: null,
-    color: 'oklch(0.65 0.10 185)',
-    accent: '#3D9E8C',
-    logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/No%20Q%20White-2jMDdM7Mp0FgKbWUQVmrmhFEA7ab8J.png',
-    shortDesc: 'Long queues. No clarity. No control.\nBuilt to give patients back their time.',
-    situation: 'Patients faced stressful waiting rooms with no visibility into their position.\nWasted hours. No updates. No system.',
-    action: 'Designed a queue system with real-time updates and SMS notifications.\nA calm interface built to reduce anxiety, not add to it.',
-    result: 'Patients reclaim their time. Walk-aways reduced significantly.\nMedical staff manage flow with ease. Outcomes improve for everyone.',
-    problem: 'How do you bring humanity and clarity\nto an experience that is inherently stressful?',
-    solution: 'A gentle interface that keeps patients in control of their wait.\nClarity replaces uncertainty. Dignity replaces frustration.',
-    tools: ['Figma', 'Canva', 'UX Research', 'Prototyping', 'Backend'],
-    team: ['Sangay Yoesel – Design Lead', 'Healthcare consultants', 'Dev team of 2'],
-    liveUrl: 'https://q-leess.netlify.app/',
-    image: '/images/q-less.png',
-    imagePosition: 'center 20%',
-    ongoing: false,
+    color: 'oklch(0.75 0.15 55)',
+    accent: '#C8884A',
+    logo: undefined,
+    shortDesc: 'A personal website for a music artist to showcase songs and music videos.\nDesigned to express identity through sound and visuals.',
+    situation: 'Independent artists struggle to present their music and identity in one cohesive space.\nSocial platforms exist, but none truly belong to the artist.',
+    action: 'Designed and built a personal website from concept to code.\nEvery detail — layout, motion, color — built to reflect the artist\'s sound.',
+    result: 'A living digital stage that the artist fully owns.\nA space that feels like the music before a single note plays.',
+    problem: 'How do you design a website that makes someone\nfeel the music before they press play?',
+    solution: 'Dark, cinematic atmosphere. Intentional motion. Emotional hierarchy.\nThe design becomes part of the listening experience.',
+    tools: ['Figma', 'Next.js', 'Tailwind CSS', 'Brand Identity', 'Frontend'],
+    team: ['Sangay Yoesel – Designer & Developer'],
+    liveUrl: undefined,
+    caseStudyHref: '/work/xom-bee',
+    image: '/images/xombee.png',
+    imagePosition: 'center center',
+    ongoing: true,
     compositeUi: undefined,
-    preLine: 'Built for moments that should not feel frustrating.',
+    preLine: 'Your sound deserves its own stage.',
   },
 ]
 
@@ -411,7 +349,7 @@ function ProjectRow({
   const rowRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const [imgHovered, setImgHovered] = useState(false)
-  const isReversed = index % 2 !== 0
+  const isReversed = false
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -449,18 +387,6 @@ function ProjectRow({
           transition: 'opacity 0.75s 0s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s 0s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
-        {/* Label */}
-        <div style={{
-          fontSize: '11px',
-          fontWeight: 500,
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          color: project.accent,
-          marginBottom: '20px',
-        }}>
-          {project.category}
-        </div>
-
         {/* Ongoing badge */}
         {project.ongoing && (
           <div style={{
@@ -543,43 +469,77 @@ function ProjectRow({
           lineHeight: 1.85,
           color: '#7A7A84',
           maxWidth: '360px',
-          marginBottom: '40px',
+          marginBottom: '16px',
           whiteSpace: 'pre-line',
         }}>
           {project.shortDesc}
         </p>
 
+        {/* Role */}
+        <p style={{
+          fontSize: '11px',
+          fontWeight: 500,
+          letterSpacing: '0.10em',
+          textTransform: 'uppercase',
+          color: '#E6A15A',
+          maxWidth: '360px',
+          marginBottom: '36px',
+        }}>
+          <span style={{ color: 'rgba(255,255,255,0.25)', marginRight: '8px', fontWeight: 400, letterSpacing: '0.06em' }}>Role</span>
+          {project.category}
+        </p>
+
         {/* CTA */}
-        <button
-          onClick={onClick}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '10px',
-            fontSize: '13px',
-            fontWeight: 600,
-            letterSpacing: '0.04em',
-            color: '#FFFFFF',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: 0,
-            transition: 'gap 0.3s ease',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.gap = '16px'
-            const arrow = e.currentTarget.querySelector('span') as HTMLElement
-            if (arrow) arrow.style.transform = 'translateX(4px)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.gap = '10px'
-            const arrow = e.currentTarget.querySelector('span') as HTMLElement
-            if (arrow) arrow.style.transform = 'translateX(0)'
-          }}
-        >
-          Explore Case Study
-          <span style={{ fontSize: '18px', lineHeight: 1, color: '#C8884A', transition: 'transform 0.3s ease' }}>→</span>
-        </button>
+        {project.caseStudyHref ? (
+          <Link
+            href={project.caseStudyHref}
+            style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', color: '#FFFFFF', transition: 'gap 0.3s ease' }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.gap = '16px'
+              const arrow = e.currentTarget.querySelector('span') as HTMLElement
+              if (arrow) arrow.style.transform = 'translateX(4px)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.gap = '10px'
+              const arrow = e.currentTarget.querySelector('span') as HTMLElement
+              if (arrow) arrow.style.transform = 'translateX(0)'
+            }}
+          >
+            View Case Study
+            <span style={{ fontSize: '18px', lineHeight: 1, color: '#C8884A', transition: 'transform 0.3s ease' }}>→</span>
+          </Link>
+        ) : (
+          <button
+            onClick={onClick}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              fontSize: '13px',
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              color: '#FFFFFF',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0,
+              transition: 'gap 0.3s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.gap = '16px'
+              const arrow = e.currentTarget.querySelector('span') as HTMLElement
+              if (arrow) arrow.style.transform = 'translateX(4px)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.gap = '10px'
+              const arrow = e.currentTarget.querySelector('span') as HTMLElement
+              if (arrow) arrow.style.transform = 'translateX(0)'
+            }}
+          >
+            View Case Study
+            <span style={{ fontSize: '18px', lineHeight: 1, color: '#C8884A', transition: 'transform 0.3s ease' }}>→</span>
+          </button>
+        )}
       </div>
 
       {/* Visual side */}
@@ -767,16 +727,6 @@ function SectionHeader() {
         transition: 'opacity 1s 0s cubic-bezier(0.22, 1, 0.36, 1), transform 1s 0s cubic-bezier(0.22, 1, 0.36, 1)',
       }}
     >
-      <div style={{
-        fontSize: '11px',
-        fontWeight: 500,
-        letterSpacing: '0.16em',
-        textTransform: 'uppercase',
-        color: '#C8884A',
-        marginBottom: '16px',
-      }}>
-        Selected Work
-      </div>
       <h2 style={{
         fontSize: 'clamp(32px, 5vw, 64px)',
         fontWeight: 700,
@@ -785,7 +735,7 @@ function SectionHeader() {
         color: '#FFFFFF',
         marginBottom: '16px',
       }}>
-        Projects that matter.
+        Selected Work
       </h2>
       <p style={{
         fontSize: 'clamp(13px, 1.2vw, 15px)',
@@ -794,7 +744,7 @@ function SectionHeader() {
         letterSpacing: '0.01em',
         lineHeight: 1.65,
       }}>
-        Not just projects.<br />Real problems. Real people. Real impact.
+        A collection of projects focused on identity, experience, and visual storytelling
       </p>
     </div>
   )
@@ -814,11 +764,12 @@ export function PortfolioSection() {
       <section
         id="portfolio"
         style={{
-          background: '#0B0B0F',
-          padding: 'clamp(56px, 8vw, 96px) clamp(28px, 10vw, 140px) clamp(40px, 6vw, 72px)',
+          background: 'transparent',
+          paddingTop: 'clamp(56px, 8vw, 96px)',
+          paddingBottom: 'clamp(40px, 6vw, 72px)',
         }}
       >
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
           <SectionHeader />
 
           {projects.map((project, index) => (

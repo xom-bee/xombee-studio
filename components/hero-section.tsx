@@ -25,7 +25,7 @@ export function HeroSection() {
       ref={heroRef}
       id="hero"
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-      style={{ background: '#0B0B0F' }}
+      style={{ background: 'transparent' }}
     >
       {/* Breathing amber orb — reduced ~25% from previous */}
       <div
@@ -112,17 +112,16 @@ export function HeroSection() {
             opacity: 0,
           }}
         >
-          I design digital stages that turn independent music artists into
-          <br />
+          I design professional personal websites for{' '}
           <span style={{ color: '#E6A15A', fontWeight: 600 }}>
-            Powerful Personal Brands
+            Creative Artists
           </span>
         </p>
 
         {/* Single CTA */}
         <div style={{ animation: 'fade-in-up 1s 1.05s ease-out forwards', opacity: 0 }}>
           <button
-            onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' })}
             style={{
               background: '#E6A15A',
               color: '#0B0B0F',
@@ -146,7 +145,7 @@ export function HeroSection() {
               e.currentTarget.style.boxShadow = '0 4px 24px rgba(230, 161, 90, 0.18)'
             }}
           >
-            Start a Project
+            View My Work
           </button>
         </div>
       </div>

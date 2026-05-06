@@ -8,7 +8,7 @@ export function EducationSection() {
   const { ref: cardRef, revealed: cardRevealed } = useReveal()
 
   return (
-    <section id="education" className="px-6" style={{ background: '#0B0B0F', borderTop: '1px solid rgba(255,255,255,0.05)', padding: 'clamp(48px, 7vw, 88px) clamp(24px, 6vw, 80px) clamp(40px, 6vw, 72px)' }}>
+    <section id="education" className="px-6" style={{ background: 'transparent', borderTop: '1px solid rgba(255,255,255,0.05)', padding: 'clamp(48px, 7vw, 88px) clamp(24px, 6vw, 80px) clamp(40px, 6vw, 72px)' }}>
       <div className="max-w-7xl mx-auto">
         <div ref={ref} className={`reveal ${revealed ? 'revealed' : ''}`} style={{ marginBottom: '40px', maxWidth: '860px', margin: '0 auto 40px' }}>
           <span className="text-xs tracking-widest uppercase mb-3 block" style={{ color: 'oklch(0.78 0.12 55)' }}>

@@ -26,12 +26,12 @@ const tools = [
     ),
   },
   {
-    name: 'Illustrator',
-    desc: 'Vector marks, logos, and detailed brand assets.',
+    name: 'VS Code',
+    desc: 'Building and refining design systems in code.',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-6 h-6">
-        <rect width="40" height="40" rx="8" fill="oklch(0.65 0.15 55 / 0.2)" />
-        <text x="20" y="26" textAnchor="middle" fill="oklch(0.78 0.12 55)" fontSize="14" fontWeight="700">Ai</text>
+        <rect width="40" height="40" rx="8" fill="oklch(0.55 0.14 240 / 0.2)" />
+        <text x="20" y="26" textAnchor="middle" fill="oklch(0.70 0.12 240)" fontSize="11" fontWeight="700">&lt;/&gt;</text>
       </svg>
     ),
   },
@@ -55,58 +55,135 @@ const tools = [
       </svg>
     ),
   },
-  {
-    name: 'VS Code',
-    desc: 'Building and refining design systems in code.',
-    icon: (
-      <svg viewBox="0 0 40 40" fill="none" className="w-6 h-6">
-        <rect width="40" height="40" rx="8" fill="oklch(0.55 0.14 240 / 0.2)" />
-        <text x="20" y="26" textAnchor="middle" fill="oklch(0.70 0.12 240)" fontSize="11" fontWeight="700">&lt;/&gt;</text>
-      </svg>
-    ),
-  },
 ]
 
 const strengths = [
   'Design with intention',
   'Listen before creating',
   'Translate feeling into form',
-  'Deliver with care',
+  'Build with clarity and structure',
+  'Focus on user experience first',
+  'Deliver clean and scalable work',
 ]
 
 function SkillItem({ name, desc }: { name: string; desc: string }) {
+  const [hovered, setHovered] = useState(false)
   return (
-    <div>
-      <p style={{ fontSize: '14px', fontWeight: 500, color: 'rgba(255,255,255,0.78)', marginBottom: '5px', letterSpacing: '0.01em' }}>{name}</p>
-      <p style={{ fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.24)', lineHeight: 1.6 }}>{desc}</p>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '12px',
+        cursor: 'default',
+        transition: 'transform 0.2s ease',
+        transform: hovered ? 'translateX(4px)' : 'translateX(0)',
+      }}
+    >
+      {/* Left dot indicator */}
+      <div style={{
+        width: '3px',
+        height: '3px',
+        borderRadius: '50%',
+        background: '#E6A15A',
+        opacity: hovered ? 0.9 : 0.35,
+        marginTop: '7px',
+        flexShrink: 0,
+        transition: 'opacity 0.2s ease, box-shadow 0.2s ease',
+        boxShadow: hovered ? '0 0 6px rgba(230,161,90,0.7)' : 'none',
+      }} />
+      <div>
+        <p style={{
+          fontSize: '14px',
+          fontWeight: 500,
+          color: hovered ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.78)',
+          marginBottom: '4px',
+          letterSpacing: '0.01em',
+          transition: 'color 0.2s ease',
+        }}>{name}</p>
+        <p style={{
+          fontSize: '12px',
+          fontWeight: 400,
+          color: 'rgba(255,255,255,0.22)',
+          lineHeight: 1.6,
+        }}>{desc}</p>
+      </div>
+    </div>
+  )
+}
+
+function ToolItem({ tool }: { tool: typeof tools[0] }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '14px',
+        padding: '10px 0',
+        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        cursor: 'default',
+        transition: 'transform 0.2s ease',
+        transform: hovered ? 'translateX(4px)' : 'translateX(0)',
+      }}
+    >
+      <div style={{
+        flexShrink: 0,
+        filter: hovered ? 'drop-shadow(0 0 6px rgba(230,161,90,0.45))' : 'none',
+        transition: 'filter 0.25s ease',
+        marginTop: '2px',
+      }}>
+        {tool.icon}
+      </div>
+      <div>
+        <p style={{
+          fontSize: '13px',
+          fontWeight: 500,
+          color: hovered ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.75)',
+          marginBottom: '3px',
+          transition: 'color 0.2s ease',
+        }}>{tool.name}</p>
+        <p style={{
+          fontSize: '11px',
+          color: 'rgba(255,255,255,0.22)',
+          lineHeight: 1.6,
+        }}>{tool.desc}</p>
+      </div>
     </div>
   )
 }
 
 export function SkillsSection() {
   const { ref, revealed } = useReveal()
-  const [hoveredStrength, setHoveredStrength] = useState<string | null>(null)
 
   return (
-    <section id="skills" className="py-24 px-3 sm:px-6 lg:px-12" style={{ background: '#0B0B0F' }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+    <section id="skills" style={{ background: 'transparent', paddingTop: 'clamp(48px, 7vw, 80px)', paddingBottom: 'clamp(48px, 7vw, 80px)' }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+
         {/* Header */}
-        <div ref={ref} className={`mb-16 reveal ${revealed ? 'revealed' : ''}`}>
-          <span className="text-xs tracking-widest uppercase mb-4 block" style={{ color: 'oklch(0.78 0.12 55)' }}>
+        <div ref={ref} className={`reveal ${revealed ? 'revealed' : ''}`} style={{ marginBottom: 'clamp(32px, 5vw, 48px)' }}>
+          <span style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#E6A15A', display: 'block', marginBottom: '14px' }}>
             Capabilities
           </span>
-          <h2 className="font-serif text-5xl md:text-6xl font-bold text-balance">
-            What I Bring to Your <span style={{ color: 'oklch(0.78 0.12 55)', textShadow: '0 0 20px oklch(0.78 0.12 55 / 0.25)' }}>Identity</span>
+          <h2 className="font-serif text-5xl md:text-6xl font-bold text-balance" style={{ marginBottom: '12px' }}>
+            What I Bring to Your <span style={{ color: 'oklch(0.78 0.12 55)', textShadow: '0 0 20px oklch(0.78 0.12 55 / 0.25)' }}>Brand</span>
           </h2>
+          <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.30)', lineHeight: 1.65 }}>
+            Design, development, and identity systems that work.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" style={{ alignItems: 'start' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" style={{ alignItems: 'stretch' }}>
+
           {/* Design Skills */}
-          <SkillsCard revealed={revealed}>
-            <h3 className="font-semibold text-foreground mb-6 text-sm tracking-widest uppercase" style={{ color: 'oklch(0.78 0.12 55)' }}>
+          <SkillsCard>
+            <h3 style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#E6A15A', marginBottom: '24px' }}>
               Design Skills
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {designSkills.map((skill) => (
                 <SkillItem key={skill.name} name={skill.name} desc={skill.desc} />
               ))}
@@ -114,80 +191,95 @@ export function SkillsSection() {
           </SkillsCard>
 
           {/* Tools */}
-          <SkillsCard revealed={revealed}>
-            <h3 className="font-semibold text-foreground mb-6 text-sm tracking-widest uppercase" style={{ color: 'oklch(0.78 0.12 55)' }}>
+          <SkillsCard prominent>
+            <h3 style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#E6A15A', marginBottom: '20px' }}>
               Tools
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
               {tools.map((tool) => (
-                <div
-                  key={tool.name}
-                  className="flex items-start gap-4 rounded-xl border border-border/30 hover:border-primary/30 transition-all duration-300 hover:bg-primary/5 group"
-                  style={{ padding: '12px 14px' }}
-                >
-                  <div className="shrink-0 mt-0.5">{tool.icon}</div>
-                  <div>
-                    <p className="text-sm text-foreground/80 group-hover:text-foreground transition-colors font-medium">{tool.name}</p>
-                    <p className="text-xs mt-0.5 transition-colors" style={{ color: 'rgba(255,255,255,0.28)' }}>{tool.desc}</p>
-                  </div>
-                </div>
+                <ToolItem key={tool.name} tool={tool} />
               ))}
             </div>
           </SkillsCard>
 
           {/* Strengths */}
-          <SkillsCard revealed={revealed}>
-            <h3 className="font-semibold text-foreground mb-6 text-sm tracking-widest uppercase" style={{ color: 'oklch(0.78 0.12 55)' }}>
+          <SkillsCard>
+            <h3 style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#E6A15A', marginBottom: '24px' }}>
               Strengths
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
               {strengths.map((strength) => (
-                <button
-                  key={strength}
-                  onMouseEnter={() => setHoveredStrength(strength)}
-                  onMouseLeave={() => setHoveredStrength(null)}
-                  style={{
-                    padding: '12px 20px',
-                    borderRadius: '12px',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    textAlign: 'left',
-                    border: `1px solid ${hoveredStrength === strength ? 'oklch(0.78 0.12 55 / 0.35)' : 'rgba(255,255,255,0.07)'}`,
-                    background: hoveredStrength === strength ? 'oklch(0.78 0.12 55 / 0.08)' : 'transparent',
-                    color: hoveredStrength === strength ? 'oklch(0.82 0.10 55)' : 'rgba(255,255,255,0.45)',
-                    boxShadow: hoveredStrength === strength ? '0 0 18px oklch(0.78 0.12 55 / 0.10)' : 'none',
-                    transition: 'all 0.3s ease',
-                    cursor: 'default',
-                    width: '100%',
-                  }}
-                >
-                  {strength}
-                </button>
+                <StrengthItem key={strength} label={strength} />
               ))}
             </div>
           </SkillsCard>
+
         </div>
       </div>
     </section>
   )
 }
 
-function SkillsCard({ children, revealed }: { children: React.ReactNode; revealed: boolean }) {
-  const { ref, revealed: cardRevealed } = useReveal()
+function StrengthItem({ label }: { label: string }) {
+  const [hovered, setHovered] = useState(false)
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '14px',
+        padding: '14px 0',
+        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        cursor: 'default',
+        transition: 'transform 0.2s ease',
+        transform: hovered ? 'translateX(5px)' : 'translateX(0)',
+      }}
+    >
+      <div style={{
+        width: '20px',
+        height: '1px',
+        background: '#E6A15A',
+        opacity: hovered ? 0.8 : 0.25,
+        flexShrink: 0,
+        transition: 'opacity 0.2s ease, width 0.2s ease',
+      }} />
+      <p style={{
+        fontSize: '14px',
+        fontWeight: 500,
+        color: hovered ? 'rgba(255,255,255,0.90)' : 'rgba(255,255,255,0.50)',
+        transition: 'color 0.2s ease',
+      }}>
+        {label}
+      </p>
+    </div>
+  )
+}
+
+function SkillsCard({ children, prominent }: { children: React.ReactNode; prominent?: boolean }) {
+  const { ref, revealed } = useReveal()
   const [hovered, setHovered] = useState(false)
   return (
     <div
       ref={ref}
-      className={`rounded-2xl reveal ${cardRevealed ? 'revealed' : ''}`}
+      className={`rounded-2xl reveal ${revealed ? 'revealed' : ''}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: 'rgba(255,255,255,0.02)',
-        border: `1px solid ${hovered ? 'rgba(200,136,74,0.20)' : 'rgba(255,255,255,0.05)'}`,
+        height: '100%',
+        background: prominent
+          ? 'rgba(230,161,90,0.03)'
+          : 'rgba(255,255,255,0.02)',
+        border: hovered
+          ? `1px solid rgba(230,161,90,${prominent ? '0.30' : '0.20'})`
+          : `1px solid ${prominent ? 'rgba(230,161,90,0.10)' : 'rgba(255,255,255,0.05)'}`,
         padding: 'clamp(24px, 3vw, 36px) clamp(18px, 2.5vw, 32px)',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-        boxShadow: hovered ? '0 12px 40px rgba(0,0,0,0.3), 0 0 24px oklch(0.78 0.12 55 / 0.08)' : 'none',
-        transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease',
+        transform: hovered ? 'translateY(-5px)' : 'translateY(0)',
+        boxShadow: hovered
+          ? `0 16px 48px rgba(0,0,0,0.35), 0 0 28px rgba(230,161,90,${prominent ? '0.12' : '0.07'})`
+          : prominent ? '0 0 0 1px rgba(230,161,90,0.04)' : 'none',
+        transition: 'transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease',
       }}
     >
       {children}

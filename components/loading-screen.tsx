@@ -62,7 +62,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
 
       {/* Logo */}
       <div className="relative flex flex-col items-center gap-6 animate-fade-in">
-        {/* Hexagonal logo mark */}
+        {/* Symbol mark */}
         <div className="relative">
           <svg width="80" height="80" viewBox="0 0 80 80" fill="none" className="animate-spin-slow opacity-20 absolute inset-0">
             <polygon
@@ -79,21 +79,20 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
               strokeWidth="1.5"
               fill="none"
             />
-            <text x="40" y="45" textAnchor="middle" fill="oklch(0.78 0.12 55)" fontSize="18" fontWeight="700" fontFamily="serif" className="animate-pulse-glow">
-              XB
+            <text x="40" y="46" textAnchor="middle" fill="oklch(0.78 0.12 55)" fontSize="17" fontWeight="700" letterSpacing="2" fontFamily="serif" className="animate-pulse-glow">
+              SY
             </text>
           </svg>
         </div>
 
-        {/* Studio name */}
+        {/* Name */}
         <div className="text-center">
           <h1
-            className="font-serif text-4xl md:text-5xl font-bold tracking-widest uppercase animate-logo-glow"
+            className="font-serif text-4xl md:text-5xl font-bold tracking-[0.22em] uppercase animate-logo-glow"
             style={{ color: 'oklch(0.78 0.12 55)' }}
           >
-            Xom Bee
+            Yoesel
           </h1>
-          <p className="text-muted-foreground text-xs tracking-[0.4em] uppercase mt-2">Studio</p>
         </div>
 
         {/* Sound wave bars */}

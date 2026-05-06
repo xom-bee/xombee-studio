@@ -83,7 +83,15 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative py-24 px-3 sm:px-6 lg:px-12 overflow-hidden" style={{ background: '#0B0B0F' }}>
+    <section id="contact" className="relative py-24 overflow-hidden" style={{ background: 'transparent' }}>
+      <style>{`
+        #contact input:focus,
+        #contact textarea:focus {
+          border-color: rgba(230,161,90,0.45) !important;
+          box-shadow: 0 0 0 3px rgba(230,161,90,0.08);
+          outline: none;
+        }
+      `}</style>
       {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
@@ -93,17 +101,17 @@ export function ContactSection() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
         {/* Header */}
         <div ref={ref} className={`mb-16 text-center reveal ${revealed ? 'revealed' : ''}`}>
-          <span className="text-xs tracking-widest uppercase mb-4 block" style={{ color: 'oklch(0.78 0.12 55)' }}>
+          <span style={{ fontSize: 'clamp(18px, 2vw, 22px)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#E6A15A', display: 'block', marginBottom: '16px' }}>
             Get in Touch
           </span>
           <h2 className="font-serif text-5xl md:text-6xl font-bold mb-6 text-balance">
-            Let&apos;s build your <span style={{ color: 'oklch(0.74 0.10 55)', textShadow: '0 0 16px oklch(0.78 0.12 55 / 0.18)' }}>stage</span>
+            Let&apos;s build your <span style={{ color: 'oklch(0.74 0.10 55)', textShadow: '0 0 16px oklch(0.78 0.12 55 / 0.18)' }}>digital stage</span>
           </h2>
           <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.38)', maxWidth: '440px', margin: '0 auto', lineHeight: 1.75, textAlign: 'center' }}>
-            Your sound deserves a visual identity that moves people. Let&apos;s create it together.
+            Your work deserves a strong digital presence that people can see and remember.
           </p>
         </div>
 
@@ -155,7 +163,7 @@ export function ContactSection() {
               <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Documents</p>
               <div style={{ display: 'flex' }}>
                 {[
-                  { label: 'Resume', file: '/Resume-Sangay-Yoesel.pdf' },
+                  { label: 'Download CV', file: '/CV-Sangay-Yoesel.pdf' },
                 ].map((doc) => (
                   <a
                     key={doc.label}
@@ -319,7 +327,7 @@ export function ContactSection() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-medium text-sm tracking-widest uppercase disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-medium text-sm disabled:opacity-60 disabled:cursor-not-allowed"
                   style={{
                     background: 'oklch(0.76 0.11 55)',
                     color: 'oklch(0.06 0 0)',

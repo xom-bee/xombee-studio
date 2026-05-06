@@ -165,7 +165,7 @@ export function ExperienceSection() {
   const { ref, revealed } = useReveal()
 
   return (
-    <section id="experience" className="py-24 px-6" style={{ background: '#0B0B0F', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+    <section id="experience" className="py-24 px-6" style={{ background: 'transparent', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div ref={ref} className={`mb-6 reveal ${revealed ? 'revealed' : ''}`}>

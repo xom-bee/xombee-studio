@@ -1,17 +1,18 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 const links = [
-  { label: 'Work', href: '#portfolio' },
-  { label: 'Music', href: '/music' },
-  { label: 'About', href: '#about' },
+  { label: 'Work', href: '/work' },
+  { label: 'About', href: '/about' },
 ]
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60)
@@ -19,12 +20,23 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const router = useRouter()
+  const handleLogoClick = () => {
+    setMenuOpen(false)
+    if (pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      router.push('/')
+    }
+  }
 
   const scrollTo = (href: string) => {
     setMenuOpen(false)
     if (href.startsWith('/')) {
       router.push(href)
+      return
+    }
+    if (pathname !== '/') {
+      router.push(`/${href}`)
       return
     }
     const el = document.querySelector(href)
@@ -44,7 +56,7 @@ export function Navbar() {
 
           {/* Logo */}
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={handleLogoClick}
             className="flex items-center gap-2.5 group"
           >
             <div className="relative w-7 h-7">
@@ -56,37 +68,45 @@ export function Navbar() {
                   fill="rgba(230, 161, 90, 0.08)"
                   className="transition-all duration-300 group-hover:fill-[rgba(230,161,90,0.2)]"
                 />
-                <text x="40" y="47" textAnchor="middle" fill="var(--color-gold)" fontSize="20" fontWeight="700">
-                  XB
+                <text x="40" y="47" textAnchor="middle" fill="var(--color-gold)" fontSize="18" fontWeight="700" letterSpacing="2">
+                  SY
                 </text>
               </svg>
             </div>
             <span
-              className="font-sans font-semibold tracking-wide text-sm hidden sm:block transition-colors duration-300"
-              style={{ color: 'rgba(255,255,255,0.85)' }}
+              className="font-serif font-bold tracking-[0.12em] text-sm hidden sm:block transition-opacity duration-300 group-hover:opacity-80"
+              style={{ color: 'rgba(255,255,255,0.88)' }}
             >
-              Xom Bee Studio
+              Yoesel
             </span>
           </button>
 
           {/* Desktop nav — wider spacing, subtler */}
           <nav aria-label="Main navigation" className="hidden md:flex items-center gap-12">
-            {links.map((link) => (
-              <button
-                key={link.label}
-                onClick={() => scrollTo(link.href)}
-                className="relative group transition-colors duration-300"
-                style={{ color: 'rgba(255,255,255,0.4)', fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase' }}
-                onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.85)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.4)' }}
-              >
-                {link.label}
-                <span
-                  className="absolute -bottom-1 left-0 w-0 h-px group-hover:w-full transition-all duration-300"
-                  style={{ background: 'var(--color-gold)' }}
-                />
-              </button>
-            ))}
+            {links.map((link) => {
+              const active = pathname === link.href
+              return (
+                <button
+                  key={link.label}
+                  onClick={() => scrollTo(link.href)}
+                  className="relative group transition-colors duration-300"
+                  style={{
+                    color: active ? 'var(--color-gold)' : 'rgba(255,255,255,0.4)',
+                    fontSize: '11px',
+                    letterSpacing: '0.14em',
+                    textTransform: 'uppercase',
+                  }}
+                  onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.85)' }}
+                  onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.4)' }}
+                >
+                  {link.label}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-px transition-all duration-300 ${active ? 'w-full' : 'w-0 group-hover:w-full'}`}
+                    style={{ background: 'var(--color-gold)' }}
+                  />
+                </button>
+              )
+            })}
           </nav>
 
           {/* CTA */}

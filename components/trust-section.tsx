@@ -44,7 +44,7 @@ export function TrustSection() {
     <section
       ref={sectionRef}
       style={{
-        background: '#0B0B0F',
+        background: 'transparent',
         padding: 'clamp(64px, 9vw, 112px) clamp(20px, 8vw, 140px)',
       }}
     >

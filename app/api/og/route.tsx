@@ -49,10 +49,10 @@ export async function GET() {
             y="47"
             textAnchor="middle"
             fill="#E6A15A"
-            fontSize="20"
+            fontSize="18"
             fontWeight="700"
           >
-            XB
+            SY
           </text>
         </svg>
 
@@ -67,7 +67,7 @@ export async function GET() {
             display: 'flex',
           }}
         >
-          Xom Bee Studio
+          Yoesel
         </div>
 
         {/* Tagline */}
