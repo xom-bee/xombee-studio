@@ -113,7 +113,7 @@ export function AboutPreviewSection() {
             boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(230,161,90,0.06), 0 0 40px rgba(230,161,90,0.07)',
           }}>
             <Image
-              src="/images/trust-portrait.JPG"
+              src="/images/trust-portrait.png"
               alt="Sangay Yoesel"
               fill
               style={{ objectFit: 'cover', objectPosition: 'center 20%' }}

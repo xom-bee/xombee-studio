@@ -181,7 +181,7 @@ export default function AboutPage() {
               zIndex: 1,
             }}>
               <Image
-                src="/images/about-page.JPG"
+                src="/images/about-page.png"
                 alt="Sangay Yoesel"
                 fill
                 priority
