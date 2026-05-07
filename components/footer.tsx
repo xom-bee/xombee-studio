@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 
 export function Footer() {
   const headingRef = useRef<HTMLDivElement>(null)
@@ -18,6 +19,14 @@ export function Footer() {
   return (
     <>
       <style>{`
+.ft-nav-link {
+          font-size: 13px;
+          color: rgba(255,255,255,0.35);
+          text-decoration: none;
+          transition: color 0.22s ease;
+          display: block;
+        }
+        .ft-nav-link:hover { color: rgba(255,255,255,0.75); }
 .ft-back-top {
           display: flex;
           align-items: center;
@@ -37,6 +46,22 @@ export function Footer() {
           display: inline-block;
           transition: transform 0.2s ease;
         }
+        .ft-bottom-bar {
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          align-items: center;
+          gap: 16px;
+          padding-top: 16px;
+          padding-bottom: 24px;
+          border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .ft-tagline { text-align: center; }
+        @media (max-width: 640px) {
+          .ft-bottom-bar {
+            grid-template-columns: 1fr auto;
+          }
+          .ft-tagline { display: none; }
+        }
       `}</style>
 
       {/* Thin amber divider */}
@@ -53,7 +78,7 @@ export function Footer() {
           ref={headingRef}
           style={{
             textAlign: 'center',
-            padding: 'clamp(48px, 6vw, 72px) 24px clamp(32px, 4vw, 48px)',
+            padding: 'clamp(48px, 6vw, 72px) clamp(24px, 5vw, 64px) clamp(32px, 4vw, 48px)',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -75,24 +100,24 @@ export function Footer() {
           }}>
             <p style={{
               fontFamily: 'serif',
-              fontSize: 'clamp(24px, 3.5vw, 40px)',
+              fontSize: 'clamp(22px, 3vw, 36px)',
               fontWeight: 700,
               lineHeight: 1.15,
               letterSpacing: '-0.02em',
               color: 'rgba(255,255,255,0.85)',
               textShadow: '0 0 60px rgba(230,161,90,0.10)',
-              marginBottom: '10px',
+              marginBottom: '12px',
             }}>
               Your story deserves a stage.
             </p>
             <p style={{
               fontFamily: 'serif',
-              fontSize: 'clamp(14px, 1.6vw, 18px)',
+              fontSize: 'clamp(13px, 1.4vw, 16px)',
               fontWeight: 400,
               fontStyle: 'italic',
-              lineHeight: 1.4,
-              color: 'rgba(255,255,255,0.28)',
-              letterSpacing: '0.01em',
+              lineHeight: 1.5,
+              color: 'rgba(255,255,255,0.26)',
+              letterSpacing: '0.02em',
             }}>
               Let&apos;s make it unforgettable.
             </p>
@@ -105,10 +130,15 @@ export function Footer() {
             paddingTop: 'clamp(28px, 4vw, 40px)',
             paddingBottom: 'clamp(28px, 4vw, 40px)',
             borderTop: '1px solid rgba(255,255,255,0.05)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            gap: '48px',
+            flexWrap: 'wrap',
           }}>
 
             {/* Brand */}
-            <div style={{ maxWidth: '360px' }}>
+            <div style={{ maxWidth: '320px' }}>
               {/* Logo + Name */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
                 <svg width="26" height="26" viewBox="0 0 80 80" fill="none">
@@ -133,7 +163,7 @@ export function Footer() {
               {/* Role */}
               <p style={{
                 fontSize: '10px',
-                fontWeight: 600,
+                fontWeight: 500,
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
                 color: '#E6A15A',
@@ -146,7 +176,7 @@ export function Footer() {
               {/* Description */}
               <p style={{
                 fontSize: '13px',
-                lineHeight: 1.70,
+                lineHeight: 1.75,
                 color: 'rgba(255,255,255,0.30)',
                 marginBottom: '16px',
               }}>
@@ -165,22 +195,33 @@ export function Footer() {
               </div>
             </div>
 
+            {/* Quick nav */}
+            <div>
+              <p style={{
+                fontSize: '10px',
+                fontWeight: 500,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.22)',
+                marginBottom: '16px',
+              }}>
+                Navigation
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <Link href="/work" className="ft-nav-link">Work</Link>
+                <Link href="/about" className="ft-nav-link">About</Link>
+                <Link href="/#contact" className="ft-nav-link">Contact</Link>
+              </div>
+            </div>
+
           </div>
 
           {/* ── 3. BOTTOM BAR ── */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr auto 1fr',
-            alignItems: 'center',
-            gap: '16px',
-            paddingTop: '16px',
-            paddingBottom: '24px',
-            borderTop: '1px solid rgba(255,255,255,0.04)',
-          }}>
+          <div className="ft-bottom-bar">
             <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.18)', letterSpacing: '0.02em' }}>
               &copy; 2026 Yoesel
             </p>
-            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.14)', fontStyle: 'italic', letterSpacing: '0.02em', textAlign: 'center' }}>
+            <p className="ft-tagline" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.14)', fontStyle: 'italic', letterSpacing: '0.02em' }}>
               Your sound deserves to be felt
             </p>
             <button

@@ -1,22 +1,23 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 export function HeroSection() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const heroRef = useRef<HTMLDivElement>(null)
+  const glowRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleMouse = (e: MouseEvent) => {
-      if (!heroRef.current) return
+      if (!heroRef.current || !glowRef.current) return
       const rect = heroRef.current.getBoundingClientRect()
-      setMousePos({
-        x: (e.clientX - rect.left - rect.width / 2) / rect.width,
-        y: (e.clientY - rect.top - rect.height / 2) / rect.height,
-      })
+      const x = ((e.clientX - rect.left) / rect.width) * 100
+      const y = ((e.clientY - rect.top) / rect.height) * 100
+      // Direct DOM update — no React re-render
+      glowRef.current.style.background =
+        `radial-gradient(ellipse 70% 50% at ${x}% ${y}%, rgba(230, 161, 90, 0.075) 0%, transparent 70%)`
     }
     const el = heroRef.current
-    el?.addEventListener('mousemove', handleMouse)
+    el?.addEventListener('mousemove', handleMouse, { passive: true })
     return () => el?.removeEventListener('mousemove', handleMouse)
   }, [])
 
@@ -27,8 +28,9 @@ export function HeroSection() {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
       style={{ background: 'transparent' }}
     >
-      {/* Breathing amber orb — reduced ~25% from previous */}
+      {/* Breathing amber orb */}
       <div
+        aria-hidden="true"
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none animate-glow-breathe"
         style={{
           width: '800px',
@@ -38,24 +40,27 @@ export function HeroSection() {
         }}
       />
 
-      {/* Aurora sweep — reduced ~25% from previous */}
+      {/* Aurora sweep */}
       <div
+        aria-hidden="true"
         className="absolute inset-0 pointer-events-none animate-aurora"
         style={{
           background: 'linear-gradient(105deg, transparent 30%, rgba(230, 161, 90, 0.03) 50%, transparent 70%)',
         }}
       />
 
-      {/* Mouse-driven glow — reduced ~25% from previous */}
+      {/* Mouse-driven glow — DOM-managed, no re-renders */}
       <div
+        ref={glowRef}
+        aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: `radial-gradient(ellipse 70% 50% at ${50 + mousePos.x * 8}% ${45 + mousePos.y * 8}%, rgba(230, 161, 90, 0.075) 0%, transparent 70%)`,
+          background: 'radial-gradient(ellipse 70% 50% at 50% 45%, rgba(230, 161, 90, 0.075) 0%, transparent 70%)',
           transition: 'background 0.4s ease',
         }}
       />
 
-      {/* Main content — slight top offset so it floats in space */}
+      {/* Main content */}
       <div
         className="relative z-10 text-center px-3 sm:px-6 max-w-4xl mx-auto w-full"
         style={{ marginTop: '6vh' }}
@@ -74,19 +79,18 @@ export function HeroSection() {
           You are heard.
         </div>
 
-        {/* Headline line 2 — white text with soft glow only behind "remembered?" */}
+        {/* Headline line 2 */}
         <div
           className="font-sans font-extrabold leading-[1.06] tracking-tight text-white"
           style={{
             fontSize: 'clamp(32px, 11vw, 92px)',
             animation: 'fade-in-up 1s 0.45s ease-out forwards',
             opacity: 0,
-            marginBottom: '64px',
+            marginBottom: 'clamp(32px, 6vw, 64px)',
           }}
         >
           But are you{' '}
           <span className="relative inline-block">
-            {/* Soft radial glow sitting behind the word */}
             <span
               aria-hidden="true"
               className="absolute pointer-events-none"
@@ -100,14 +104,14 @@ export function HeroSection() {
           </span>
         </div>
 
-        {/* Support line — breathable spacing, softer color */}
+        {/* Support line */}
         <p
           style={{
             fontSize: 'clamp(14px, 1.6vw, 17px)',
             lineHeight: 1.75,
-            color: '#A1A1AA',
+            color: 'rgba(255,255,255,0.45)',
             maxWidth: '600px',
-            margin: '0 auto 56px',
+            margin: '0 auto clamp(28px, 5vw, 56px)',
             animation: 'fade-in-up 1s 0.75s ease-out forwards',
             opacity: 0,
           }}
@@ -118,10 +122,11 @@ export function HeroSection() {
           </span>
         </p>
 
-        {/* Single CTA */}
+        {/* CTA */}
         <div style={{ animation: 'fade-in-up 1s 1.05s ease-out forwards', opacity: 0 }}>
           <button
             onClick={() => document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' })}
+            aria-label="View my portfolio work"
             style={{
               background: '#E6A15A',
               color: '#0B0B0F',
@@ -133,16 +138,16 @@ export function HeroSection() {
               textTransform: 'uppercase',
               border: 'none',
               cursor: 'pointer',
-              boxShadow: '0 4px 24px rgba(230, 161, 90, 0.18)',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              boxShadow: '0 4px 24px rgba(230, 161, 90, 0.22)',
+              transition: 'transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.03)'
-              e.currentTarget.style.boxShadow = '0 4px 32px rgba(230, 161, 90, 0.32)'
+              e.currentTarget.style.transform = 'scale(1.04) translateY(-1px)'
+              e.currentTarget.style.boxShadow = '0 8px 40px rgba(230, 161, 90, 0.42)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)'
-              e.currentTarget.style.boxShadow = '0 4px 24px rgba(230, 161, 90, 0.18)'
+              e.currentTarget.style.transform = 'scale(1) translateY(0)'
+              e.currentTarget.style.boxShadow = '0 4px 24px rgba(230, 161, 90, 0.22)'
             }}
           >
             View My Work
@@ -150,16 +155,20 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Minimal scroll indicator */}
+      {/* Scroll indicator */}
       <div
+        aria-hidden="true"
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
         style={{ animation: 'fade-in 1s 1.5s ease-out forwards', opacity: 0 }}
       >
         <div
           className="w-px h-10"
-          style={{ background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.08), transparent)' }}
+          style={{
+            background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.14), transparent)',
+            animation: 'scrollHint 2.4s ease-in-out infinite',
+          }}
         />
-        <span style={{ fontSize: '9px', letterSpacing: '0.4em', textTransform: 'uppercase', color: '#333338' }}>
+        <span style={{ fontSize: '9px', letterSpacing: '0.4em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)' }}>
           Scroll
         </span>
       </div>

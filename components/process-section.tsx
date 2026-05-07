@@ -74,18 +74,19 @@ export function ProcessSection() {
       <style>{`
         @keyframes process-float {
           0%, 100% { transform: translateY(0px);  opacity: 0.40; }
-          50%       { transform: translateY(-6px); opacity: 0.72; }
+          50%       { transform: translateY(-8px); opacity: 0.75; }
         }
         .process-icon-wrap {
           animation: process-float 3s ease-in-out infinite;
+          will-change: transform, opacity;
         }
         .process-card {
-          transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+          transition: transform 0.30s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.30s ease;
         }
         .process-card:hover {
-          transform: translateY(-3px);
-          border-color: rgba(230,161,90,0.25) !important;
-          box-shadow: 0 10px 32px rgba(0,0,0,0.38);
+          transform: translateY(-4px);
+          border-color: rgba(230,161,90,0.28) !important;
+          box-shadow: 0 16px 48px rgba(0,0,0,0.48), 0 0 0 1px rgba(230,161,90,0.06);
         }
       `}</style>
 
@@ -117,7 +118,7 @@ export function ProcessSection() {
         {/* Cards grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
           gap: '10px',
         }}>
           {steps.map((step) => (
@@ -157,9 +158,9 @@ export function ProcessSection() {
 
               {/* Description */}
               <p style={{
-                fontSize: 'clamp(12px, 1.1vw, 13px)',
-                color: 'rgba(255,255,255,0.38)',
-                lineHeight: 1.65,
+                fontSize: 'clamp(13px, 1.1vw, 14px)',
+                color: 'rgba(255,255,255,0.40)',
+                lineHeight: 1.70,
               }}>
                 {step.description}
               </p>

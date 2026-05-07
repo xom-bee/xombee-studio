@@ -18,47 +18,47 @@ export function AboutPreviewSection() {
           <div style={{ flex: '1 1 300px', maxWidth: '500px' }}>
 
             <div style={{
-              fontSize: 'clamp(18px, 2vw, 22px)',
-              fontWeight: 600,
-              letterSpacing: '0.06em',
+              fontSize: '11px',
+              fontWeight: 500,
+              letterSpacing: '0.16em',
               textTransform: 'uppercase',
               color: '#E6A15A',
-              marginBottom: '20px',
+              marginBottom: '16px',
             }}>
               About
             </div>
 
             {/* Heading */}
             <p style={{
-              fontSize: 'clamp(26px, 3.5vw, 36px)',
+              fontSize: 'clamp(24px, 3vw, 34px)',
               fontWeight: 700,
               lineHeight: 1.15,
               color: '#FFFFFF',
               letterSpacing: '-0.02em',
-              marginBottom: '28px',
+              marginBottom: '24px',
             }}>
               I started with music.
             </p>
 
             {/* Group 1 */}
-            <div style={{ marginBottom: '24px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.45)' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.80, color: 'rgba(255,255,255,0.45)' }}>
                 It was the first way I expressed myself.<br />
                 But I realized something was missing.
               </p>
             </div>
 
             {/* Group 2 */}
-            <div style={{ marginBottom: '24px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.30)' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.80, color: 'rgba(255,255,255,0.30)' }}>
                 The feeling was there.<br />
                 The identity was not.
               </p>
             </div>
 
             {/* Group 3 — emphasis */}
-            <div style={{ marginBottom: '24px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 600, lineHeight: 1.75, color: 'rgba(255,255,255,0.82)' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 600, lineHeight: 1.80, color: 'rgba(255,255,255,0.82)' }}>
                 That is where{' '}
                 <span style={{ color: '#E6A15A' }}>design</span>
                 {' '}came in.
@@ -66,8 +66,8 @@ export function AboutPreviewSection() {
             </div>
 
             {/* Group 4 */}
-            <div style={{ marginBottom: '40px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.45)' }}>
+            <div style={{ marginBottom: '36px' }}>
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.80, color: 'rgba(255,255,255,0.45)' }}>
                 Today, I design digital experiences that help creative artists express who they are and be remembered.
               </p>
             </div>

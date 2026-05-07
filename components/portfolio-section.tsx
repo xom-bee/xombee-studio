@@ -173,7 +173,7 @@ function PreviewCard({ projectId, color, variant }: { projectId: string; color: 
 
 function ProjectDetail({ project, onClose }: { project: typeof projects[0]; onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-100 bg-background/98 backdrop-blur-xl overflow-y-auto">
+    <div className="fixed inset-0 z-100 bg-background/98 backdrop-blur-xl overflow-y-auto overlay-enter">
       <div
         className="max-w-250 mx-auto px-3 sm:px-6 pt-10 sm:pt-16 pb-24 sm:pb-32"
       >
@@ -568,6 +568,7 @@ function ProjectRow({
               src={project.image}
               alt=""
               fill
+              sizes="100vw"
               style={{
                 objectFit: 'cover',
                 objectPosition: project.imagePosition ?? 'center center',
@@ -651,6 +652,7 @@ function ProjectRow({
               src={project.image}
               alt={project.title}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 640px"
               style={{
                 objectFit: 'cover',
                 objectPosition: project.imagePosition ?? 'center center',

@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
-import Script from 'next/script'
 import { Analytics } from '@/components/analytics'
 import { Navbar } from '@/components/navbar'
 import { BackgroundLayer } from '@/components/background-layer'
@@ -9,24 +8,50 @@ import './globals.css'
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Yoesel — Digital Designer for Creative Artists',
+  metadataBase: new URL('https://yoesel.com'),
+  title: {
+    default: 'Yoesel — Digital Designer for Creative Artists',
+    template: '%s — Yoesel',
+  },
   description:
     'I design personal websites that help artists be seen and remembered. Visual identity, UI/UX, and brand design by Sangay Yoesel.',
-  keywords: ['visual identity', 'music artist branding', 'UI/UX design', 'Bhutan', 'Yoesel', 'Sangay Yoesel'],
+  keywords: ['visual identity', 'music artist branding', 'UI/UX design', 'Bhutan', 'Yoesel', 'Sangay Yoesel', 'portfolio', 'web design'],
   authors: [{ name: 'Sangay Yoesel' }],
+  creator: 'Sangay Yoesel',
   openGraph: {
-    title: 'Yoesel',
-    description: 'Digital designer for creative artists',
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Yoesel',
+    title: 'Yoesel — Digital Designer for Creative Artists',
+    description: 'Personal websites for creative artists. Visual identity, UI/UX, and brand design.',
     images: [
       {
         url: '/api/og',
         width: 1200,
         height: 630,
+        alt: 'Yoesel — Digital Designer for Creative Artists',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Yoesel — Digital Designer for Creative Artists',
+    description: 'Personal websites for creative artists. Visual identity, UI/UX, and brand design.',
+    images: ['/api/og'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 }
 
@@ -57,25 +82,6 @@ export default function RootLayout({
           {children}
         </div>
         <Analytics />
-        <Script
-          id="clarity-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","wf3rv1xmng");`,
-          }}
-        />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-6PC3WD41GG"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-6PC3WD41GG');
-          `}
-        </Script>
       </body>
     </html>
   )

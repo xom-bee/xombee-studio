@@ -3,7 +3,16 @@
     "allow": [
       "Bash(git -C \"c:/Users/sanga/Downloads/Portfolio Website\" ls-files --others --exclude-standard)",
       "Bash(git -C \"c:/Users/sanga/Downloads/Portfolio Website\" status --short)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(npm list *)",
+      "Bash(npx eslint *)",
+      "Bash(npx next *)",
+      "Bash(node_modules/.bin/next lint *)",
+      "Bash(node \"node_modules/.bin/next\" lint --dir .)",
+      "Bash(npx tsc *)",
+      "Bash(node scripts/generate-assets.js)",
+      "Bash(node scripts/generate-favicon.js)",
+      "Read(//c/Users/sanga/.claude/projects/c--Users-sanga-Downloads-Portfolio-Website/memory/**)"
     ]
   }
 }

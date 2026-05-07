@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useReveal } from '@/hooks/use-reveal'
 
 const logos = [
@@ -40,6 +40,8 @@ const logos = [
     desc: 'Music artist identity — evocative, personal, and rooted in cultural emotion.',
     src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Serkhai%20Gawa-kIxJZL1zDDc0SHHHT9XcJQnpki0nec.png',
     objectFit: 'cover' as const,
+    link: 'https://www.youtube.com/watch?v=ElnpNEgbtR0',
+    linkText: 'View Identity Usage',
   },
   {
     id: 6,
@@ -47,6 +49,8 @@ const logos = [
     category: 'Digital Services',
     desc: 'Clean identity system for a trusted digital services platform built for modern businesses.',
     src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Dasho-whcxMkgP3NLY8B0iy8mhDDOTy50fRH.png',
+    link: 'https://www.tiktok.com/@dashodigital',
+    linkText: 'Explore Brand Presence',
   },
 ]
 
@@ -62,117 +66,106 @@ function SYMark({ size = 80 }: { size?: number }) {
   )
 }
 
-function Modal({ logo, onClose }: { logo: Logo; onClose: () => void }) {
+function ImageModal({ logo, onClose, isClosing }: { logo: Logo; onClose: () => void; isClosing: boolean }) {
+  const [imgHovered, setImgHovered] = useState(false)
   const isFeatured = 'featured' in logo && logo.featured
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${logo.name} logo preview`}
       style={{
         position: 'fixed', inset: 0, zIndex: 9999,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: '24px',
-        background: 'rgba(0,0,0,0.88)',
-        backdropFilter: 'blur(14px)',
-        WebkitBackdropFilter: 'blur(14px)',
-        animation: 'modalFadeIn 0.25s ease',
+        background: 'rgba(0,0,0,0.92)',
+        backdropFilter: 'blur(22px)',
+        WebkitBackdropFilter: 'blur(22px)',
+        animation: isClosing ? 'imgModalFadeOut 0.24s ease forwards' : 'modalFadeIn 0.28s ease',
+        cursor: 'pointer',
       }}
       onClick={onClose}
     >
+      {/* Close button — always top-right, independent of image position */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onClose() }}
+        aria-label="Close preview"
+        style={{
+          position: 'fixed', top: '20px', right: '20px', zIndex: 10001,
+          width: '38px', height: '38px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          borderRadius: '50%',
+          background: 'rgba(255,255,255,0.06)',
+          border: '1px solid rgba(255,255,255,0.10)',
+          color: 'rgba(255,255,255,0.45)',
+          cursor: 'pointer', fontSize: '14px',
+          transition: 'all 0.2s ease',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = 'rgba(230,161,90,0.14)'
+          e.currentTarget.style.color = '#E6A15A'
+          e.currentTarget.style.borderColor = 'rgba(230,161,90,0.40)'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
+          e.currentTarget.style.color = 'rgba(255,255,255,0.45)'
+          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'
+        }}
+      >
+        ✕
+      </button>
+
+      {/* Image wrapper — stops backdrop click from firing */}
       <div
         style={{
-          position: 'relative',
-          maxWidth: '460px',
-          width: '100%',
-          background: '#101014',
-          border: '1px solid rgba(230,161,90,0.20)',
-          borderRadius: '20px',
-          overflow: 'hidden',
-          boxShadow: '0 40px 100px rgba(0,0,0,0.75), 0 0 0 1px rgba(230,161,90,0.06)',
-          animation: 'modalScaleIn 0.3s cubic-bezier(0.22,1,0.36,1)',
+          animation: isClosing
+            ? 'imgModalScaleOut 0.24s cubic-bezier(0.4, 0, 1, 1) forwards'
+            : 'imgModalScaleIn 0.34s cubic-bezier(0.22, 1, 0.36, 1)',
+          cursor: 'default',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close */}
-        <button
-          onClick={onClose}
-          style={{
-            position: 'absolute', top: '14px', right: '14px', zIndex: 10,
-            width: '30px', height: '30px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            borderRadius: '50%',
-            background: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            color: 'rgba(255,255,255,0.40)',
-            cursor: 'pointer', fontSize: '13px',
-            transition: 'all 0.2s ease',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(230,161,90,0.12)'
-            e.currentTarget.style.color = '#E6A15A'
-            e.currentTarget.style.borderColor = 'rgba(230,161,90,0.35)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
-            e.currentTarget.style.color = 'rgba(255,255,255,0.40)'
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'
-          }}
-        >
-          ✕
-        </button>
-
-        {/* Image area */}
-        <div style={{
-          background: isFeatured ? 'rgba(230,161,90,0.03)' : '#0a0a0e',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          padding: '52px 44px',
-          minHeight: '260px',
-          position: 'relative',
-          borderBottom: '1px solid rgba(255,255,255,0.05)',
-        }}>
-          <div style={{
-            position: 'absolute', top: 0, left: 0, right: 0, height: '1px',
-            background: 'linear-gradient(90deg, transparent, rgba(230,161,90,0.35), transparent)',
-          }} />
-          <div style={{
-            position: 'absolute', top: '50%', left: '50%',
-            transform: 'translate(-50%,-50%)',
-            width: '220px', height: '220px',
-            background: 'radial-gradient(ellipse, rgba(230,161,90,0.07) 0%, transparent 70%)',
-            pointerEvents: 'none',
-          }} />
-          {logo.src ? (
-            <img
-              src={logo.src}
-              alt={logo.name}
-              style={{
-                maxWidth: '260px', maxHeight: '180px',
-                objectFit: 'objectFit' in logo && logo.objectFit === 'cover' ? 'cover' : 'contain',
-                position: 'relative', zIndex: 1,
-              }}
-            />
-          ) : (
-            <SYMark size={130} />
-          )}
-        </div>
-
-        {/* Info */}
-        <div style={{ padding: '22px 26px 26px' }}>
-          <p style={{
-            fontSize: '10px', fontWeight: 600, letterSpacing: '0.15em',
-            textTransform: 'uppercase', color: '#E6A15A', marginBottom: '8px',
-          }}>
-            {logo.category}
-          </p>
-          <p style={{
-            fontFamily: 'serif', fontSize: '21px', fontWeight: 700,
-            color: 'rgba(255,255,255,0.90)', letterSpacing: '-0.01em', marginBottom: '10px',
-          }}>
-            {logo.name}
-          </p>
-          <p style={{ fontSize: '13px', lineHeight: 1.70, color: 'rgba(255,255,255,0.36)' }}>
-            {logo.desc}
-          </p>
-        </div>
+        {logo.src ? (
+          <img
+            src={logo.src}
+            alt=""
+            loading="eager"
+            style={{
+              maxWidth: 'min(85vw, 860px)',
+              maxHeight: '82vh',
+              width: 'auto',
+              height: 'auto',
+              objectFit: 'contain',
+              borderRadius: '14px',
+              boxShadow: '0 48px 140px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.04), 0 0 60px rgba(230,161,90,0.04)',
+              transform: imgHovered ? 'scale(1.03)' : 'scale(1)',
+              transition: 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)',
+              cursor: 'default',
+              display: 'block',
+            }}
+            onMouseEnter={() => setImgHovered(true)}
+            onMouseLeave={() => setImgHovered(false)}
+          />
+        ) : (
+          <div
+            style={{
+              width: 'min(300px, 82vw)',
+              height: 'min(300px, 60vh)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              borderRadius: '14px',
+              background: 'rgba(230,161,90,0.04)',
+              border: '1px solid rgba(230,161,90,0.18)',
+              boxShadow: '0 48px 140px rgba(0,0,0,0.85)',
+              transform: imgHovered ? 'scale(1.03)' : 'scale(1)',
+              transition: 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+            onMouseEnter={() => setImgHovered(true)}
+            onMouseLeave={() => setImgHovered(false)}
+          >
+            <SYMark size={isFeatured ? 180 : 140} />
+          </div>
+        )}
       </div>
     </div>
   )
@@ -191,7 +184,9 @@ function LogoCard({
 }) {
   const { ref, revealed } = useReveal()
   const [flipped, setFlipped] = useState(false)
+  const [linkHovered, setLinkHovered] = useState(false)
   const isFeatured = 'featured' in logo && logo.featured
+  const hasLink = 'link' in logo && !!logo.link
 
   const handleClick = () => {
     if (isTouchDevice) {
@@ -208,11 +203,15 @@ function LogoCard({
   return (
     <div
       ref={ref}
+      role="button"
+      tabIndex={0}
+      aria-label={`${logo.name} — ${logo.category}. ${isTouchDevice ? 'Tap to explore.' : 'Hover to explore, click to preview.'}`}
       className={`reveal ${revealed ? 'revealed' : ''}`}
       style={{ transitionDelay: `${index * 0.07}s`, position: 'relative', paddingBottom: '118%', perspective: '1100px', cursor: 'pointer' }}
       onMouseEnter={() => !isTouchDevice && setFlipped(true)}
       onMouseLeave={() => !isTouchDevice && setFlipped(false)}
       onClick={handleClick}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleClick() } }}
     >
       {/* Flip container */}
       <div
@@ -266,7 +265,7 @@ function LogoCard({
           </div>
 
           {/* Front label */}
-          <div style={{ width: '100%', textAlign: 'center', padding: '0 20px 20px' }}>
+          <div className="logo-front-label" style={{ width: '100%', textAlign: 'center', padding: '0 20px 20px' }}>
             <p style={{
               fontSize: '13px', fontWeight: 600,
               color: isFeatured ? 'rgba(230,161,90,0.88)' : 'rgba(255,255,255,0.80)',
@@ -286,7 +285,7 @@ function LogoCard({
 
         {/* ── BACK ── */}
         <div
-          className="flip-face flip-face-back"
+          className="flip-face flip-face-back logo-back-face"
           style={{
             position: 'absolute', inset: 0,
             borderRadius: '16px', overflow: 'hidden',
@@ -312,20 +311,61 @@ function LogoCard({
             }}>
               {logo.category}
             </p>
-            <p style={{
+            <p className="logo-back-name" style={{
               fontFamily: 'serif', fontSize: '22px', fontWeight: 700,
               color: 'rgba(255,255,255,0.90)', letterSpacing: '-0.01em',
               marginBottom: '14px',
             }}>
               {logo.name}
             </p>
-            <p style={{
+            <p className="logo-back-desc" style={{
               fontSize: '12px', lineHeight: 1.7,
               color: 'rgba(255,255,255,0.36)',
               maxWidth: '190px', margin: '0 auto',
             }}>
               {logo.desc}
             </p>
+
+            {/* External identity link — only for logos that have one */}
+            {hasLink && (
+              <a
+                href={('link' in logo && logo.link) || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  marginTop: '20px',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  letterSpacing: '0.07em',
+                  color: linkHovered ? '#E6A15A' : 'rgba(255,255,255,0.30)',
+                  textDecoration: 'none',
+                  padding: '6px 13px',
+                  border: `1px solid ${linkHovered ? 'rgba(230,161,90,0.38)' : 'rgba(255,255,255,0.09)'}`,
+                  borderRadius: '999px',
+                  background: linkHovered ? 'rgba(230,161,90,0.08)' : 'transparent',
+                  boxShadow: linkHovered ? '0 0 16px rgba(230,161,90,0.12)' : 'none',
+                  transition: 'color 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease',
+                  cursor: 'pointer',
+                  minHeight: '30px',
+                }}
+                onMouseEnter={() => setLinkHovered(true)}
+                onMouseLeave={() => setLinkHovered(false)}
+              >
+                {'linkText' in logo && logo.linkText ? logo.linkText : 'Explore'}
+                <span style={{
+                  display: 'inline-block',
+                  transform: linkHovered ? 'translateX(3px)' : 'translateX(0)',
+                  transition: 'transform 0.25s ease',
+                  lineHeight: 1,
+                }}>
+                  →
+                </span>
+              </a>
+            )}
           </div>
 
           {/* Hint */}
@@ -350,17 +390,26 @@ export function LogoSection() {
   const { ref, revealed } = useReveal()
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   const [modalLogo, setModalLogo] = useState<Logo | null>(null)
+  const [isClosing, setIsClosing] = useState(false)
 
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0)
   }, [])
 
+  const handleClose = useCallback(() => {
+    setIsClosing(true)
+    setTimeout(() => {
+      setModalLogo(null)
+      setIsClosing(false)
+    }, 240)
+  }, [])
+
   // ESC to close
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setModalLogo(null) }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') handleClose() }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [])
+  }, [handleClose])
 
   // Lock scroll when modal open
   useEffect(() => {
@@ -371,10 +420,18 @@ export function LogoSection() {
   return (
     <>
       <style>{`
+        @media (max-width: 480px) {
+          .logo-back-face {
+            padding: 20px 14px !important;
+          }
+          .logo-front-label {
+            padding: 0 10px 14px !important;
+          }
+        }
         .flip-inner {
           transform-style: preserve-3d;
           -webkit-transform-style: preserve-3d;
-          transition: transform 0.60s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .flip-inner.flipped {
           transform: rotateY(180deg);
@@ -393,6 +450,18 @@ export function LogoSection() {
         @keyframes modalScaleIn {
           from { opacity: 0; transform: scale(0.94) translateY(8px); }
           to   { opacity: 1; transform: scale(1)    translateY(0);   }
+        }
+        @keyframes imgModalScaleIn {
+          from { opacity: 0; transform: scale(0.92); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes imgModalFadeOut {
+          from { opacity: 1; }
+          to   { opacity: 0; }
+        }
+        @keyframes imgModalScaleOut {
+          from { opacity: 1; transform: scale(1); }
+          to   { opacity: 0; transform: scale(0.94); }
         }
       `}</style>
 
@@ -421,7 +490,7 @@ export function LogoSection() {
           </div>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
             {logos.map((logo, i) => (
               <LogoCard
                 key={logo.id}
@@ -436,9 +505,9 @@ export function LogoSection() {
         </div>
       </section>
 
-      {/* Modal */}
+      {/* Image modal */}
       {modalLogo && (
-        <Modal logo={modalLogo} onClose={() => setModalLogo(null)} />
+        <ImageModal logo={modalLogo} onClose={handleClose} isClosing={isClosing} />
       )}
     </>
   )

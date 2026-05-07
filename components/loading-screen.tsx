@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 
 // Pre-computed stable values for sound wave bars to avoid hydration mismatch
 const LOADING_WAVE_BARS = [
@@ -116,11 +116,12 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
       <div className="absolute bottom-12 w-48">
         <div className="h-px bg-border rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full transition-all duration-100 ease-linear"
+            className="h-full rounded-full"
             style={{
               width: `${Math.min(progress, 100)}%`,
               background: 'oklch(0.78 0.12 55)',
               boxShadow: '0 0 8px oklch(0.78 0.12 55 / 0.8)',
+              transition: 'width 0.18s cubic-bezier(0.22, 1, 0.36, 1)',
             }}
           />
         </div>

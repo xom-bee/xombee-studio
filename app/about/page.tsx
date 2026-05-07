@@ -5,12 +5,12 @@ import Image from 'next/image'
 import { SkillsSection } from '@/components/skills-section'
 
 const skills = [
-  'UI/UX Design',
-  'Frontend Development',
-  'Wireframing & Prototyping',
-  'Information Architecture',
-  'Visual Design',
-  'User Research Basics',
+  { name: 'UI/UX Design',               desc: 'Designing intuitive digital experiences focused on clarity, emotion, and usability.' },
+  { name: 'Frontend Development',        desc: 'Building responsive and interactive interfaces that bring design systems to life.' },
+  { name: 'Wireframing & Prototyping',   desc: 'Structuring ideas into clear user flows and interactive visual concepts.' },
+  { name: 'Information Architecture',    desc: 'Organizing content and systems for better navigation and user understanding.' },
+  { name: 'Visual Design',               desc: 'Crafting modern visual systems with strong hierarchy, balance, and identity.' },
+  { name: 'User Research Basics',        desc: 'Understanding user behavior and identifying pain points to improve experiences.' },
 ]
 
 const experience = [
@@ -129,9 +129,9 @@ export default function AboutPage() {
               I design professional personal websites for creative artists.
             </p>
             <p style={{
-              fontSize: 'clamp(13px, 1.2vw, 14px)',
+              fontSize: 'clamp(14px, 1.2vw, 15px)',
               fontWeight: 400,
-              lineHeight: 1.6,
+              lineHeight: 1.65,
               color: 'rgba(255,255,255,0.38)',
               letterSpacing: '0.01em',
               marginBottom: '40px',
@@ -278,76 +278,143 @@ export default function AboutPage() {
           {sectionTitle('Core Skills')}
           <style>{`
             .skill-row {
-              transition: background 0.2s ease, padding-left 0.2s ease;
+              transition: background 0.28s ease, box-shadow 0.28s ease;
+              border-radius: 8px;
+              cursor: default;
             }
             .skill-row:hover {
-              background: rgba(230,161,90,0.04);
-              padding-left: 12px !important;
+              background: rgba(230,161,90,0.03);
+              box-shadow: inset 3px 0 0 rgba(230,161,90,0.38);
             }
             .skill-row:hover .skill-dot {
-              opacity: 0.9;
-              box-shadow: 0 0 6px rgba(230,161,90,0.6);
+              opacity: 1 !important;
+              box-shadow: 0 0 8px rgba(230,161,90,0.65);
             }
             .skill-row:hover .skill-label {
               color: rgba(255,255,255,1) !important;
             }
+            .skill-row:hover .skill-arrow {
+              opacity: 0.5;
+              transform: translateX(3px);
+            }
+
+            /* CSS grid trick — smooth zero-to-auto height with no layout jump */
+            .skill-desc-wrap {
+              display: grid;
+              grid-template-rows: 0fr;
+              opacity: 0;
+              transform: translateY(-4px);
+              transition:
+                grid-template-rows 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.26s ease 0.06s,
+                transform 0.30s cubic-bezier(0.22, 1, 0.36, 1) 0.06s;
+            }
+            .skill-row:hover .skill-desc-wrap {
+              grid-template-rows: 1fr;
+              opacity: 1;
+              transform: translateY(0);
+            }
+            .skill-desc-inner {
+              overflow: hidden;
+              min-height: 0;
+            }
+
+            .skill-dot {
+              transition: opacity 0.24s ease, box-shadow 0.24s ease;
+            }
+            .skill-label {
+              transition: color 0.24s ease;
+            }
+            .skill-arrow {
+              opacity: 0;
+              transform: translateX(0);
+              transition: opacity 0.24s ease, transform 0.28s cubic-bezier(0.22,1,0.36,1);
+              color: rgba(230,161,90,0.55);
+              font-size: 12px;
+              line-height: 1;
+            }
+            /* On touch devices descriptions are always visible */
+            @media (hover: none), (max-width: 768px) {
+              .skill-desc-wrap {
+                grid-template-rows: 1fr !important;
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+              }
+              .skill-arrow { display: none; }
+            }
           `}</style>
+
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {skills.map((skill, i) => {
-              const isKey = skill === 'UI/UX Design' || skill === 'Frontend Development'
+              const isKey = skill.name === 'UI/UX Design' || skill.name === 'Frontend Development'
               return (
                 <div
-                  key={skill}
+                  key={skill.name}
                   className="skill-row"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '14px',
-                    padding: '18px 0',
-                    paddingLeft: '0',
+                    padding: '16px 10px 16px 14px',
                     borderTop: i === 0 ? '1px solid rgba(255,255,255,0.06)' : 'none',
                     borderBottom: '1px solid rgba(255,255,255,0.06)',
-                    borderRadius: '6px',
-                    cursor: 'default',
                   }}
                 >
-                  {/* Left dot */}
-                  <div
-                    className="skill-dot"
-                    style={{
-                      width: '5px',
-                      height: '5px',
-                      borderRadius: '50%',
-                      background: '#E6A15A',
-                      opacity: isKey ? 0.7 : 0.28,
-                      flexShrink: 0,
-                      transition: 'opacity 0.2s ease, box-shadow 0.2s ease',
-                    }}
-                  />
-                  <span
-                    className="skill-label"
-                    style={{
-                      fontSize: 'clamp(15px, 1.8vw, 18px)',
-                      fontWeight: isKey ? 600 : 500,
-                      color: isKey ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.65)',
-                      transition: 'color 0.2s ease',
-                    }}
-                  >
-                    {skill}
-                  </span>
+                  {/* Row: dot + content column */}
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px' }}>
+
+                    {/* Dot — vertically aligned with first text line */}
+                    <div
+                      className="skill-dot"
+                      style={{
+                        width: '5px',
+                        height: '5px',
+                        borderRadius: '50%',
+                        background: '#E6A15A',
+                        opacity: isKey ? 0.70 : 0.28,
+                        flexShrink: 0,
+                        marginTop: '8px',
+                      }}
+                    />
+
+                    {/* Content column */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+
+                      {/* Skill name row */}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span
+                          className="skill-label"
+                          style={{
+                            fontSize: 'clamp(15px, 1.8vw, 18px)',
+                            fontWeight: isKey ? 600 : 500,
+                            color: isKey ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.65)',
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          {skill.name}
+                        </span>
+                        <span className="skill-arrow">→</span>
+                      </div>
+
+                      {/* Animated description reveal */}
+                      <div className="skill-desc-wrap">
+                        <div className="skill-desc-inner">
+                          <p style={{
+                            paddingTop: '7px',
+                            fontSize: 'clamp(12px, 1.2vw, 13px)',
+                            color: 'rgba(255,255,255,0.36)',
+                            lineHeight: 1.70,
+                            maxWidth: '480px',
+                          }}>
+                            {skill.desc}
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
                 </div>
               )
             })}
           </div>
-          <p style={{
-            marginTop: '24px',
-            fontSize: '13px',
-            color: 'rgba(255,255,255,0.35)',
-            lineHeight: 1.7,
-          }}>
-            <span style={{ color: 'rgba(230,161,90,0.55)', marginRight: '8px', letterSpacing: '0.06em', fontWeight: 500, fontSize: '11px' }}>Tools I use:</span>
-            Figma, Adobe Illustrator, Photoshop, Canva, CapCut
-          </p>
+
         </div>
 
         <SkillsSection />
@@ -369,6 +436,17 @@ export default function AboutPage() {
             .exp-item:hover .exp-dot {
               box-shadow: 0 0 8px rgba(230,161,90,0.7);
               opacity: 1 !important;
+            }
+            .achievement-item {
+              transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+            }
+            .achievement-item:hover {
+              transform: translateY(-3px);
+              border-color: rgba(230,161,90,0.30) !important;
+              box-shadow: 0 8px 28px rgba(0,0,0,0.30);
+            }
+            .achievement-item:hover .achievement-subtitle {
+              color: rgba(230,161,90,0.85) !important;
             }
           `}</style>
 
@@ -455,6 +533,7 @@ export default function AboutPage() {
             {achievements.map((item, i) => (
               <div
                 key={i}
+                className="achievement-item"
                 style={{
                   display: 'flex',
                   alignItems: 'flex-start',
@@ -476,12 +555,16 @@ export default function AboutPage() {
                   }}>
                     {item.title}
                   </p>
-                  <p style={{
-                    fontSize: '12px',
-                    color: 'rgba(230,161,90,0.60)',
-                    fontWeight: 400,
-                    lineHeight: 1.5,
-                  }}>
+                  <p
+                    className="achievement-subtitle"
+                    style={{
+                      fontSize: '12px',
+                      color: 'rgba(230,161,90,0.60)',
+                      fontWeight: 400,
+                      lineHeight: 1.5,
+                      transition: 'color 0.22s ease',
+                    }}
+                  >
                     {item.subtitle}
                   </p>
                 </div>

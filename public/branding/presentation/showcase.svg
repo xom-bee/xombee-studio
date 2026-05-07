@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <defs>
+    <radialGradient id="scGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E6A15A" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#E6A15A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#0B0B0F"/>
+  <rect width="1600" height="900" fill="url(#scGlow)"/>
+
+  <!-- Header label -->
+  <text x="80" y="74" fill="#E6A15A" fill-opacity="0.5" font-size="10"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="4">YOESEL — BRAND IDENTITY SYSTEM</text>
+  <line x1="80" y1="84" x2="1520" y2="84"
+    stroke="#E6A15A" stroke-width="0.5" stroke-opacity="0.15"/>
+
+  <!-- PRIMARY (dark bg, glow) — large center top -->
+  <rect x="580" y="120" width="440" height="260" rx="4" fill="#0D0D11"/>
+  <g transform="translate(680, 132)">
+    <!-- Symbol at scale 1.5x, center (120,80) -->
+    <polygon points="120,3 165,28 165,72 120,97 75,72 75,28"
+      stroke="#E6A15A" stroke-width="1.1" fill="none" opacity="0.25"/>
+    <polygon points="120,12 157,33 157,87 120,108 83,87 83,33"
+      stroke="#E6A15A" stroke-width="2" fill="#E6A15A" fill-opacity="0.09"/>
+    <text x="120" y="68" text-anchor="middle"
+      fill="#E6A15A" font-size="26" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="3">SY</text>
+    <text x="120" y="148" text-anchor="middle"
+      fill="#FFFFFF" fill-opacity="0.88" font-size="22" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="4">YOESEL</text>
+    <text x="120" y="168" text-anchor="middle"
+      fill="#FFFFFF" fill-opacity="0.32" font-size="8"
+      font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3">DESIGN &amp; MUSIC</text>
+  </g>
+  <text x="800" y="404" text-anchor="middle"
+    fill="#E6A15A" fill-opacity="0.4" font-size="9"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3">PRIMARY — DARK</text>
+
+  <!-- AMBER on transparent — left -->
+  <rect x="80" y="440" width="320" height="200" rx="4" fill="#111115"/>
+  <g transform="translate(140, 452)">
+    <polygon points="100,2 130,19 130,51 100,68 70,51 70,19"
+      stroke="#E6A15A" stroke-width="0.7" fill="none" opacity="0.28"/>
+    <polygon points="100,8 125,22 125,48 100,62 75,48 75,22"
+      stroke="#E6A15A" stroke-width="1.4" fill="#E6A15A" fill-opacity="0.07"/>
+    <text x="100" y="40" text-anchor="middle"
+      fill="#E6A15A" font-size="16" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="2">SY</text>
+    <text x="100" y="100" text-anchor="middle"
+      fill="#E6A15A" font-size="18" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="3">YOESEL</text>
+    <text x="100" y="118" text-anchor="middle"
+      fill="#E6A15A" fill-opacity="0.5" font-size="8"
+      font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="2">DESIGN &amp; MUSIC</text>
+  </g>
+  <text x="240" y="664" text-anchor="middle"
+    fill="#E6A15A" fill-opacity="0.4" font-size="9"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3">PRIMARY — AMBER</text>
+
+  <!-- WHITE on dark — center -->
+  <rect x="440" y="440" width="320" height="200" rx="4" fill="#0A0A0E"/>
+  <g transform="translate(500, 452)">
+    <polygon points="100,2 130,19 130,51 100,68 70,51 70,19"
+      stroke="#FFFFFF" stroke-width="0.7" fill="none" opacity="0.25"/>
+    <polygon points="100,8 125,22 125,48 100,62 75,48 75,22"
+      stroke="#FFFFFF" stroke-width="1.4" fill="#FFFFFF" fill-opacity="0.07"/>
+    <text x="100" y="40" text-anchor="middle"
+      fill="#FFFFFF" font-size="16" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="2">SY</text>
+    <text x="100" y="100" text-anchor="middle"
+      fill="#FFFFFF" fill-opacity="0.9" font-size="18" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="3">YOESEL</text>
+    <text x="100" y="118" text-anchor="middle"
+      fill="#FFFFFF" fill-opacity="0.4" font-size="8"
+      font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="2">DESIGN &amp; MUSIC</text>
+  </g>
+  <text x="600" y="664" text-anchor="middle"
+    fill="#E6A15A" fill-opacity="0.4" font-size="9"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3">MONOCHROME — WHITE</text>
+
+  <!-- BLACK on white — right -->
+  <rect x="800" y="440" width="320" height="200" rx="4" fill="#FFFFFF"/>
+  <g transform="translate(860, 452)">
+    <polygon points="100,2 130,19 130,51 100,68 70,51 70,19"
+      stroke="#000000" stroke-width="0.7" fill="none" opacity="0.2"/>
+    <polygon points="100,8 125,22 125,48 100,62 75,48 75,22"
+      stroke="#000000" stroke-width="1.4" fill="#000000" fill-opacity="0.06"/>
+    <text x="100" y="40" text-anchor="middle"
+      fill="#000000" font-size="16" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="2">SY</text>
+    <text x="100" y="100" text-anchor="middle"
+      fill="#000000" font-size="18" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="3">YOESEL</text>
+    <text x="100" y="118" text-anchor="middle"
+      fill="#000000" fill-opacity="0.4" font-size="8"
+      font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="2">DESIGN &amp; MUSIC</text>
+  </g>
+  <text x="960" y="664" text-anchor="middle"
+    fill="#E6A15A" fill-opacity="0.4" font-size="9"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3">MONOCHROME — BLACK</text>
+
+  <!-- SYMBOL ONLY — right -->
+  <rect x="1160" y="440" width="360" height="200" rx="4" fill="#0D0D11"/>
+  <g transform="translate(1260, 460)">
+    <!-- Symbol only, large, centered in 160x160 area -->
+    <polygon points="80,3 145,39 145,121 80,157 15,121 15,39"
+      stroke="#E6A15A" stroke-width="1.2" fill="none" opacity="0.25"/>
+    <polygon points="80,13 136,45 136,115 80,147 24,115 24,45"
+      stroke="#E6A15A" stroke-width="2.2" fill="#E6A15A" fill-opacity="0.09"/>
+    <text x="80" y="90" text-anchor="middle"
+      fill="#E6A15A" font-size="34" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="3">SY</text>
+  </g>
+  <text x="1340" y="664" text-anchor="middle"
+    fill="#E6A15A" fill-opacity="0.4" font-size="9"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3">SYMBOL — MARK</text>
+
+  <!-- Color palette swatches -->
+  <text x="80" y="730" fill="#E6A15A" fill-opacity="0.4" font-size="9"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3">COLOUR SYSTEM</text>
+  <!-- Amber -->
+  <rect x="80" y="746" width="48" height="48" rx="4" fill="#E6A15A"/>
+  <text x="104" y="810" text-anchor="middle"
+    fill="#E6A15A" fill-opacity="0.5" font-size="8"
+    font-family="'Helvetica Neue',Arial,sans-serif">#E6A15A</text>
+  <!-- Dark -->
+  <rect x="144" y="746" width="48" height="48" rx="4" fill="#0B0B0F" stroke="#333" stroke-width="0.5"/>
+  <text x="168" y="810" text-anchor="middle"
+    fill="#E6A15A" fill-opacity="0.5" font-size="8"
+    font-family="'Helvetica Neue',Arial,sans-serif">#0B0B0F</text>
+  <!-- White -->
+  <rect x="208" y="746" width="48" height="48" rx="4" fill="#FFFFFF" fill-opacity="0.9"/>
+  <text x="232" y="810" text-anchor="middle"
+    fill="#E6A15A" fill-opacity="0.5" font-size="8"
+    font-family="'Helvetica Neue',Arial,sans-serif">#FFFFFF</text>
+
+  <!-- Footer line -->
+  <line x1="80" y1="860" x2="1520" y2="860"
+    stroke="#E6A15A" stroke-width="0.5" stroke-opacity="0.15"/>
+  <text x="80" y="878" fill="#FFFFFF" fill-opacity="0.15" font-size="9"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3">yoesel.com</text>
+  <text x="1520" y="878" text-anchor="end" fill="#FFFFFF" fill-opacity="0.15" font-size="9"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3">BRAND IDENTITY SYSTEM — CONFIDENTIAL</text>
+</svg>

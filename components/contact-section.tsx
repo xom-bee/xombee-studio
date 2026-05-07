@@ -103,11 +103,11 @@ export function ContactSection() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
         {/* Header */}
-        <div ref={ref} className={`mb-16 text-center reveal ${revealed ? 'revealed' : ''}`}>
-          <span style={{ fontSize: 'clamp(18px, 2vw, 22px)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#E6A15A', display: 'block', marginBottom: '16px' }}>
+        <div ref={ref} className={`mb-12 text-center reveal ${revealed ? 'revealed' : ''}`}>
+          <span style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#E6A15A', display: 'block', marginBottom: '14px' }}>
             Get in Touch
           </span>
-          <h2 className="font-serif text-5xl md:text-6xl font-bold mb-6 text-balance">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance">
             Let&apos;s build your <span style={{ color: 'oklch(0.74 0.10 55)', textShadow: '0 0 16px oklch(0.78 0.12 55 / 0.18)' }}>digital stage</span>
           </h2>
           <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.38)', maxWidth: '440px', margin: '0 auto', lineHeight: 1.75, textAlign: 'center' }}>
@@ -196,7 +196,7 @@ export function ContactSection() {
             {/* 4. Social */}
             <div>
               <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Social</p>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
@@ -348,7 +348,7 @@ export function ContactSection() {
                   <Send size={14} />
                   {sending ? 'Sending...' : 'Send Message'}
                 </button>
-                <p style={{ textAlign: 'center', fontSize: '11px', color: 'rgba(255,255,255,0.22)', marginTop: '8px' }}>
+                <p style={{ textAlign: 'center', fontSize: '11px', color: 'rgba(255,255,255,0.22)' }}>
                   Usually replies within 24 hours
                 </p>
               </form>

@@ -7,7 +7,6 @@
   --color-gold: #E6A15A;
   --color-bg: #0B0B0F;
 
-  /* Xom Bee Studio - Dark music art space theme */
   --background: oklch(0.06 0 0);
   --foreground: oklch(0.96 0 0);
   --card: oklch(0.09 0 0);
@@ -30,23 +29,6 @@
   --radius: 0.5rem;
   --glow: oklch(0.78 0.12 55);
   --glow-dim: oklch(0.65 0.10 55 / 0.3);
-
-  /* Chart colors */
-  --chart-1: oklch(0.78 0.12 55);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-
-  /* Sidebar */
-  --sidebar: oklch(0.09 0 0);
-  --sidebar-foreground: oklch(0.96 0 0);
-  --sidebar-primary: oklch(0.78 0.12 55);
-  --sidebar-primary-foreground: oklch(0.06 0 0);
-  --sidebar-accent: oklch(0.13 0 0);
-  --sidebar-accent-foreground: oklch(0.96 0 0);
-  --sidebar-border: oklch(0.18 0 0);
-  --sidebar-ring: oklch(0.78 0.12 55);
 }
 
 @theme inline {
@@ -71,23 +53,10 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
   --color-glow: var(--glow);
   --color-glow-dim: var(--glow-dim);
 }
@@ -117,12 +86,6 @@
 }
 
 /* Custom animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-12px) rotate(1deg); }
-  66% { transform: translateY(-6px) rotate(-1deg); }
-}
-
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 0 20px var(--glow-dim); }
   50% { box-shadow: 0 0 40px var(--glow-dim), 0 0 80px var(--glow-dim); }
@@ -134,13 +97,13 @@
   100% { transform: scaleY(0.3); }
 }
 
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(30px); }
+@keyframes overlay-enter {
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -164,26 +127,9 @@
   to { transform: rotate(360deg); }
 }
 
-@keyframes particle-drift {
-  0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-  10% { opacity: 0.6; }
-  90% { opacity: 0.6; }
-  100% { transform: translateY(-10vh) translateX(30px); opacity: 0; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
 @keyframes logo-glow {
   0%, 100% { text-shadow: 0 0 20px oklch(0.78 0.12 55 / 0.5), 0 0 40px oklch(0.78 0.12 55 / 0.3); }
   50% { text-shadow: 0 0 40px oklch(0.78 0.12 55 / 0.8), 0 0 80px oklch(0.78 0.12 55 / 0.5), 0 0 120px oklch(0.78 0.12 55 / 0.3); }
-}
-
-@keyframes progress-bar {
-  from { width: 0%; }
-  to { width: 100%; }
 }
 
 @keyframes glow-breathe {
@@ -191,74 +137,32 @@
   50% { opacity: 0.5; transform: scale(1.15); }
 }
 
-@keyframes grid-drift {
-  0% { background-position: 0px 0px; }
-  100% { background-position: 80px 80px; }
-}
-
 @keyframes aurora-sweep {
   0%, 100% { transform: translateX(-25%) skewX(-6deg); opacity: 0.08; }
   50% { transform: translateX(25%) skewX(6deg); opacity: 0.16; }
 }
 
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-float-delay { animation: float 6s ease-in-out infinite 2s; }
-.animate-float-delay-2 { animation: float 6s ease-in-out infinite 4s; }
 .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
 .animate-spin-slow { animation: spin-slow 20s linear infinite; }
 .animate-logo-glow { animation: logo-glow 2s ease-in-out infinite; }
-.animate-progress { animation: progress-bar 4.5s ease-in-out forwards; }
 .animate-fade-in { animation: fadeIn 0.8s ease-out forwards; }
-.animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
 .animate-glow-breathe { animation: glow-breathe 5s ease-in-out infinite; }
-
-@keyframes subtle-scale {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.85); }
-}
-.animate-pulse-dot { animation: pulse 2s ease-in-out infinite; }
-.animate-grid-drift { animation: grid-drift 25s linear infinite; }
 .animate-aurora { animation: aurora-sweep 10s ease-in-out infinite; }
-
-/* Icon swap micro-animation */
-@keyframes iconPop {
-  from { opacity: 0; transform: scale(0.7); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-/* Page transition */
-@keyframes page-enter {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.page-enter {
-  animation: page-enter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* Glow text utility */
-.text-glow {
-  text-shadow: 0 0 20px oklch(0.78 0.12 55 / 0.6), 0 0 40px oklch(0.78 0.12 55 / 0.3);
-}
-
-.glow-border {
-  box-shadow: 0 0 0 1px oklch(0.78 0.12 55 / 0.3), 0 0 20px oklch(0.78 0.12 55 / 0.1);
-}
 
 /* Scroll reveal utility */
 .reveal {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(24px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 .reveal.revealed {
   opacity: 1;
   transform: translateY(0);
+}
+
+.overlay-enter {
+  animation: overlay-enter 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Custom scrollbar */
@@ -266,12 +170,6 @@
 ::-webkit-scrollbar-track { background: var(--background); }
 ::-webkit-scrollbar-thumb { background: oklch(0.78 0.12 55 / 0.4); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: oklch(0.78 0.12 55 / 0.8); }
-
-/* GPU acceleration for smooth animations */
-.gpu-accelerated {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
 
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
@@ -287,36 +185,34 @@
     opacity: 1;
     transform: none;
   }
-  .page-enter {
-    animation: none;
+}
+
+/* ── Process section — tighter padding on small mobile ──────────────────────── */
+@media (max-width: 480px) {
+  .process-card {
+    padding: 16px 16px 48px !important;
   }
 }
 
-/* Low-end device optimizations (reduce particles/effects) */
-@media (max-width: 640px) {
-  .animate-float,
-  .animate-float-delay,
-  .animate-float-delay-2 {
-    animation: none;
+/* ── Logo section back-face — reduce font on 2-col mobile ───────────────────── */
+@media (max-width: 480px) {
+  .logo-back-name {
+    font-size: 16px !important;
+  }
+  .logo-back-desc {
+    font-size: 11px !important;
   }
 }
 
 /* ── 320–360px micro-screen fixes ───────────────────────────────────────────── */
 @media (max-width: 360px) {
-  /* Reduce large heading utility classes */
-  .text-5xl { font-size: 1.875rem !important; }   /* 30px  */
-  .text-6xl { font-size: 2.125rem !important; }   /* 34px  */
-
-  /* Reduce form / card panel padding */
+  .text-5xl { font-size: 1.875rem !important; }
+  .text-6xl { font-size: 2.125rem !important; }
   .p-8 { padding: 20px !important; }
-
-  /* Tighten section vertical padding */
   .py-24 {
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
   }
-
-  /* Keep everything inside the viewport */
   * { box-sizing: border-box; }
   body { overflow-x: hidden; }
   img, svg, video { max-width: 100%; }

@@ -170,6 +170,23 @@ export function Navbar() {
             {link.label}
           </button>
         ))}
+        <button
+          onClick={() => scrollTo('#contact')}
+          className="font-sans font-medium transition-all duration-300"
+          style={{
+            fontSize: '13px',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--color-gold)',
+            border: '1px solid rgba(230,161,90,0.30)',
+            borderRadius: '999px',
+            padding: '12px 32px',
+            background: 'transparent',
+            marginTop: '8px',
+          }}
+        >
+          Let&apos;s Talk
+        </button>
       </div>
     </>
   )

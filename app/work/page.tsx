@@ -99,7 +99,7 @@ export default function WorkPage() {
           flexWrap: 'wrap',
           gap: '16px',
         }}>
-          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.22)', letterSpacing: '0.02em' }}>
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.32)', letterSpacing: '0.02em' }}>
             More projects available on request.
           </p>
           <Link
@@ -167,7 +167,7 @@ function ProjectCard({
               color: '#FFFFFF',
               lineHeight: 1.1,
             }}>
-              {project.title}
+              <Link href={project.href} style={{ color: 'inherit', textDecoration: 'none' }}>{project.title}</Link>
             </h2>
             {project.status && (
               <span style={{
@@ -206,7 +206,9 @@ function ProjectCard({
       </div>
 
       {/* Right: CTA */}
-      <CtaButton href={project.href} />
+      <div className="hidden sm:block">
+        <CtaButton href={project.href} />
+      </div>
     </div>
   )
 }

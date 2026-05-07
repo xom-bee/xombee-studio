@@ -1,133 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 
-const color = 'oklch(0.75 0.15 55)'
 const accent = '#E6A15A'
-
-// ─── Inline procedural visuals ──────────────────────────────────────────────
-
-// Visual 1: Homepage hero — XB mark + nav + hero text blocks
-function Visual1() {
-  return (
-    <svg viewBox="0 0 800 400" style={{ width: '100%', height: '100%' }}>
-      <rect width="800" height="400" fill="oklch(0.09 0 0)" />
-      {/* Navbar strip */}
-      <rect x="0" y="0" width="800" height="48" fill="oklch(0.07 0 0)" opacity="0.9" />
-      <polygon points="36,14 46,20 46,34 36,40 26,34 26,20" stroke={color} strokeWidth="1.2" fill={color} fillOpacity="0.12" />
-      <text x="36" y="28" textAnchor="middle" fill={color} fontSize="9" fontWeight="700">XB</text>
-      <rect x="550" y="18" width="40" height="8" rx="4" fill={color} opacity="0.20" />
-      <rect x="600" y="18" width="40" height="8" rx="4" fill={color} opacity="0.20" />
-      <rect x="680" y="14" width="80" height="18" rx="9" stroke={color} strokeWidth="0.8" fill="none" opacity="0.30" />
-      {/* Hero radial glow */}
-      <ellipse cx="400" cy="220" rx="260" ry="140" fill={color} fillOpacity="0.05" />
-      {/* Small label */}
-      <rect x="328" y="120" width="144" height="10" rx="5" fill={color} opacity="0.22" />
-      {/* Big heading */}
-      <rect x="180" y="148" width="440" height="36" rx="6" fill={color} opacity="0.30" />
-      <rect x="240" y="194" width="320" height="28" rx="6" fill={color} opacity="0.20" />
-      {/* Subline */}
-      <rect x="280" y="238" width="240" height="10" rx="5" fill={color} opacity="0.13" />
-      {/* CTA */}
-      <rect x="330" y="268" width="140" height="30" rx="15" fill={color} opacity="0.35" />
-      {/* Scroll hint */}
-      <rect x="392" y="320" width="16" height="22" rx="8" stroke={color} strokeWidth="0.8" fill="none" opacity="0.20" />
-      <rect x="398" y="325" width="4" height="8" rx="2" fill={color} opacity="0.25" />
-    </svg>
-  )
-}
-
-// Visual 2: Music section — track grid + audio player bar
-function Visual2() {
-  return (
-    <svg viewBox="0 0 800 360" style={{ width: '100%', height: '100%' }}>
-      <rect width="800" height="360" fill="oklch(0.09 0 0)" />
-      {/* Section label */}
-      <rect x="40" y="32" width="80" height="8" rx="4" fill={color} opacity="0.25" />
-      <rect x="40" y="50" width="200" height="22" rx="4" fill={color} opacity="0.32" />
-      {/* 4 track cards */}
-      {[0, 1, 2, 3].map((i) => (
-        <g key={i}>
-          <rect x={40 + i * 182} y={96} width={166} height={166} rx="12"
-            fill={color} opacity={0.07 + i * 0.02}
-            stroke={color} strokeWidth="0.8" strokeOpacity="0.20" />
-          {/* Album art placeholder */}
-          <rect x={52 + i * 182} y={108} width={142} height={108} rx="8" fill={color} opacity={0.10 + i * 0.03} />
-          {/* Play button */}
-          <circle cx={123 + i * 182} cy={162} r="20" fill="oklch(0.07 0 0)" opacity="0.70" />
-          <polygon points={`${117 + i * 182},154 ${117 + i * 182},170 ${133 + i * 182},162`} fill={color} opacity="0.55" />
-          {/* Track title */}
-          <rect x={52 + i * 182} y={224} width={90} height="8" rx="4" fill={color} opacity="0.28" />
-          <rect x={52 + i * 182} y={238} width={64} height="6" rx="3" fill={color} opacity="0.14" />
-        </g>
-      ))}
-      {/* Audio player bar */}
-      <rect x="0" y="296" width="800" height="64" fill="oklch(0.07 0 0)" opacity="0.95" />
-      {/* Album thumb */}
-      <rect x="20" y="308" width="40" height="40" rx="6" fill={color} opacity="0.22" />
-      {/* Track name */}
-      <rect x="72" y="314" width="100" height="8" rx="4" fill={color} opacity="0.28" />
-      <rect x="72" y="328" width="70" height="6" rx="3" fill={color} opacity="0.14" />
-      {/* Controls */}
-      <circle cx="400" cy="328" r="14" fill={color} opacity="0.20" />
-      <polygon points="394,322 394,334 408,328" fill={color} opacity="0.50" />
-      <rect x="358" y="325" width="24" height="6" rx="3" fill={color} opacity="0.14" />
-      <rect x="418" y="325" width="24" height="6" rx="3" fill={color} opacity="0.14" />
-      {/* Progress bar */}
-      <rect x="80" y="350" width="640" height="3" rx="1.5" fill={color} opacity="0.10" />
-      <rect x="80" y="350" width="200" height="3" rx="1.5" fill={color} opacity="0.45" />
-      <circle cx="280" cy="351.5" r="5" fill={color} opacity="0.60" />
-    </svg>
-  )
-}
-
-// Visual 3: Identity + interaction — brand system + hover states
-function Visual3() {
-  return (
-    <svg viewBox="0 0 800 320" style={{ width: '100%', height: '100%' }}>
-      <rect width="800" height="320" fill="oklch(0.09 0 0)" />
-      {/* Left: brand mark panel */}
-      <rect x="40" y="40" width="320" height="240" rx="14" stroke={color} strokeWidth="0.8" fill={color} fillOpacity="0.04" />
-      <polygon points="200,90 228,106 228,138 200,154 172,138 172,106"
-        stroke={color} strokeWidth="1.5" fill={color} fillOpacity="0.12" />
-      <text x="200" y="127" textAnchor="middle" fill={color} fontSize="18" fontWeight="700" opacity="0.65">XB</text>
-      <rect x="130" y="172" width="140" height="10" rx="5" fill={color} opacity="0.25" />
-      <rect x="150" y="190" width="100" height="7" rx="3" fill={color} opacity="0.14" />
-      {/* Color swatches */}
-      {[color, 'rgba(255,255,255,0.60)', 'rgba(255,255,255,0.12)', 'oklch(0.07 0 0)'].map((c, i) => (
-        <rect key={i} x={100 + i * 46} y={220} width="36" height="36" rx="8" fill={c} opacity={c === color ? 1 : 0.9} />
-      ))}
-      {/* Right: interaction states */}
-      <rect x="400" y="40" width="360" height="240" rx="14" stroke={color} strokeWidth="0.8" fill={color} fillOpacity="0.04" />
-      {/* Track card hover state */}
-      <rect x="420" y="58" width="150" height="150" rx="10" fill={color} opacity="0.10"
-        stroke={color} strokeWidth="1" strokeOpacity="0.40" />
-      <rect x="420" y="58" width="150" height="150" rx="10"
-        fill="url(#vignette)" opacity="0.35" />
-      <circle cx="495" cy="133" r="22" fill="oklch(0.07 0 0)" opacity="0.75" />
-      <polygon points="488,125 488,141 506,133" fill={color} opacity="0.70" />
-      {/* Waveform bars */}
-      {[18,28,14,32,22,30,16,26,20,24,12,28].map((h, i) => (
-        <rect key={i} x={424 + i * 10} y={222 - h} width="6" height={h} rx="2"
-          fill={color} opacity={0.15 + (i % 3) * 0.08} />
-      ))}
-      {/* Button states */}
-      <rect x="590" y="68" width="148" height="34" rx="17" stroke={color} strokeWidth="0.8" fill="none" opacity="0.25" />
-      <rect x="590" y="68" width="148" height="34" rx="17" fill={color} opacity="0.08" />
-      <rect x="616" y="80" width="90" height="8" rx="4" fill={color} opacity="0.30" />
-      <rect x="590" y="118" width="148" height="34" rx="17" fill={color} opacity="0.35" />
-      <rect x="620" y="130" width="80" height="8" rx="4" fill="oklch(0.09 0 0)" opacity="0.60" />
-      <rect x="590" y="168" width="148" height="34" rx="17" stroke={color} strokeWidth="1.2" fill={color} fillOpacity="0.05" opacity="0.55" />
-      <rect x="616" y="180" width="90" height="8" rx="4" fill={color} opacity="0.22" />
-      <defs>
-        <radialGradient id="vignette" cx="50%" cy="50%" r="60%">
-          <stop offset="0%" stopColor="black" stopOpacity="0" />
-          <stop offset="100%" stopColor="black" stopOpacity="0.6" />
-        </radialGradient>
-      </defs>
-    </svg>
-  )
-}
 
 // ─── Shared primitives ──────────────────────────────────────────────────────
 
@@ -150,19 +26,6 @@ function Divider() {
   return <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', margin: 'clamp(48px, 6vw, 64px) 0' }} />
 }
 
-function VisualBlock({ children, ratio = '2 / 1' }: { children: React.ReactNode; ratio?: string }) {
-  return (
-    <div style={{
-      borderRadius: '16px',
-      overflow: 'hidden',
-      border: '1px solid rgba(255,255,255,0.06)',
-      marginBottom: 'clamp(48px, 6vw, 64px)',
-      aspectRatio: ratio,
-    }}>
-      {children}
-    </div>
-  )
-}
 
 // ─── Page ───────────────────────────────────────────────────────────────────
 
@@ -193,7 +56,7 @@ export default function XomBeePage() {
           onMouseEnter={(e) => { e.currentTarget.style.color = accent }}
           onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.30)' }}
         >
-          ← All Work
+          ← View All Projects
         </Link>
 
         {/* ── 1. Project Overview ──────────────────────────────────────────── */}
@@ -216,8 +79,7 @@ export default function XomBeePage() {
             maxWidth: '580px',
             marginBottom: '36px',
           }}>
-            A personal website designed for a music artist to showcase songs, music videos,
-            and visual identity through a clean and emotional digital experience.
+            A personal artist website designed to bring music, visuals, and identity into one immersive digital experience.
           </p>
 
           {/* Meta */}
@@ -231,7 +93,7 @@ export default function XomBeePage() {
             {[
               { label: 'Duration', value: 'Jan 2025 – Apr 2025' },
               { label: 'Role', value: 'UI/UX Design · Frontend Development' },
-              { label: 'Team', value: 'Individual Project' },
+              { label: 'Team', value: 'Solo Project' },
             ].map((item, i) => (
               <div key={item.label} style={{
                 padding: '20px 24px',
@@ -249,7 +111,9 @@ export default function XomBeePage() {
         </div>
 
         {/* Visual 1: Homepage */}
-        <VisualBlock ratio="2 / 1"><Visual1 /></VisualBlock>
+        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2 / 1' }}>
+          <Image src="/images/xom-bee-1.png" alt="Xom Bee Official — screen 1" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
+        </div>
 
         <Divider />
 
@@ -291,62 +155,84 @@ export default function XomBeePage() {
             <SectionLabel>Problem</SectionLabel>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-                Most music artists share their work across different platforms without a unified identity.
+                Many music artists rely on separate platforms for music, videos, and social presence, resulting in a fragmented identity and disconnected audience experience.
               </p>
               <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
-                This makes it difficult for audiences to understand and remember the artist.
+                The lack of a dedicated digital space makes it harder for audiences to emotionally connect with the artist and their story.
               </p>
             </div>
           </div>
           <div>
             <SectionLabel>Goal</SectionLabel>
             <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-              To design a personal website that brings music, visuals, and identity into one place,
-              creating a stronger and more memorable presence.
+              To create a cinematic and emotionally driven digital platform that unifies music, visuals, and storytelling into one memorable artist identity.
             </p>
           </div>
         </div>
 
         {/* Visual 2: Music section */}
-        <VisualBlock ratio="2.22 / 1"><Visual2 /></VisualBlock>
+        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2.22 / 1' }}>
+          <Image src="/images/xom-bee-2.png" alt="Xom Bee Official — screen 2" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
+        </div>
 
         <Divider />
 
         {/* ── 5. Process ──────────────────────────────────────────────────── */}
         <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
           <SectionLabel>Process</SectionLabel>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '0',
-            marginBottom: '24px',
-          }}>
-            {['Research', 'Wireframes', 'UI Design', 'Development'].map((step, i, arr) => (
-              <div key={step} style={{ display: 'flex', alignItems: 'center' }}>
-                <span style={{
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.65)',
-                  padding: '10px 16px',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '8px',
-                  background: i === arr.length - 1 ? 'rgba(230,161,90,0.08)' : 'transparent',
-                  whiteSpace: 'nowrap' as const,
-                }}>
-                  {step}
-                </span>
-                {i < arr.length - 1 && (
-                  <span style={{ color: 'rgba(255,255,255,0.18)', fontSize: '12px', padding: '0 6px' }}>→</span>
-                )}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            {[
+              {
+                step: 'Research',
+                desc: 'Studied how modern music artists present themselves across digital platforms and identified gaps in identity consistency and emotional storytelling.',
+              },
+              {
+                step: 'Wireframing',
+                desc: 'Created structured layouts focused on music discovery, visual hierarchy, and immersive browsing.',
+              },
+              {
+                step: 'UI Design',
+                desc: 'Designed a cinematic interface that enhances emotional tone while keeping the experience minimal and focused.',
+              },
+              {
+                step: 'Development',
+                desc: 'Built the frontend experience with responsive interactions, smooth transitions, and performance-focused implementation.',
+              },
+            ].map((item, i, arr) => (
+              <div key={item.step} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
+                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{
+                    width: '28px', height: '28px', borderRadius: '50%',
+                    border: i === arr.length - 1 ? `1.5px solid ${accent}` : '1px solid rgba(255,255,255,0.14)',
+                    background: i === arr.length - 1 ? 'rgba(230,161,90,0.10)' : 'transparent',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <span style={{
+                      fontSize: '10px', fontWeight: 600, letterSpacing: '0.05em',
+                      color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.30)',
+                    }}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <div style={{ width: '1px', height: '28px', background: 'rgba(255,255,255,0.07)', marginTop: '4px' }} />
+                  )}
+                </div>
+                <div style={{ paddingTop: '4px' }}>
+                  <p style={{
+                    fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em',
+                    color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.65)',
+                    marginBottom: '6px',
+                  }}>
+                    {item.step}
+                  </p>
+                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
+                    {item.desc}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
-          <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.35)', lineHeight: 1.75, maxWidth: '520px' }}>
-            Began by understanding how music artists present themselves online.
-            Translated those insights into a structured layout, refined through UI design
-            and brought to life through frontend development.
-          </p>
         </div>
 
         <Divider />
@@ -360,10 +246,11 @@ export default function XomBeePage() {
             gap: '16px',
           }}>
             {[
-              'Used a dark theme to create a cinematic and focused experience',
-              'Applied minimal layouts to highlight music and visuals',
-              'Designed interactive elements to make the experience engaging',
-              'Maintained consistent visual identity across sections',
+              'Used a cinematic interface to create emotional depth and focus',
+              'Designed minimal layouts to prioritize music and visual storytelling',
+              'Introduced subtle interactions and motion to make the experience feel alive',
+              'Maintained consistent typography and spacing across all sections',
+              'Balanced modern web aesthetics with the artist\'s emotional identity',
             ].map((item, i) => (
               <div key={i} style={{
                 padding: '20px 22px',
@@ -384,7 +271,9 @@ export default function XomBeePage() {
         </div>
 
         {/* Visual 3: Identity + interactions */}
-        <VisualBlock ratio="2.5 / 1"><Visual3 /></VisualBlock>
+        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2.5 / 1' }}>
+          <Image src="/images/xom-bee-3.png" alt="Xom Bee Official — screen 3" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
+        </div>
 
         <Divider />
 
@@ -398,10 +287,115 @@ export default function XomBeePage() {
             letterSpacing: '-0.01em',
             color: 'rgba(255,255,255,0.82)',
             maxWidth: '620px',
+            marginBottom: '20px',
           }}>
-            The final website provides a complete digital identity for the artist, allowing
-            users to explore music and visuals in a more engaging and structured way.
+            The final website creates a stronger and more unified digital identity for the artist.
           </p>
+          <p style={{
+            fontSize: 'clamp(14px, 1.4vw, 16px)',
+            color: 'rgba(255,255,255,0.42)',
+            lineHeight: 1.75,
+            maxWidth: '580px',
+          }}>
+            It allows audiences to experience music, visuals, and storytelling within one immersive and emotionally connected platform.
+          </p>
+        </div>
+
+        <Divider />
+
+        {/* ── 8. Tech Stack ───────────────────────────────────────────────── */}
+        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
+          <SectionLabel>Tech Stack</SectionLabel>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+            {['Next.js', 'Tailwind CSS', 'TypeScript', 'Figma'].map((tech) => (
+              <span key={tech} style={{
+                fontSize: '12px',
+                fontWeight: 500,
+                letterSpacing: '0.04em',
+                color: 'rgba(255,255,255,0.55)',
+                padding: '8px 16px',
+                border: '1px solid rgba(255,255,255,0.09)',
+                borderRadius: '999px',
+                background: 'rgba(255,255,255,0.03)',
+              }}>
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <Divider />
+
+        {/* ── 9. Features ─────────────────────────────────────────────────── */}
+        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
+          <SectionLabel>Features</SectionLabel>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            {[
+              'Interactive music showcase',
+              'Responsive layout across devices',
+              'Animated transitions and hover interactions',
+              'Visual identity integration',
+              'Cinematic dark mode experience',
+              'Embedded music and media content',
+            ].map((item, i) => (
+              <div key={i} style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                <div style={{
+                  width: '5px', height: '5px', borderRadius: '50%',
+                  background: accent, opacity: 0.5, flexShrink: 0,
+                }} />
+                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.52)', lineHeight: 1.6 }}>
+                  {item}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <Divider />
+
+        {/* ── 10. Project Links ───────────────────────────────────────────── */}
+        <div style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
+          <SectionLabel>Project Links</SectionLabel>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <a
+              href="https://sangayyoesel.wixsite.com/xombeeofficial"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '16px 20px',
+                border: '1px solid rgba(255,255,255,0.07)',
+                borderRadius: '12px',
+                background: 'rgba(255,255,255,0.02)',
+                textDecoration: 'none',
+                transition: 'border-color 0.2s ease, background 0.2s ease',
+                maxWidth: '400px',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(230,161,90,0.30)'
+                e.currentTarget.style.background = 'rgba(230,161,90,0.04)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
+                e.currentTarget.style.background = 'rgba(255,255,255,0.02)'
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, opacity: 0.65 }}>
+                <circle cx="12" cy="12" r="10" stroke={accent} strokeWidth="1.5" />
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke={accent} strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              <div>
+                <p style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.72)', marginBottom: '2px' }}>
+                  Visit Live Experience
+                </p>
+                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)', letterSpacing: '0.02em' }}>
+                  xombeeofficial ↗
+                </p>
+              </div>
+            </a>
+          </div>
         </div>
 
         {/* ── Footer nav ──────────────────────────────────────────────────── */}
@@ -417,45 +411,48 @@ export default function XomBeePage() {
           <Link
             href="/work"
             style={{
-              fontSize: '12px',
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
+              fontSize: '13px',
+              fontWeight: 500,
+              letterSpacing: '0.04em',
               color: 'rgba(255,255,255,0.28)',
               textDecoration: 'none',
-              transition: 'color 0.2s ease',
+              transition: 'color 0.25s ease',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = accent }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.72)' }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.28)' }}
           >
-            ← All Work
+            ← View All Projects
           </Link>
           <Link
-            href="/#contact"
+            href="/work/scan2dine"
             style={{
               display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '12px',
-              fontWeight: 600,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: '#0B0B0F',
-              background: accent,
-              borderRadius: '999px',
-              padding: '12px 24px',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              gap: '4px',
               textDecoration: 'none',
-              transition: 'background 0.2s ease, transform 0.2s ease',
+              transition: 'opacity 0.25s ease',
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#d4904d'
-              e.currentTarget.style.transform = 'translateY(-2px)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = accent
-              e.currentTarget.style.transform = 'translateY(0)'
-            }}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.75' }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
           >
-            Start a Project →
+            <span style={{
+              fontSize: '10px',
+              fontWeight: 500,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.22)',
+            }}>
+              Next Case Study
+            </span>
+            <span style={{
+              fontSize: '15px',
+              fontWeight: 600,
+              letterSpacing: '-0.01em',
+              color: accent,
+            }}>
+              Scan2Dine →
+            </span>
           </Link>
         </div>
 
