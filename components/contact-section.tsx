@@ -90,17 +90,32 @@ export function ContactSection() {
       <style>{`
         #contact input:focus,
         #contact textarea:focus {
-          border-color: rgba(230,161,90,0.45) !important;
-          box-shadow: 0 0 0 3px rgba(230,161,90,0.08);
+          border-color: rgba(230,161,90,0.50) !important;
+          box-shadow: 0 0 0 4px rgba(230,161,90,0.07), 0 0 24px rgba(230,161,90,0.10);
           outline: none;
+          background: rgba(0,0,0,0.35) !important;
+          transition: border-color 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
+        }
+        #contact input,
+        #contact textarea {
+          transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
         }
       `}</style>
-      {/* Background glow */}
+
+      {/* Background glow — deeper, more spatial */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 60% 50% at 50% 80%, oklch(0.78 0.12 55 / 0.06) 0%, transparent 60%)',
+            'radial-gradient(ellipse 70% 55% at 50% 85%, oklch(0.78 0.12 55 / 0.07) 0%, transparent 65%)',
+        }}
+      />
+      {/* Top ambient trace — section depth */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 50% 35% at 20% 10%, rgba(230,161,90,0.022) 0%, transparent 70%)',
         }}
       />
 

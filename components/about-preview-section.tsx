@@ -116,9 +116,23 @@ export function AboutPreviewSection() {
           position: 'absolute',
           top: '15%',
           left: '-8%',
-          width: '48%',
-          height: '70%',
-          background: 'radial-gradient(ellipse, rgba(230,161,90,0.020) 0%, transparent 72%)',
+          width: '55%',
+          height: '72%',
+          background: 'radial-gradient(ellipse, rgba(230,161,90,0.028) 0%, transparent 68%)',
+          pointerEvents: 'none',
+          animation: 'edge-light-trace 22s ease-in-out infinite',
+        }}
+      />
+      {/* Right-side atmospheric depth — spatial separation */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '10%',
+          right: '-5%',
+          width: '40%',
+          height: '80%',
+          background: 'radial-gradient(ellipse, rgba(230,161,90,0.014) 0%, transparent 65%)',
           pointerEvents: 'none',
         }}
       />
@@ -234,8 +248,8 @@ export function AboutPreviewSection() {
             position: 'relative',
             borderRadius: '20px',
             overflow: 'hidden',
-            border: '1px solid rgba(255,255,255,0.08)',
-            boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(230,161,90,0.06), 0 0 40px rgba(230,161,90,0.07)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            boxShadow: '0 48px 110px rgba(0,0,0,0.68), 0 0 0 1px rgba(230,161,90,0.08), 0 0 60px rgba(230,161,90,0.09)',
           }}>
             <Image
               src="/images/trust-portrait.png"
@@ -244,25 +258,39 @@ export function AboutPreviewSection() {
               style={{ objectFit: 'cover', objectPosition: 'center 20%' }}
               sizes="(max-width: 768px) 100vw, 420px"
             />
-            {/* Left edge fade */}
+            {/* Cinematic edge vignette — frames portrait like a stage spotlight */}
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to right, rgba(11,11,15,0.35) 0%, transparent 30%)',
+              background: 'radial-gradient(ellipse 85% 90% at 55% 38%, transparent 28%, rgba(11,11,15,0.62) 100%)',
               pointerEvents: 'none',
             }} />
-            {/* Bottom fade */}
+            {/* Left edge darkness — foreground/background separation */}
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to bottom, transparent 50%, rgba(11,11,15,0.65) 100%)',
+              background: 'linear-gradient(to right, rgba(11,11,15,0.42) 0%, transparent 28%)',
               pointerEvents: 'none',
             }} />
-            {/* Warm amber tint */}
+            {/* Bottom fade — grounds the figure */}
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'rgba(230,161,90,0.04)',
+              background: 'linear-gradient(to bottom, transparent 42%, rgba(11,11,15,0.72) 100%)',
+              pointerEvents: 'none',
+            }} />
+            {/* Directional amber edge light — as if a warm stage light catches the right side */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to left, rgba(230,161,90,0.055) 0%, transparent 32%)',
+              pointerEvents: 'none',
+            }} />
+            {/* Top fade — cinematic frame top */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to bottom, rgba(11,11,15,0.28) 0%, transparent 18%)',
               pointerEvents: 'none',
             }} />
           </div>

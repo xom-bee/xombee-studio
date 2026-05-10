@@ -150,6 +150,10 @@ function ProjectRow({
   project: typeof projects[0]
 }) {
   const rowRef = useRef<HTMLDivElement>(null)
+  const cardRef = useRef<HTMLAnchorElement>(null)
+  const tiltRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number>(0)
+  const tiltState = useRef({ tx: 0, ty: 0, cx: 0, cy: 0 })
   const [visible, setVisible] = useState(false)
   const [imgHovered, setImgHovered] = useState(false)
 
@@ -165,6 +169,49 @@ function ProjectRow({
     )
     if (rowRef.current) observer.observe(rowRef.current)
     return () => observer.disconnect()
+  }, [])
+
+  // Mouse-based perspective tilt — slow lerp, max 4deg, cinematic not reactive
+  useEffect(() => {
+    const card = cardRef.current
+    if (!card) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const MAX_TILT = 4   // degrees
+    const LERP = 0.06    // lower = slower, heavier feel
+
+    const onMove = (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect()
+      const cx = (e.clientX - rect.left) / rect.width  - 0.5   // -0.5 to 0.5
+      const cy = (e.clientY - rect.top)  / rect.height - 0.5
+      tiltState.current.tx = -cy * MAX_TILT   // invert Y: mouse up → tilt back-top
+      tiltState.current.ty =  cx * MAX_TILT
+    }
+    const onLeave = () => {
+      tiltState.current.tx = 0
+      tiltState.current.ty = 0
+    }
+
+    const tick = () => {
+      const s = tiltState.current
+      s.cx += (s.tx - s.cx) * LERP
+      s.cy += (s.ty - s.cy) * LERP
+      if (tiltRef.current) {
+        tiltRef.current.style.transform =
+          `perspective(900px) rotateX(${s.cx.toFixed(3)}deg) rotateY(${s.cy.toFixed(3)}deg)`
+      }
+      rafRef.current = requestAnimationFrame(tick)
+    }
+
+    card.addEventListener('mousemove', onMove, { passive: true })
+    card.addEventListener('mouseleave', onLeave)
+    rafRef.current = requestAnimationFrame(tick)
+
+    return () => {
+      card.removeEventListener('mousemove', onMove)
+      card.removeEventListener('mouseleave', onLeave)
+      cancelAnimationFrame(rafRef.current)
+    }
   }, [])
 
   const href = project.caseStudyHref ?? '/work'
@@ -188,7 +235,7 @@ function ProjectRow({
           flex: '1 1 320px',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(24px)',
-          transition: 'opacity 1.1s 0s cubic-bezier(0.22, 1, 0.36, 1), transform 1.1s 0s cubic-bezier(0.22, 1, 0.36, 1)',
+          transition: 'opacity 1.4s 0s cubic-bezier(0.16, 1, 0.30, 1), transform 1.4s 0s cubic-bezier(0.16, 1, 0.30, 1)',
         }}
       >
         {/* Ongoing badge */}
@@ -339,28 +386,44 @@ function ProjectRow({
         </Link>
       </div>
 
-      {/* Visual side — navigates directly to case study */}
+      {/* Visual side — perspective tilt wrapper (preserves 3D on outer, overflow:hidden on inner) */}
+      <div
+        style={{
+          flex: '1 1 340px',
+          perspective: '900px',
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'translateY(0)' : 'translateY(24px) scale(0.96)',
+          transition: 'opacity 1.4s 0.24s cubic-bezier(0.16, 1, 0.30, 1), transform 1.4s 0.24s cubic-bezier(0.16, 1, 0.30, 1)',
+        }}
+      >
+      {/* Inner — receives perspective tilt; also the shadow+border host */}
+      <div
+        ref={tiltRef}
+        style={{
+          width: '100%',
+          transformStyle: 'preserve-3d',
+          transition: 'box-shadow 0.65s cubic-bezier(0.16, 1, 0.30, 1)',
+          boxShadow: imgHovered
+            ? `0 48px 110px rgba(0,0,0,0.80), 0 0 90px ${project.accent}3A, 0 0 0 1px rgba(255,255,255,0.10)`
+            : project.image
+              ? `0 36px 90px rgba(0,0,0,0.72), 0 0 80px ${project.accent}28, 0 0 0 1px rgba(255,255,255,0.05)`
+              : '0 36px 90px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04)',
+          borderRadius: '20px',
+        }}
+      >
       <Link
+        ref={cardRef}
         href={href}
         onMouseEnter={() => setImgHovered(true)}
         onMouseLeave={() => setImgHovered(false)}
         style={{
           display: 'block',
-          flex: '1 1 340px',
           aspectRatio: '4 / 3',
           borderRadius: '20px',
           overflow: 'hidden',
           position: 'relative',
           background: '#06060A',
           cursor: 'pointer',
-          opacity: visible ? 1 : 0,
-          transform: visible ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(20px)',
-          transition: 'opacity 0.85s 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1)',
-          boxShadow: imgHovered
-            ? `0 40px 96px rgba(0,0,0,0.75), 0 0 80px ${project.accent}38, 0 0 0 1px rgba(255,255,255,0.08)`
-            : project.image
-              ? `0 32px 80px rgba(0,0,0,0.7), 0 0 72px ${project.accent}30, 0 0 0 1px rgba(255,255,255,0.04)`
-              : '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)',
         }}
       >
         {project.image && project.compositeUi ? (
@@ -483,18 +546,38 @@ function ProjectRow({
               </filter>
               <rect width="100%" height="100%" filter="url(#img-grain)" />
             </svg>
+            {/* Cinematic edge vignette — frames the image like a stage spotlight */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'radial-gradient(ellipse 88% 85% at 50% 48%, transparent 30%, rgba(6,6,10,0.62) 100%)',
+              pointerEvents: 'none',
+            }} />
+            {/* Ambient amber edge light — directional warmth from top-left */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(135deg, rgba(230,161,90,0.048) 0%, transparent 42%)',
+              pointerEvents: 'none',
+            }} />
           </>
         ) : (
           <>
             <ProceduralVisual projectId={project.id} color={project.color} variant={0} />
             <div style={{
               position: 'absolute', inset: 0,
-              background: 'radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(6,6,10,0.55) 100%)',
+              background: 'radial-gradient(ellipse 88% 85% at 50% 48%, transparent 30%, rgba(6,6,10,0.70) 100%)',
+              pointerEvents: 'none',
+            }} />
+            {/* Ambient amber edge light */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(135deg, rgba(230,161,90,0.036) 0%, transparent 40%)',
               pointerEvents: 'none',
             }} />
           </>
         )}
       </Link>
+      </div>{/* /tilt inner */}
+      </div>{/* /perspective wrapper */}
     </div>
   )
 }

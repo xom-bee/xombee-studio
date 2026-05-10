@@ -80,15 +80,26 @@ export function HeroSection() {
         }}
       />
 
-      {/* Readability vignette — frames the scene, protects typography */}
+      {/* Readability vignette — cinematic framing: heavier edge darkness, protects typography */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"
         style={{
           background: `
-            radial-gradient(ellipse 90% 80% at 50% 46%, transparent 30%, rgba(11,11,15,0.58) 100%),
-            linear-gradient(to bottom, rgba(11,11,15,0.24) 0%, transparent 20%, transparent 78%, rgba(11,11,15,0.36) 100%)
+            radial-gradient(ellipse 85% 75% at 50% 46%, transparent 22%, rgba(11,11,15,0.68) 100%),
+            linear-gradient(to bottom, rgba(11,11,15,0.30) 0%, transparent 18%, transparent 76%, rgba(11,11,15,0.50) 100%),
+            linear-gradient(to right, rgba(11,11,15,0.18) 0%, transparent 12%, transparent 88%, rgba(11,11,15,0.18) 100%)
           `,
+        }}
+      />
+
+      {/* Cinematic edge light trace — extremely faint amber catching the left edge */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to right, rgba(230,161,90,0.022) 0%, transparent 18%)',
+          animation: 'edge-light-trace 18s ease-in-out infinite',
         }}
       />
 
@@ -169,25 +180,36 @@ export function HeroSection() {
 
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — slower cinematic pacing */}
       <div
         aria-hidden="true"
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10"
-        style={{ animation: 'fade-in 1s 1.5s ease-out forwards', opacity: 0 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-10"
+        style={{ animation: 'fade-in 1.4s 2.0s ease-out forwards', opacity: 0 }}
       >
+        {/* Amber dot — breathes before line drops */}
         <div
-          className="w-px h-10"
           style={{
-            background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.14), transparent)',
-            animation: 'scrollHint 2.4s ease-in-out infinite',
+            width: '3px',
+            height: '3px',
+            borderRadius: '50%',
+            background: 'rgba(230,161,90,0.45)',
+            boxShadow: '0 0 6px rgba(230,161,90,0.28)',
+            animation: 'scrollHint 3.2s ease-in-out infinite',
+          }}
+        />
+        <div
+          className="w-px h-12"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(230,161,90,0.28), rgba(255,255,255,0.08), transparent)',
+            animation: 'scrollHint 3.2s ease-in-out infinite 0.4s',
           }}
         />
         <span
           style={{
-            fontSize: '9px',
-            letterSpacing: '0.4em',
+            fontSize: '8px',
+            letterSpacing: '0.5em',
             textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.22)',
+            color: 'rgba(255,255,255,0.18)',
           }}
         >
           Scroll
