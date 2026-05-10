@@ -100,19 +100,78 @@ export function ProcessSection() {
           animation: process-float 5.5s ease-in-out infinite;
           will-change: transform, opacity;
         }
+        /* Architectural drift — right source, slow traverse */
+        @keyframes process-drift-r {
+          0%, 100% { transform: translate(0px, 0px) scale(1.00); opacity: 0.70; }
+          33%       { transform: translate(-22px, 12px) scale(1.05); opacity: 1.00; }
+          66%       { transform: translate(12px, -8px) scale(0.97); opacity: 0.80; }
+        }
+        /* Bottom-left source, slower counter-phase */
+        @keyframes process-drift-l {
+          0%, 100% { transform: translate(0px, 0px) scale(1.00); opacity: 0.55; }
+          40%       { transform: translate(18px, -15px) scale(1.08); opacity: 0.90; }
+          75%       { transform: translate(-10px, 8px) scale(0.96); opacity: 0.65; }
+        }
+        /* Central faint luminance — very slow breath */
+        @keyframes process-center-breathe {
+          0%, 100% { opacity: 0.00; transform: scale(0.90); }
+          50%       { opacity: 1.00; transform: scale(1.10); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .process-atmo { animation: none !important; }
+        }
       `}</style>
 
-      {/* Atmospheric ambient — traces the hero's amber world into this section */}
+      {/* Atmospheric system — architectural: ceiling-right source + floor-left fill + central breath */}
+
+      {/* Right ambient — primary architectural source, like a high directional ceiling light */}
       <div
+        className="process-atmo"
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: '5%',
-          right: '5%',
-          width: '45%',
-          height: '65%',
-          background: 'radial-gradient(ellipse, rgba(230,161,90,0.022) 0%, transparent 72%)',
+          top: '-5%',
+          right: '-8%',
+          width: '52%',
+          height: '75%',
+          background: 'radial-gradient(ellipse at 60% 30%, rgba(230,161,90,0.026) 0%, rgba(230,161,90,0.010) 45%, transparent 72%)',
           pointerEvents: 'none',
+          animation: 'process-drift-r 28s ease-in-out infinite',
+          willChange: 'transform, opacity',
+        }}
+      />
+
+      {/* Bottom-left ambient — reflected fill from the floor, countering the ceiling source */}
+      <div
+        className="process-atmo"
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          bottom: '0%',
+          left: '-5%',
+          width: '42%',
+          height: '60%',
+          background: 'radial-gradient(ellipse at 30% 70%, rgba(230,161,90,0.018) 0%, transparent 68%)',
+          pointerEvents: 'none',
+          animation: 'process-drift-l 36s ease-in-out infinite 4s',
+          willChange: 'transform, opacity',
+        }}
+      />
+
+      {/* Central faint luminance — breathes once every 32s, pure spatial depth */}
+      <div
+        className="process-atmo"
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '30%',
+          left: '30%',
+          width: '40%',
+          height: '40%',
+          background: 'radial-gradient(ellipse, rgba(230,161,90,0.014) 0%, transparent 65%)',
+          pointerEvents: 'none',
+          animation: 'process-center-breathe 32s ease-in-out infinite 10s',
+          willChange: 'opacity, transform',
         }}
       />
 
@@ -157,7 +216,7 @@ export function ProcessSection() {
               <Card
                 hover
                 surface="elevated"
-                className="process-card"
+                className="process-card shimmer-surface"
                 style={{ padding: '24px 24px 52px', position: 'relative', overflow: 'hidden' }}
               >
                 {/* Step label */}

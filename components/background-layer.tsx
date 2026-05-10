@@ -127,6 +127,36 @@ export function BackgroundLayer() {
           }}
         />
 
+        {/* Slow luminance scan — a horizontal band of faint warmth that drifts top→bottom.
+            Cycle: 42s. Opacity peaks at 0.018 — felt at threshold of perception, never seen. */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: '38%',
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(230,161,90,0.018) 40%, rgba(230,161,90,0.018) 60%, transparent 100%)',
+            pointerEvents: 'none',
+            animation: 'lum-scan-y 42s cubic-bezier(0.16, 1, 0.30, 1) infinite 8s',
+          }}
+        />
+        {/* Second scan — offset in time so there is always at least one in transit */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            height: '30%',
+            background: 'linear-gradient(to bottom, transparent 0%, rgba(230,161,90,0.012) 40%, rgba(230,161,90,0.012) 60%, transparent 100%)',
+            pointerEvents: 'none',
+            animation: 'lum-scan-y 42s cubic-bezier(0.16, 1, 0.30, 1) infinite 29s',
+          }}
+        />
+
         {/* Mouse-parallax container — drifts up to 8px */}
         <div ref={parallaxRef} style={{ position: 'absolute', inset: '-30px' }}>
 

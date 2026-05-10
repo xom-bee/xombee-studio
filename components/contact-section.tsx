@@ -102,20 +102,49 @@ export function ContactSection() {
         }
       `}</style>
 
-      {/* Background glow — deeper, more spatial */}
+      {/* Contact atmosphere — quiet ending scene. Warmth rises from the floor,
+          like an invitation glow. Three orbs with independent phases, never in sync. */}
+
+      {/* Primary floor warmth — rises and breathes like a warm invitation */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 70% 55% at 50% 85%, oklch(0.78 0.12 55 / 0.07) 0%, transparent 65%)',
+            'radial-gradient(ellipse 72% 58% at 50% 92%, rgba(230,161,90,0.068) 0%, rgba(230,161,90,0.024) 40%, transparent 68%)',
+          animation: 'section-breathe-a 24s ease-in-out infinite',
         }}
       />
-      {/* Top ambient trace — section depth */}
+
+      {/* Left ambient — quiet, very faint, holds the space from collapsing */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(ellipse 50% 35% at 20% 10%, rgba(230,161,90,0.022) 0%, transparent 70%)',
+            'radial-gradient(ellipse 50% 45% at 8% 55%, rgba(230,161,90,0.020) 0%, transparent 70%)',
+          animation: 'section-breathe-c 36s ease-in-out infinite 8s',
+        }}
+      />
+
+      {/* Top ambient trace — memory of the journey above, very faint */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 48% 32% at 78% 8%, rgba(230,161,90,0.016) 0%, transparent 72%)',
+          animation: 'section-breathe-b 44s ease-in-out infinite 14s',
+        }}
+      />
+
+      {/* Horizontal separation — a nearly invisible line of warmth at the visual midpoint */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          left: 0, right: 0,
+          top: '48%',
+          height: '4px',
+          background: 'linear-gradient(to right, transparent 0%, rgba(230,161,90,0.012) 30%, rgba(230,161,90,0.020) 50%, rgba(230,161,90,0.012) 70%, transparent 100%)',
+          filter: 'blur(2px)',
+          animation: 'atmo-drift-x 28s ease-in-out infinite',
         }}
       />
 
@@ -341,22 +370,24 @@ export function ContactSection() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-medium text-sm disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-medium text-sm disabled:opacity-60 disabled:cursor-not-allowed shimmer-surface"
                   style={{
                     background: 'oklch(0.76 0.11 55)',
                     color: 'oklch(0.06 0 0)',
                     boxShadow: '0 4px 20px oklch(0.78 0.12 55 / 0.18)',
-                    transition: 'background 0.38s ease, box-shadow 0.38s ease, transform 0.42s cubic-bezier(0.22,1,0.36,1)',
+                    transition: 'background 0.50s ease, box-shadow 0.55s ease, transform 0.55s cubic-bezier(0.16,1,0.30,1)',
+                    overflow: 'hidden',
+                    position: 'relative',
                   }}
                   onMouseEnter={(e) => {
-                    ;(e.currentTarget as HTMLButtonElement).style.background = 'oklch(0.80 0.12 55)'
-                    ;(e.currentTarget as HTMLButtonElement).style.boxShadow = '0 8px 28px oklch(0.78 0.12 55 / 0.28)'
-                    ;(e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)'
+                    ;(e.currentTarget as HTMLButtonElement).style.background = 'oklch(0.81 0.12 55)'
+                    ;(e.currentTarget as HTMLButtonElement).style.boxShadow = '0 12px 44px oklch(0.78 0.12 55 / 0.32), 0 0 60px oklch(0.78 0.12 55 / 0.08)'
+                    ;(e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-3px) scale(1.01)'
                   }}
                   onMouseLeave={(e) => {
                     ;(e.currentTarget as HTMLButtonElement).style.background = 'oklch(0.76 0.11 55)'
                     ;(e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 20px oklch(0.78 0.12 55 / 0.18)'
-                    ;(e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'
+                    ;(e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0) scale(1)'
                   }}
                 >
                   <Send size={14} />

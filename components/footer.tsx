@@ -25,10 +25,10 @@ export function Footer() {
           font-size: 13px;
           color: rgba(255,255,255,0.35);
           text-decoration: none;
-          transition: color 0.22s ease;
+          transition: color 0.42s ease, letter-spacing 0.42s ease;
           display: block;
         }
-        .ft-nav-link:hover { color: rgba(255,255,255,0.75); }
+        .ft-nav-link:hover { color: rgba(255,255,255,0.72); letter-spacing: 0.01em; }
 .ft-back-top {
           display: flex;
           align-items: center;
@@ -80,14 +80,37 @@ export function Footer() {
             overflow: 'hidden',
           }}
         >
-          {/* Soft ambient glow */}
+          {/* Footer atmosphere — slow exhale. The page's final breath. */}
+
+          {/* Primary amber haze — breathes once every 20s, the loudest of the three */}
           <div style={{
             position: 'absolute',
             top: '50%', left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '480px', height: '180px',
-            background: 'radial-gradient(ellipse, rgba(230,161,90,0.06) 0%, transparent 70%)',
+            width: '560px', height: '220px',
+            background: 'radial-gradient(ellipse, rgba(230,161,90,0.065) 0%, rgba(230,161,90,0.018) 50%, transparent 72%)',
             pointerEvents: 'none',
+            animation: 'section-breathe-a 20s ease-in-out infinite',
+          }} />
+
+          {/* Left ambient — very faint, slow counter-drift */}
+          <div style={{
+            position: 'absolute',
+            top: '30%', left: '10%',
+            width: '240px', height: '140px',
+            background: 'radial-gradient(ellipse, rgba(230,161,90,0.028) 0%, transparent 68%)',
+            pointerEvents: 'none',
+            animation: 'section-breathe-c 32s ease-in-out infinite 6s',
+          }} />
+
+          {/* Right ambient — subtle, whisper-level, almost nothing */}
+          <div style={{
+            position: 'absolute',
+            top: '25%', right: '8%',
+            width: '200px', height: '120px',
+            background: 'radial-gradient(ellipse, rgba(230,161,90,0.020) 0%, transparent 65%)',
+            pointerEvents: 'none',
+            animation: 'section-breathe-b 38s ease-in-out infinite 14s',
           }} />
 
           <div style={{

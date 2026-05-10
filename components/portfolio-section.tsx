@@ -644,18 +644,52 @@ export function PortfolioSection() {
         overflow: 'hidden',
       }}
     >
-      {/* Atmospheric trace — amber warmth carried from the hero into the work */}
+      {/* Gallery atmosphere system — floating luminance with independent drifts.
+          Each orb has a different phase and duration, creating an asymmetric gallery float. */}
+
+      {/* Floating orb 1 — top center, slow upward drift, primary gallery source */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: 0,
+          top: '0%',
           left: '50%',
           transform: 'translateX(-50%)',
-          width: '80%',
-          height: '35%',
-          background: 'radial-gradient(ellipse, rgba(230,161,90,0.018) 0%, transparent 72%)',
+          width: '72%',
+          height: '38%',
+          background: 'radial-gradient(ellipse, rgba(230,161,90,0.022) 0%, transparent 70%)',
           pointerEvents: 'none',
+          animation: 'section-breathe-a 26s ease-in-out infinite',
+        }}
+      />
+
+      {/* Floating orb 2 — mid-right, counter-phase drift, spatial separation */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '35%',
+          right: '-5%',
+          width: '40%',
+          height: '50%',
+          background: 'radial-gradient(ellipse at 70% 40%, rgba(230,161,90,0.016) 0%, transparent 68%)',
+          pointerEvents: 'none',
+          animation: 'section-breathe-b 34s ease-in-out infinite 6s',
+        }}
+      />
+
+      {/* Floating orb 3 — bottom-left, the slowest, gallery floor warmth */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          bottom: '5%',
+          left: '-3%',
+          width: '38%',
+          height: '40%',
+          background: 'radial-gradient(ellipse at 30% 65%, rgba(230,161,90,0.012) 0%, transparent 65%)',
+          pointerEvents: 'none',
+          animation: 'section-breathe-c 44s ease-in-out infinite 12s',
         }}
       />
 
