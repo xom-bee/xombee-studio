@@ -46,14 +46,14 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background transition-opacity duration-700 ${
+      className={`fixed inset-0 z-9999 flex flex-col items-center justify-center bg-background transition-opacity duration-700 ${
         fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
       {/* Ambient glow background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 rounded-full opacity-20"
           style={{
             background: 'radial-gradient(circle, oklch(0.78 0.12 55 / 0.4) 0%, transparent 70%)',
           }}
@@ -79,7 +79,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
               strokeWidth="1.5"
               fill="none"
             />
-            <text x="40" y="46" textAnchor="middle" fill="oklch(0.78 0.12 55)" fontSize="17" fontWeight="700" letterSpacing="2" fontFamily="serif" className="animate-pulse-glow">
+            <text x="40" y="46" textAnchor="middle" fill="oklch(0.78 0.12 55)" fontSize="17" fontWeight="700" letterSpacing="2" className="animate-pulse-glow" style={{ fontFamily: 'var(--font-cormorant)' }}>
               SY
             </text>
           </svg>

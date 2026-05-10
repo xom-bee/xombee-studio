@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import { useReveal } from '@/hooks/use-reveal'
 import { Mail, Phone, MapPin, Send, Download } from 'lucide-react'
+import { Container } from '@/components/ui/container'
+import { SectionLabel } from '@/components/ui/section-label'
+import { Card } from '@/components/ui/card'
 
 const socialLinks = [
   {
@@ -101,16 +104,14 @@ export function ContactSection() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+      <Container>
         {/* Header */}
         <div ref={ref} className={`mb-12 text-center reveal ${revealed ? 'revealed' : ''}`}>
-          <span style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#E6A15A', display: 'block', marginBottom: '14px' }}>
-            Get in Touch
-          </span>
+          <SectionLabel>Get in Touch</SectionLabel>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance">
             Let&apos;s build your <span style={{ color: 'oklch(0.74 0.10 55)', textShadow: '0 0 16px oklch(0.78 0.12 55 / 0.18)' }}>digital stage</span>
           </h2>
-          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.38)', maxWidth: '440px', margin: '0 auto', lineHeight: 1.75, textAlign: 'center' }}>
+          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.65)', maxWidth: '440px', margin: '0 auto', lineHeight: 1.75, textAlign: 'center' }}>
             Your work deserves a strong digital presence that people can see and remember.
           </p>
         </div>
@@ -239,13 +240,11 @@ export function ContactSection() {
           </div>
 
           {/* Contact form */}
-          <div
-            className="rounded-2xl p-5 sm:p-8"
-            style={{
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(255,255,255,0.07)',
-              boxShadow: '0 0 0 1px rgba(255,255,255,0.02), inset 0 1px 0 rgba(255,255,255,0.04)',
-            }}
+          <Card
+            surface="glass"
+            radius="lg"
+            className="p-5 sm:p-8"
+            style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.02), inset 0 1px 0 rgba(255,255,255,0.04)' }}
           >
             {submitted ? (
               <div role="alert" aria-live="polite" className="flex flex-col items-center justify-center h-full py-12 text-center gap-6">
@@ -332,7 +331,7 @@ export function ContactSection() {
                     background: 'oklch(0.76 0.11 55)',
                     color: 'oklch(0.06 0 0)',
                     boxShadow: '0 4px 20px oklch(0.78 0.12 55 / 0.18)',
-                    transition: 'background 0.25s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(0.22,1,0.36,1)',
+                    transition: 'background 0.38s ease, box-shadow 0.38s ease, transform 0.42s cubic-bezier(0.22,1,0.36,1)',
                   }}
                   onMouseEnter={(e) => {
                     ;(e.currentTarget as HTMLButtonElement).style.background = 'oklch(0.80 0.12 55)'
@@ -353,9 +352,9 @@ export function ContactSection() {
                 </p>
               </form>
             )}
-          </div>
+          </Card>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

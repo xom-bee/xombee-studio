@@ -123,7 +123,7 @@ export default function AboutPage() {
               fontSize: 'clamp(15px, 1.5vw, 17px)',
               fontWeight: 400,
               lineHeight: 1.7,
-              color: 'rgba(255,255,255,0.45)',
+              color: 'rgba(255,255,255,0.72)',
               marginBottom: '16px',
             }}>
               I design professional personal websites for creative artists.
@@ -132,7 +132,7 @@ export default function AboutPage() {
               fontSize: 'clamp(14px, 1.2vw, 15px)',
               fontWeight: 400,
               lineHeight: 1.65,
-              color: 'rgba(255,255,255,0.38)',
+              color: 'rgba(255,255,255,0.58)',
               letterSpacing: '0.01em',
               marginBottom: '40px',
             }}>
@@ -225,14 +225,14 @@ export default function AboutPage() {
               <p style={{ fontSize: 'clamp(17px, 1.8vw, 20px)', fontWeight: 700, lineHeight: 1.5, color: 'rgba(255,255,255,0.92)', marginBottom: '10px' }}>
                 I started with music.
               </p>
-              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.45)' }}>
+              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.65)' }}>
                 It was the first way I expressed myself.
               </p>
             </div>
 
             {/* Realization — no label */}
             <div style={{ marginBottom: '32px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.40)', marginBottom: '10px' }}>
+              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.62)', marginBottom: '10px' }}>
                 But I realized something was missing.
               </p>
               <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 600, lineHeight: 1.85, color: 'rgba(255,255,255,0.72)' }}>
@@ -248,7 +248,7 @@ export default function AboutPage() {
                 <span style={{ color: '#E6A15A' }}>design</span>
                 {' '}came in.
               </p>
-              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.42)' }}>
+              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.62)' }}>
                 I use design to translate ideas and emotions into clear digital experiences. Experiences that people can see, understand, and remember.
               </p>
             </div>
@@ -256,14 +256,14 @@ export default function AboutPage() {
             {/* Today */}
             <div>
               <p style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(230,161,90,0.55)', marginBottom: '16px' }}>Today</p>
-              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.38)', marginBottom: '12px' }}>
+              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.62)', marginBottom: '12px' }}>
                 I am currently pursuing a degree in Interactive Design and Development at Gyalpozhing College of Information Technology.
               </p>
               <p style={{ fontSize: 'clamp(14px, 1.3vw, 16px)', fontWeight: 600, lineHeight: 1.85, color: 'rgba(255,255,255,0.80)', marginBottom: '10px' }}>
                 My work focuses on{' '}
                 <span style={{ color: '#E6A15A' }}>UI/UX design, frontend development, and visual identity.</span>
               </p>
-              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.40)' }}>
+              <p style={{ fontSize: 'clamp(14px, 1.3vw, 15px)', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.62)' }}>
                 I aim to create modern, minimal, and meaningful digital products that improve how people interact with technology.
               </p>
             </div>
@@ -291,7 +291,7 @@ export default function AboutPage() {
               box-shadow: 0 0 8px rgba(230,161,90,0.65);
             }
             .skill-row:hover .skill-label {
-              color: rgba(255,255,255,1) !important;
+              color: rgba(255,255,255,0.96) !important;
             }
             .skill-row:hover .skill-arrow {
               opacity: 0.5;
@@ -345,9 +345,7 @@ export default function AboutPage() {
           `}</style>
 
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {skills.map((skill, i) => {
-              const isKey = skill.name === 'UI/UX Design' || skill.name === 'Frontend Development'
-              return (
+            {skills.map((skill, i) => (
                 <div
                   key={skill.name}
                   className="skill-row"
@@ -368,7 +366,7 @@ export default function AboutPage() {
                         height: '5px',
                         borderRadius: '50%',
                         background: '#E6A15A',
-                        opacity: isKey ? 0.70 : 0.28,
+                        opacity: 0.38,
                         flexShrink: 0,
                         marginTop: '8px',
                       }}
@@ -383,8 +381,8 @@ export default function AboutPage() {
                           className="skill-label"
                           style={{
                             fontSize: 'clamp(15px, 1.8vw, 18px)',
-                            fontWeight: isKey ? 600 : 500,
-                            color: isKey ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.65)',
+                            fontWeight: 500,
+                            color: 'rgba(255,255,255,0.86)',
                             lineHeight: 1.4,
                           }}
                         >
@@ -399,7 +397,7 @@ export default function AboutPage() {
                           <p style={{
                             paddingTop: '7px',
                             fontSize: 'clamp(12px, 1.2vw, 13px)',
-                            color: 'rgba(255,255,255,0.36)',
+                            color: 'rgba(255,255,255,0.62)',
                             lineHeight: 1.70,
                             maxWidth: '480px',
                           }}>
@@ -411,8 +409,7 @@ export default function AboutPage() {
                     </div>
                   </div>
                 </div>
-              )
-            })}
+            ))}
           </div>
 
         </div>
@@ -515,7 +512,7 @@ export default function AboutPage() {
                   </div>
 
                   {/* Description */}
-                  <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
+                  <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.62)', lineHeight: 1.75 }}>
                     {item.desc}
                   </p>
                 </div>
@@ -607,7 +604,7 @@ export default function AboutPage() {
             fontSize: 'clamp(14px, 1.4vw, 16px)',
             fontWeight: 400,
             lineHeight: 1.7,
-            color: 'rgba(255,255,255,0.35)',
+            color: 'rgba(255,255,255,0.58)',
             marginBottom: '36px',
           }}>
             Your work deserves more than just being seen.
@@ -650,11 +647,16 @@ function ContactButton() {
           cursor: pointer;
           transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease, background 0.2s ease;
           white-space: nowrap;
+          animation: cta-glow-breathe 5.5s ease-in-out infinite;
         }
         .cta-btn:hover {
+          animation: none;
           transform: scale(1.04) translateY(-2px);
           background: #d4904d;
           box-shadow: 0 8px 32px rgba(230,161,90,0.35), 0 0 0 1px rgba(230,161,90,0.2);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .cta-btn { animation: none !important; }
         }
         .cta-btn:hover .cta-arrow {
           transform: translateX(4px);

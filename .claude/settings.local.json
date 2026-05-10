@@ -12,7 +12,13 @@
       "Bash(npx tsc *)",
       "Bash(node scripts/generate-assets.js)",
       "Bash(node scripts/generate-favicon.js)",
-      "Read(//c/Users/sanga/.claude/projects/c--Users-sanga-Downloads-Portfolio-Website/memory/**)"
+      "Read(//c/Users/sanga/.claude/projects/c--Users-sanga-Downloads-Portfolio-Website/memory/**)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\sanga\\\\Downloads\\\\Portfolio Website\" -Name | Where-Object { $_ -match \"next\\\\.config|tailwind\\\\.config\" })",
+      "Bash(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\sanga\\\\Downloads\\\\Portfolio Website\\\\public\\\\projects\\\\druk-art-hub\")",
+      "Bash(Out-Null)",
+      "Bash(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\sanga\\\\Downloads\\\\Portfolio Website\\\\public\\\\projects\\\\xom-bee\")",
+      "Bash(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\sanga\\\\Downloads\\\\Portfolio Website\\\\public\\\\projects\\\\scan2dine\")",
+      "Bash(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\sanga\\\\Downloads\\\\Portfolio Website\\\\public\\\\projects\\\\q-less\")"
     ]
   }
 }

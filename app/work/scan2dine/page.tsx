@@ -1,11 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+import { CaseStudyMedia } from '@/components/case-study-media'
 
 const accent = '#E6A15A'
-
-// ─── Shared primitives ──────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -26,12 +24,9 @@ function Divider() {
   return <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', margin: 'clamp(48px, 6vw, 64px) 0' }} />
 }
 
-
-// ─── Page ───────────────────────────────────────────────────────────────────
-
 export default function Scan2DinePage() {
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div id="case-study-top" style={{ minHeight: '100vh' }}>
       <main style={{
         maxWidth: '860px',
         margin: '0 auto',
@@ -74,12 +69,13 @@ export default function Scan2DinePage() {
           </h1>
           <p style={{
             fontSize: 'clamp(15px, 1.5vw, 18px)',
-            color: 'rgba(255,255,255,0.45)',
+            color: 'rgba(255,255,255,0.82)',
             lineHeight: 1.75,
             maxWidth: '580px',
-            marginBottom: '36px',
+            marginBottom: '48px',
+            whiteSpace: 'pre-line',
           }}>
-            A QR-based digital dining platform designed to simplify menu access, reduce waiting time, and improve the overall restaurant experience.
+            {`The menu is a moment of decision under pressure.\nI designed an interface that clears the noise and makes the choice obvious.`}
           </p>
 
           {/* Meta */}
@@ -108,12 +104,22 @@ export default function Scan2DinePage() {
               </div>
             ))}
           </div>
+
+          {/* ── Top CTA ──────────────────────────────────────────────────── */}
+          <div style={{ marginTop: '32px' }}>
+            <button
+              onClick={() => document.getElementById('project-links')?.scrollIntoView({ behavior: 'smooth' })}
+              className="cs-cta-top"
+              aria-label="Jump to the final build"
+            >
+              See the Final Build
+              <span className="cs-cta-arrow">↓</span>
+            </button>
+          </div>
         </div>
 
-        {/* Visual 1: QR scan landing */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2 / 1' }}>
-          <Image src="/images/scan2dine-1.png" alt="Scan2Dine — screen 1" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
-        </div>
+        {/* Visual 1 */}
+        <CaseStudyMedia aspectRatio="2 / 1" video="/projects/scan2dine/reel-1.mp4" poster="/images/scan2dine-1.png" alt="Scan2Dine — screen 1" />
 
         <Divider />
 
@@ -122,10 +128,10 @@ export default function Scan2DinePage() {
           <SectionLabel>My Contribution</SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
-              'Designed a clean and mobile-friendly user interface for fast menu browsing',
-              'Developed responsive frontend interactions for smoother user experience',
-              'Structured menu categories and navigation for easier food discovery',
-              'Focused on accessibility, readability, and efficient user flow',
+              'Designed specifically for the restaurant environment — standing users, divided attention, time pressure, varying light — not for an ideal user in ideal conditions',
+              'Built the information architecture so food discovery happens by scanning, not reading — category first, item second, detail only on demand',
+              'Reduced the interaction flow to its minimum: the fewest taps between QR scan and a decision made',
+              'Applied visual hierarchy as a precision tool — strong enough to guide a distracted eye in under two seconds',
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
                 <span style={{
@@ -134,7 +140,7 @@ export default function Scan2DinePage() {
                 }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.60)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.76)', lineHeight: 1.7 }}>
                   {item}
                 </p>
               </div>
@@ -144,7 +150,7 @@ export default function Scan2DinePage() {
 
         <Divider />
 
-        {/* ── 3 & 4. Problem + Goal ─────────────────────────────────────── */}
+        {/* ── 3 & 4. Problem + Intent ───────────────────────────────────── */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -154,49 +160,47 @@ export default function Scan2DinePage() {
           <div>
             <SectionLabel>Problem</SectionLabel>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-                Traditional restaurant ordering experiences are often slow, unclear, and dependent on physical menus that limit efficiency.
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
+                Physical menus create friction before the experience begins. The problem was not access — it was the cognitive load around choosing while hungry, distracted, and in a hurry.
               </p>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
-                Customers spend unnecessary time waiting for menus, while restaurants struggle to provide a faster and more seamless ordering experience.
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.52)', lineHeight: 1.75 }}>
+                Most digital solutions digitize the menu without reimagining it. A cluttered screen is harder to navigate than paper.
               </p>
             </div>
           </div>
           <div>
-            <SectionLabel>Goal</SectionLabel>
-            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-              To create a fast and intuitive QR-based dining experience that allows customers to instantly access menus and interact with restaurant content more efficiently.
+            <SectionLabel>Intent</SectionLabel>
+            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
+              Design an interface fast enough to work under cognitive load — and clear enough that the right choice feels obvious, not effortful.
             </p>
           </div>
         </div>
 
-        {/* Visual 2: Menu browsing UI */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2.22 / 1' }}>
-          <Image src="/images/scan2dine-2.png" alt="Scan2Dine — screen 2" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
-        </div>
+        {/* Visual 2 */}
+        <CaseStudyMedia aspectRatio="2.22 / 1" video="/projects/scan2dine/reel-2.mp4" poster="/images/scan2dine-2.png" alt="Scan2Dine — screen 2" />
 
         <Divider />
 
-        {/* ── 5. Process ──────────────────────────────────────────────────── */}
+        {/* ── 5. Approach ─────────────────────────────────────────────────── */}
         <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>Process</SectionLabel>
+          <SectionLabel>Approach</SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {[
               {
-                step: 'Research',
-                desc: 'Observed customer behaviour and restaurant workflows to identify delays, usability issues, and interaction pain points.',
+                step: 'Designing for Real Conditions',
+                desc: 'Restaurant users are not browsing at a desk. They are scanning on a phone — possibly standing, in variable light, with ambient noise and divided attention. I designed for that person, not an ideal one.',
               },
               {
-                step: 'Wireframing',
-                desc: 'Created low-fidelity layouts focused on quick navigation and efficient menu browsing.',
+                step: 'Mapping to Minimum Interaction',
+                desc: 'I traced every step from QR scan to menu decision and eliminated anything that did not serve forward momentum. The measure of success was tap count — fewer is better, always.',
               },
               {
-                step: 'UI Design',
-                desc: 'Designed a clean and mobile-first interface optimized for readability and fast interaction.',
+                step: 'Hierarchy as Clarity',
+                desc: 'Strong category headers. Compressed copy. Tap targets sized for thumbs under real-world constraints — standing posture, one hand, imprecise tapping. The screen needed to read in two seconds, not twenty.',
               },
               {
-                step: 'Development',
-                desc: 'Built the frontend experience with responsive layouts and smooth interactions to improve usability across devices.',
+                step: 'Shipped',
+                desc: 'Built and deployed to Netlify. The design met its test on real devices, in real restaurant conditions — which is the only test that matters.',
               },
             ].map((item, i, arr) => (
               <div key={item.step} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
@@ -221,12 +225,12 @@ export default function Scan2DinePage() {
                 <div style={{ paddingTop: '4px' }}>
                   <p style={{
                     fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em',
-                    color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.65)',
+                    color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.72)',
                     marginBottom: '6px',
                   }}>
                     {item.step}
                   </p>
-                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
+                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.58)', lineHeight: 1.75 }}>
                     {item.desc}
                   </p>
                 </div>
@@ -246,11 +250,11 @@ export default function Scan2DinePage() {
             gap: '16px',
           }}>
             {[
-              'Prioritized mobile-first interaction since users scan menus through phones',
-              'Simplified navigation to reduce browsing friction',
-              'Used strong visual hierarchy for faster readability',
-              'Reduced interaction steps for a smoother customer flow',
-              'Maintained a clean interface to support quick decision making',
+              'Mobile-first was non-negotiable. The QR scan opens on a phone — this is a phone interface, always. Desktop was a secondary consideration.',
+              'Category navigation was elevated to top-level visibility. Food discovery starts by type, not scroll. Burying categories was the first thing cut.',
+              'Tap targets were sized beyond standard guidance — restaurant light, standing posture, and one-handed interaction reduce precision significantly.',
+              'Copy was compressed throughout. More name, more image, less description. Decisions happen faster with less to read, not more.',
+              'The interface stayed visually neutral so food photography could do the persuading. The design\'s job was to step back.',
             ].map((item, i) => (
               <div key={i} style={{
                 padding: '20px 22px',
@@ -262,7 +266,7 @@ export default function Scan2DinePage() {
                   width: '6px', height: '6px', borderRadius: '50%',
                   background: accent, opacity: 0.55, marginBottom: '12px',
                 }} />
-                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.50)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.68)', lineHeight: 1.7 }}>
                   {item}
                 </p>
               </div>
@@ -270,10 +274,8 @@ export default function Scan2DinePage() {
           </div>
         </div>
 
-        {/* Visual 3: Order flow + confirmation */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2.67 / 1' }}>
-          <Image src="/images/scan2dine-3.png" alt="Scan2Dine — screen 3" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
-        </div>
+        {/* Visual 3 */}
+        <CaseStudyMedia aspectRatio="2 / 1" video="/projects/scan2dine/reel-3.mp4" poster="/images/scan2dine-3.png" alt="Scan2Dine — screen 3" />
 
         <Divider />
 
@@ -285,108 +287,63 @@ export default function Scan2DinePage() {
             fontWeight: 600,
             lineHeight: 1.5,
             letterSpacing: '-0.01em',
-            color: 'rgba(255,255,255,0.82)',
+            color: 'rgba(255,255,255,0.88)',
             maxWidth: '620px',
             marginBottom: '20px',
           }}>
-            The final platform creates a faster and more efficient dining experience by simplifying how customers access and explore restaurant menus.
+            I reduced the interaction model to what was strictly load-bearing. Everything else was removed.
           </p>
           <p style={{
             fontSize: 'clamp(14px, 1.4vw, 16px)',
-            color: 'rgba(255,255,255,0.42)',
+            color: 'rgba(255,255,255,0.58)',
             lineHeight: 1.75,
-            maxWidth: '580px',
+            maxWidth: '560px',
           }}>
-            It improves usability, reduces waiting time, and creates a more modern interaction flow for both customers and restaurants.
+            The clarity came from designing in the real context, not the comfortable one — standing users, partial attention, varying light. I rebuilt the information hierarchy around those constraints. What remained was an interface that doesn&apos;t ask anything of the user beyond what the moment requires.
           </p>
         </div>
 
         <Divider />
 
-        {/* ── 8. Features ─────────────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>Features</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {[
-              'QR-based instant menu access',
-              'Mobile-first responsive design',
-              'Categorized food browsing',
-              'Fast and simplified navigation',
-              'Clean restaurant interface',
-              'Interactive frontend experience',
-            ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
-                <div style={{
-                  width: '5px', height: '5px', borderRadius: '50%',
-                  background: accent, opacity: 0.5, flexShrink: 0,
-                }} />
-                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.52)', lineHeight: 1.6 }}>
-                  {item}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Divider />
-
-        {/* ── 9. UX Considerations ────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>UX Considerations</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
-            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-              The interface was designed for quick interaction in restaurant environments where users need immediate access with minimal friction.
-            </p>
-            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
-              Special attention was given to readability, tap targets, and navigation simplicity for mobile users.
-            </p>
-          </div>
-        </div>
-
-        <Divider />
-
-        {/* ── 10. Project Links ───────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
-          <SectionLabel>Project Links</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {/* ── 8. Project Links ────────────────────────────────────────────── */}
+        <div id="project-links" style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
+          <div style={{
+            position: 'relative',
+            padding: 'clamp(28px, 4vw, 44px)',
+            border: '1px solid rgba(230,161,90,0.10)',
+            borderRadius: '20px',
+            background: 'rgba(230,161,90,0.025)',
+            overflow: 'hidden',
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '50%', left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '480px', height: '200px',
+              background: 'radial-gradient(ellipse, rgba(230,161,90,0.07) 0%, transparent 70%)',
+              pointerEvents: 'none',
+            }} />
+            <SectionLabel>The Final Build</SectionLabel>
             <a
               href="https://scan2dinee.netlify.app/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '16px 20px',
-                border: '1px solid rgba(255,255,255,0.07)',
-                borderRadius: '12px',
-                background: 'rgba(255,255,255,0.02)',
-                textDecoration: 'none',
-                transition: 'border-color 0.2s ease, background 0.2s ease',
-                maxWidth: '400px',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(230,161,90,0.30)'
-                e.currentTarget.style.background = 'rgba(230,161,90,0.04)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
-                e.currentTarget.style.background = 'rgba(255,255,255,0.02)'
-              }}
+              className="cs-live-btn"
+              aria-label="View Scan2Dine live build — opens in new tab"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, opacity: 0.65 }}>
-                <circle cx="12" cy="12" r="10" stroke={accent} strokeWidth="1.5" />
-                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke={accent} strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-              <div>
-                <p style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.72)', marginBottom: '2px' }}>
-                  View Live Experience
-                </p>
-                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)', letterSpacing: '0.02em' }}>
-                  scan2dinee.netlify.app ↗
-                </p>
-              </div>
+              <span>View the Live Build</span>
+              <span className="cs-live-arrow">↗</span>
             </a>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '28px' }}>
+            <button
+              onClick={() => document.getElementById('case-study-top')?.scrollIntoView({ behavior: 'smooth' })}
+              className="cs-back-top"
+              aria-label="Return to top of case study"
+            >
+              <span className="cs-back-arrow">↑</span>
+              Return to overview
+            </button>
           </div>
         </div>
 

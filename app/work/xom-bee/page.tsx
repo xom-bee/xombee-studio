@@ -1,11 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+import { CaseStudyMedia } from '@/components/case-study-media'
 
 const accent = '#E6A15A'
-
-// ─── Shared primitives ──────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -26,12 +24,9 @@ function Divider() {
   return <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', margin: 'clamp(48px, 6vw, 64px) 0' }} />
 }
 
-
-// ─── Page ───────────────────────────────────────────────────────────────────
-
 export default function XomBeePage() {
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div id="case-study-top" style={{ minHeight: '100vh' }}>
       <main style={{
         maxWidth: '860px',
         margin: '0 auto',
@@ -74,12 +69,13 @@ export default function XomBeePage() {
           </h1>
           <p style={{
             fontSize: 'clamp(15px, 1.5vw, 18px)',
-            color: 'rgba(255,255,255,0.45)',
+            color: 'rgba(255,255,255,0.82)',
             lineHeight: 1.75,
             maxWidth: '580px',
-            marginBottom: '36px',
+            marginBottom: '48px',
+            whiteSpace: 'pre-line',
           }}>
-            A personal artist website designed to bring music, visuals, and identity into one immersive digital experience.
+            {`The brief was the feeling, not the features.\nI designed and built a space where the artist's presence arrives before the sound does.`}
           </p>
 
           {/* Meta */}
@@ -108,12 +104,22 @@ export default function XomBeePage() {
               </div>
             ))}
           </div>
+
+          {/* ── Top CTA ──────────────────────────────────────────────────── */}
+          <div style={{ marginTop: '32px' }}>
+            <button
+              onClick={() => document.getElementById('project-links')?.scrollIntoView({ behavior: 'smooth' })}
+              className="cs-cta-top"
+              aria-label="Jump to the live experience"
+            >
+              Visit the Live Experience
+              <span className="cs-cta-arrow">↓</span>
+            </button>
+          </div>
         </div>
 
-        {/* Visual 1: Homepage */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2 / 1' }}>
-          <Image src="/images/xom-bee-1.png" alt="Xom Bee Official — screen 1" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
-        </div>
+        {/* Visual 1 */}
+        <CaseStudyMedia aspectRatio="2 / 1" video="/projects/xom-bee/reel-1.mp4" poster="/images/xom-bee-1.png" alt="Xom Bee Official — screen 1" />
 
         <Divider />
 
@@ -122,10 +128,10 @@ export default function XomBeePage() {
           <SectionLabel>My Contribution</SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
-              'Designed the full website layout and user interface',
-              'Built the frontend using modern web technologies',
-              'Structured content for music, videos, and identity',
-              'Focused on creating an emotional and minimal user experience',
+              'Translated an emotional brief — "feel the music before it plays" — into a complete designed and built system, alone, from concept to deployed product',
+              'Designed and developed the full frontend in Next.js and TypeScript — every implementation decision was also a design decision',
+              'Built a motion language where every transition, hover state, and pause communicates the artist\'s tempo — unhurried, cinematic, controlled',
+              'Used deliberate restraint as the primary design tool: what to leave out, where to hold silence, was as considered as what to include',
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
                 <span style={{
@@ -134,7 +140,7 @@ export default function XomBeePage() {
                 }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.60)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.76)', lineHeight: 1.7 }}>
                   {item}
                 </p>
               </div>
@@ -144,7 +150,7 @@ export default function XomBeePage() {
 
         <Divider />
 
-        {/* ── 3 & 4. Problem + Goal ─────────────────────────────────────── */}
+        {/* ── 3 & 4. Problem + Intent ───────────────────────────────────── */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -154,49 +160,47 @@ export default function XomBeePage() {
           <div>
             <SectionLabel>Problem</SectionLabel>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-                Many music artists rely on separate platforms for music, videos, and social presence, resulting in a fragmented identity and disconnected audience experience.
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
+                The artist had a presence scattered across platforms that did not belong to her. None of them felt like her.
               </p>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
-                The lack of a dedicated digital space makes it harder for audiences to emotionally connect with the artist and their story.
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.52)', lineHeight: 1.75 }}>
+                When identity is fragmented, audiences connect with the platform — not the artist. The space itself needed to feel like Xom Bee.
               </p>
             </div>
           </div>
           <div>
-            <SectionLabel>Goal</SectionLabel>
-            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-              To create a cinematic and emotionally driven digital platform that unifies music, visuals, and storytelling into one memorable artist identity.
+            <SectionLabel>Intent</SectionLabel>
+            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
+              Design and build a space where the artist's emotional presence arrives before any content does — and where every interaction extends that feeling rather than interrupting it.
             </p>
           </div>
         </div>
 
-        {/* Visual 2: Music section */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2.22 / 1' }}>
-          <Image src="/images/xom-bee-2.png" alt="Xom Bee Official — screen 2" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
-        </div>
+        {/* Visual 2 */}
+        <CaseStudyMedia aspectRatio="2.22 / 1" video="/projects/xom-bee/reel-2.mp4" poster="/images/xom-bee-2.png" alt="Xom Bee Official — screen 2" />
 
         <Divider />
 
-        {/* ── 5. Process ──────────────────────────────────────────────────── */}
+        {/* ── 5. Approach ─────────────────────────────────────────────────── */}
         <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>Process</SectionLabel>
+          <SectionLabel>Approach</SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {[
               {
-                step: 'Research',
-                desc: 'Studied how modern music artists present themselves across digital platforms and identified gaps in identity consistency and emotional storytelling.',
+                step: 'Starting with the Feeling',
+                desc: 'I asked: what does this music feel like before it plays? Dark. Still. Present. That became the brief — and the constraint every decision was measured against.',
               },
               {
-                step: 'Wireframing',
-                desc: 'Created structured layouts focused on music discovery, visual hierarchy, and immersive browsing.',
+                step: 'Making the Interface Disappear',
+                desc: 'Every element was evaluated against one standard: does this add presence, or does it add noise? Noise was removed. The interface had to earn its invisibility.',
               },
               {
-                step: 'UI Design',
-                desc: 'Designed a cinematic interface that enhances emotional tone while keeping the experience minimal and focused.',
+                step: 'Building the Motion Language',
+                desc: 'Transitions are slow. Hover states are deliberate. Motion communicates the artist\'s tempo — not a generic "smooth" feel, but specifically unhurried, arriving, controlled.',
               },
               {
-                step: 'Development',
-                desc: 'Built the frontend experience with responsive interactions, smooth transitions, and performance-focused implementation.',
+                step: 'Development as Creative Direction',
+                desc: 'I built this in Next.js and TypeScript, alone. Every implementation choice — animation timing, spacing units, performance tradeoffs — was made in service of the feeling, not convenience.',
               },
             ].map((item, i, arr) => (
               <div key={item.step} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
@@ -221,12 +225,12 @@ export default function XomBeePage() {
                 <div style={{ paddingTop: '4px' }}>
                   <p style={{
                     fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em',
-                    color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.65)',
+                    color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.72)',
                     marginBottom: '6px',
                   }}>
                     {item.step}
                   </p>
-                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
+                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.58)', lineHeight: 1.75 }}>
                     {item.desc}
                   </p>
                 </div>
@@ -246,11 +250,11 @@ export default function XomBeePage() {
             gap: '16px',
           }}>
             {[
-              'Used a cinematic interface to create emotional depth and focus',
-              'Designed minimal layouts to prioritize music and visual storytelling',
-              'Introduced subtle interactions and motion to make the experience feel alive',
-              'Maintained consistent typography and spacing across all sections',
-              'Balanced modern web aesthetics with the artist\'s emotional identity',
+              'Dark atmosphere was not a style choice — it was the only honest response to the music\'s emotional register. Anything lighter would have felt dishonest.',
+              'Interactions were slowed intentionally. Fast UI signals urgency. This needed to signal arrival — something coming toward you, not demanding your attention.',
+              'The artist\'s name and image lead everything. All other content recedes until it is needed. Hierarchy as a form of respect.',
+              'Typography was set wide and quiet — editorial spacing, minimal weight contrast. Not promotional. The music is the promotion.',
+              'Embedded media was structured to feel discovered, not advertised. The sound arrives; it is not pushed.',
             ].map((item, i) => (
               <div key={i} style={{
                 padding: '20px 22px',
@@ -262,7 +266,7 @@ export default function XomBeePage() {
                   width: '6px', height: '6px', borderRadius: '50%',
                   background: accent, opacity: 0.55, marginBottom: '12px',
                 }} />
-                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.50)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.68)', lineHeight: 1.7 }}>
                   {item}
                 </p>
               </div>
@@ -270,10 +274,8 @@ export default function XomBeePage() {
           </div>
         </div>
 
-        {/* Visual 3: Identity + interactions */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2.5 / 1' }}>
-          <Image src="/images/xom-bee-3.png" alt="Xom Bee Official — screen 3" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
-        </div>
+        {/* Visual 3 */}
+        <CaseStudyMedia aspectRatio="2 / 1" video="/projects/xom-bee/reel-3.mp4" poster="/images/xom-bee-3.png" alt="Xom Bee Official — screen 3" />
 
         <Divider />
 
@@ -285,19 +287,19 @@ export default function XomBeePage() {
             fontWeight: 600,
             lineHeight: 1.5,
             letterSpacing: '-0.01em',
-            color: 'rgba(255,255,255,0.82)',
+            color: 'rgba(255,255,255,0.88)',
             maxWidth: '620px',
             marginBottom: '20px',
           }}>
-            The final website creates a stronger and more unified digital identity for the artist.
+            I designed and built the entire experience end-to-end. The mood was the brief. Every decision traces back to one question: does this feel like the artist?
           </p>
           <p style={{
             fontSize: 'clamp(14px, 1.4vw, 16px)',
-            color: 'rgba(255,255,255,0.42)',
+            color: 'rgba(255,255,255,0.58)',
             lineHeight: 1.75,
-            maxWidth: '580px',
+            maxWidth: '560px',
           }}>
-            It allows audiences to experience music, visuals, and storytelling within one immersive and emotionally connected platform.
+            The dark atmosphere, the motion pacing, the typographic weight — authored, not assembled. I kept design and development as one continuous act so nothing was lost in translation. What shipped is what I intended.
           </p>
         </div>
 
@@ -305,9 +307,9 @@ export default function XomBeePage() {
 
         {/* ── 8. Tech Stack ───────────────────────────────────────────────── */}
         <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>Tech Stack</SectionLabel>
+          <SectionLabel>Built With</SectionLabel>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            {['Next.js', 'Tailwind CSS', 'TypeScript', 'Figma'].map((tech) => (
+            {['Next.js', 'TypeScript', 'Tailwind CSS', 'Figma'].map((tech) => (
               <span key={tech} style={{
                 fontSize: '12px',
                 fontWeight: 500,
@@ -326,75 +328,45 @@ export default function XomBeePage() {
 
         <Divider />
 
-        {/* ── 9. Features ─────────────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>Features</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {[
-              'Interactive music showcase',
-              'Responsive layout across devices',
-              'Animated transitions and hover interactions',
-              'Visual identity integration',
-              'Cinematic dark mode experience',
-              'Embedded music and media content',
-            ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
-                <div style={{
-                  width: '5px', height: '5px', borderRadius: '50%',
-                  background: accent, opacity: 0.5, flexShrink: 0,
-                }} />
-                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.52)', lineHeight: 1.6 }}>
-                  {item}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Divider />
-
-        {/* ── 10. Project Links ───────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
-          <SectionLabel>Project Links</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {/* ── 9. Project Links ───────────────────────────────────────────── */}
+        <div id="project-links" style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
+          <div style={{
+            position: 'relative',
+            padding: 'clamp(28px, 4vw, 44px)',
+            border: '1px solid rgba(230,161,90,0.10)',
+            borderRadius: '20px',
+            background: 'rgba(230,161,90,0.025)',
+            overflow: 'hidden',
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '50%', left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '480px', height: '200px',
+              background: 'radial-gradient(ellipse, rgba(230,161,90,0.07) 0%, transparent 70%)',
+              pointerEvents: 'none',
+            }} />
+            <SectionLabel>The Final Build</SectionLabel>
             <a
               href="https://sangayyoesel.wixsite.com/xombeeofficial"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '16px 20px',
-                border: '1px solid rgba(255,255,255,0.07)',
-                borderRadius: '12px',
-                background: 'rgba(255,255,255,0.02)',
-                textDecoration: 'none',
-                transition: 'border-color 0.2s ease, background 0.2s ease',
-                maxWidth: '400px',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(230,161,90,0.30)'
-                e.currentTarget.style.background = 'rgba(230,161,90,0.04)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
-                e.currentTarget.style.background = 'rgba(255,255,255,0.02)'
-              }}
+              className="cs-live-btn"
+              aria-label="Visit xombeeofficial — opens in new tab"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, opacity: 0.65 }}>
-                <circle cx="12" cy="12" r="10" stroke={accent} strokeWidth="1.5" />
-                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke={accent} strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-              <div>
-                <p style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.72)', marginBottom: '2px' }}>
-                  Visit Live Experience
-                </p>
-                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)', letterSpacing: '0.02em' }}>
-                  xombeeofficial ↗
-                </p>
-              </div>
+              <span>Visit the Live Experience</span>
+              <span className="cs-live-arrow">↗</span>
             </a>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '28px' }}>
+            <button
+              onClick={() => document.getElementById('case-study-top')?.scrollIntoView({ behavior: 'smooth' })}
+              className="cs-back-top"
+              aria-label="Return to top of case study"
+            >
+              <span className="cs-back-arrow">↑</span>
+              Return to overview
+            </button>
           </div>
         </div>
 

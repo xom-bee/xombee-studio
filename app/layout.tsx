@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Cormorant_Garamond } from 'next/font/google'
 import { Analytics } from '@/components/analytics'
 import { Navbar } from '@/components/navbar'
 import { BackgroundLayer } from '@/components/background-layer'
@@ -8,6 +8,14 @@ import './globals.css'
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
   display: 'swap',
 })
 
@@ -67,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} bg-background`}>
+    <html lang="en" className={`${inter.variable} ${cormorant.variable} bg-background`}>
       <body className="font-sans antialiased overflow-x-hidden">
         {/* Skip to main content link for accessibility */}
         <a

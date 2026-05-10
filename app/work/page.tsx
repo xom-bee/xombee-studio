@@ -72,7 +72,7 @@ export default function WorkPage() {
             fontSize: 'clamp(14px, 1.4vw, 17px)',
             fontWeight: 400,
             lineHeight: 1.7,
-            color: 'rgba(255,255,255,0.45)',
+            color: 'rgba(255,255,255,0.68)',
             maxWidth: '480px',
           }}>
             A collection of projects focused on digital experience, identity, and user interaction.
@@ -149,7 +149,7 @@ function ProjectCard({
           fontSize: '12px',
           fontWeight: 500,
           letterSpacing: '0.10em',
-          color: 'rgba(255,255,255,0.15)',
+          color: 'rgba(255,255,255,0.30)',
           paddingTop: '6px',
           flexShrink: 0,
           minWidth: '28px',
@@ -185,7 +185,7 @@ function ProjectCard({
           </div>
           <p style={{
             fontSize: 'clamp(13px, 1.2vw, 15px)',
-            color: 'rgba(255,255,255,0.42)',
+            color: 'rgba(255,255,255,0.65)',
             lineHeight: 1.65,
             marginBottom: '14px',
             maxWidth: '520px',
@@ -221,7 +221,7 @@ const btnStyle = {
   fontWeight: 600,
   letterSpacing: '0.06em',
   textTransform: 'uppercase' as const,
-  color: 'rgba(255,255,255,0.35)',
+  color: 'rgba(255,255,255,0.52)',
   background: 'none',
   border: '1px solid rgba(255,255,255,0.10)',
   borderRadius: '999px',
@@ -245,23 +245,25 @@ function CtaButton({ href }: { href?: string }) {
     e.currentTarget.style.color = '#E6A15A'
     e.currentTarget.style.borderColor = 'rgba(230,161,90,0.40)'
     e.currentTarget.style.background = 'rgba(230,161,90,0.06)'
+    e.currentTarget.style.animation = 'none'
   }
   const hoverOut = (e: React.MouseEvent<HTMLElement>) => {
-    e.currentTarget.style.color = 'rgba(255,255,255,0.35)'
+    e.currentTarget.style.color = 'rgba(255,255,255,0.52)'
     e.currentTarget.style.borderColor = 'rgba(255,255,255,0.10)'
     e.currentTarget.style.background = 'none'
+    e.currentTarget.style.animation = ''
   }
 
   if (href) {
     return (
-      <Link href={href} style={btnStyle} onMouseEnter={hoverIn} onMouseLeave={hoverOut}>
+      <Link href={href} style={btnStyle} className="cta-work-btn" onMouseEnter={hoverIn} onMouseLeave={hoverOut}>
         {inner}
       </Link>
     )
   }
 
   return (
-    <button style={btnStyle} onMouseEnter={hoverIn} onMouseLeave={hoverOut}>
+    <button style={btnStyle} className="cta-work-btn" onMouseEnter={hoverIn} onMouseLeave={hoverOut}>
       {inner}
     </button>
   )

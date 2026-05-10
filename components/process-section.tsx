@@ -1,11 +1,16 @@
 'use client'
 
+import { useRef, useState, useEffect } from 'react'
+import { Container } from '@/components/ui/container'
+import { SectionLabel } from '@/components/ui/section-label'
+import { Card } from '@/components/ui/card'
+
 const steps = [
   {
     number: '01',
     title: 'Research',
     description: 'Understanding the problem and user needs',
-    delay: '0s',
+    floatDelay: '0s',
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <circle cx="14" cy="14" r="7" stroke="currentColor" strokeWidth="1.5" />
@@ -19,7 +24,7 @@ const steps = [
     number: '02',
     title: 'Wireframes',
     description: 'Structuring layout and user flow',
-    delay: '0.7s',
+    floatDelay: '1.4s',
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect x="4" y="4" width="24" height="24" rx="3" stroke="currentColor" strokeWidth="1.5" />
@@ -34,7 +39,7 @@ const steps = [
     number: '03',
     title: 'UI Design',
     description: 'Designing clean and modern interfaces',
-    delay: '1.4s',
+    floatDelay: '2.8s',
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <circle cx="10" cy="10" r="4" stroke="currentColor" strokeWidth="1.5" />
@@ -50,7 +55,7 @@ const steps = [
     number: '04',
     title: 'Development',
     description: 'Building responsive and functional interfaces',
-    delay: '2.1s',
+    floatDelay: '4.2s',
     icon: (
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <polyline points="10,10 4,16 10,22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -62,48 +67,67 @@ const steps = [
 ]
 
 export function ProcessSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.14 }
+    )
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <section
+      ref={sectionRef}
       id="process"
       style={{
         background: 'transparent',
-        paddingTop: 'clamp(56px, 8vw, 96px)',
-        paddingBottom: 'clamp(56px, 8vw, 96px)',
+        position: 'relative',
+        paddingTop: 'var(--section-padding)',
+        paddingBottom: 'var(--section-padding)',
+        overflow: 'hidden',
       }}
     >
       <style>{`
         @keyframes process-float {
-          0%, 100% { transform: translateY(0px);  opacity: 0.40; }
-          50%       { transform: translateY(-8px); opacity: 0.75; }
+          0%, 100% { transform: translateY(0px);  opacity: 0.38; }
+          50%       { transform: translateY(-7px); opacity: 0.68; }
         }
         .process-icon-wrap {
-          animation: process-float 3s ease-in-out infinite;
+          animation: process-float 5.5s ease-in-out infinite;
           will-change: transform, opacity;
-        }
-        .process-card {
-          transition: transform 0.30s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.30s ease;
-        }
-        .process-card:hover {
-          transform: translateY(-4px);
-          border-color: rgba(230,161,90,0.28) !important;
-          box-shadow: 0 16px 48px rgba(0,0,0,0.48), 0 0 0 1px rgba(230,161,90,0.06);
         }
       `}</style>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+      {/* Atmospheric ambient — traces the hero's amber world into this section */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '5%',
+          right: '5%',
+          width: '45%',
+          height: '65%',
+          background: 'radial-gradient(ellipse, rgba(230,161,90,0.022) 0%, transparent 72%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <Container>
 
         {/* Header */}
-        <div style={{ marginBottom: 'clamp(28px, 4vw, 40px)' }}>
-          <div style={{
-            fontSize: '11px',
-            fontWeight: 500,
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
-            color: '#E6A15A',
-            marginBottom: '14px',
-          }}>
-            My Process
-          </div>
+        <div
+          style={{
+            marginBottom: 'clamp(28px, 4vw, 40px)',
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(16px)',
+            transition: 'opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1), transform 1.1s cubic-bezier(0.22, 1, 0.36, 1)',
+          }}
+        >
+          <SectionLabel>My Process</SectionLabel>
           <h2 style={{
             fontSize: 'clamp(28px, 4vw, 48px)',
             fontWeight: 700,
@@ -115,74 +139,77 @@ export function ProcessSection() {
           </h2>
         </div>
 
-        {/* Cards grid */}
+        {/* Cards grid — each card reveals with a sequenced delay */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
           gap: '10px',
         }}>
-          {steps.map((step) => (
+          {steps.map((step, i) => (
             <div
               key={step.number}
-              className="process-card"
               style={{
-                position: 'relative',
-                background: '#111115',
-                border: '1px solid rgba(255,255,255,0.07)',
-                borderRadius: '14px',
-                padding: '24px 24px 52px',
-                overflow: 'hidden',
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(16px)',
+                transition: `opacity 1.1s ${0.10 + i * 0.13}s cubic-bezier(0.22, 1, 0.36, 1), transform 1.1s ${0.10 + i * 0.13}s cubic-bezier(0.22, 1, 0.36, 1)`,
               }}
             >
-              {/* Step label */}
-              <div style={{
-                fontSize: '10px',
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                color: 'rgba(230,161,90,0.55)',
-                marginBottom: '10px',
-              }}>
-                Step {step.number}
-              </div>
-
-              {/* Title */}
-              <h3 style={{
-                fontSize: 'clamp(16px, 1.8vw, 20px)',
-                fontWeight: 700,
-                color: '#FFFFFF',
-                marginBottom: '6px',
-                letterSpacing: '-0.01em',
-              }}>
-                {step.title}
-              </h3>
-
-              {/* Description */}
-              <p style={{
-                fontSize: 'clamp(13px, 1.1vw, 14px)',
-                color: 'rgba(255,255,255,0.40)',
-                lineHeight: 1.70,
-              }}>
-                {step.description}
-              </p>
-
-              {/* Animated icon — bottom left */}
-              <div
-                className="process-icon-wrap"
-                style={{
-                  position: 'absolute',
-                  bottom: '16px',
-                  left: '20px',
-                  color: '#E6A15A',
-                  animationDelay: step.delay,
-                }}
+              <Card
+                hover
+                surface="elevated"
+                className="process-card"
+                style={{ padding: '24px 24px 52px', position: 'relative', overflow: 'hidden' }}
               >
-                {step.icon}
-              </div>
+                {/* Step label */}
+                <div style={{
+                  fontSize: '10px',
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(230,161,90,0.55)',
+                  marginBottom: '10px',
+                }}>
+                  Step {step.number}
+                </div>
+
+                {/* Title */}
+                <h3 style={{
+                  fontSize: 'clamp(16px, 1.8vw, 20px)',
+                  fontWeight: 700,
+                  color: '#FFFFFF',
+                  marginBottom: '6px',
+                  letterSpacing: '-0.01em',
+                }}>
+                  {step.title}
+                </h3>
+
+                {/* Description */}
+                <p style={{
+                  fontSize: 'clamp(13px, 1.1vw, 14px)',
+                  color: 'rgba(255,255,255,0.65)',
+                  lineHeight: 1.70,
+                }}>
+                  {step.description}
+                </p>
+
+                {/* Floating icon — bottom left, slow breath */}
+                <div
+                  className="process-icon-wrap"
+                  style={{
+                    position: 'absolute',
+                    bottom: '16px',
+                    left: '20px',
+                    color: '#E6A15A',
+                    animationDelay: step.floatDelay,
+                  }}
+                >
+                  {step.icon}
+                </div>
+              </Card>
             </div>
           ))}
         </div>
 
-      </div>
+      </Container>
     </section>
   )
 }

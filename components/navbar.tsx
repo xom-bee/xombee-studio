@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
+import { Button } from '@/components/ui/button'
 
 const links = [
   { label: 'Work', href: '/work' },
@@ -91,13 +92,13 @@ export function Navbar() {
                   onClick={() => scrollTo(link.href)}
                   className="relative group transition-colors duration-300"
                   style={{
-                    color: active ? 'var(--color-gold)' : 'rgba(255,255,255,0.4)',
+                    color: active ? 'var(--color-gold)' : 'rgba(255,255,255,0.55)',
                     fontSize: '11px',
                     letterSpacing: '0.14em',
                     textTransform: 'uppercase',
                   }}
-                  onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.85)' }}
-                  onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.4)' }}
+                  onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.92)' }}
+                  onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.55)' }}
                 >
                   {link.label}
                   <span
@@ -110,25 +111,14 @@ export function Navbar() {
           </nav>
 
           {/* CTA */}
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => scrollTo('#contact')}
-            className="hidden md:flex items-center px-4 py-2 rounded-full text-[11px] tracking-widest uppercase font-medium transition-all duration-300"
-            style={{
-              color: 'var(--color-gold)',
-              border: '1px solid rgba(230, 161, 90, 0.25)',
-              background: 'transparent',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(230, 161, 90, 0.08)'
-              e.currentTarget.style.borderColor = 'rgba(230, 161, 90, 0.5)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent'
-              e.currentTarget.style.borderColor = 'rgba(230, 161, 90, 0.25)'
-            }}
+            className="hidden md:flex"
           >
             Let&apos;s Talk
-          </button>
+          </Button>
 
           {/* Mobile menu toggle */}
           <button
@@ -170,23 +160,13 @@ export function Navbar() {
             {link.label}
           </button>
         ))}
-        <button
+        <Button
+          variant="ghost"
           onClick={() => scrollTo('#contact')}
-          className="font-sans font-medium transition-all duration-300"
-          style={{
-            fontSize: '13px',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: 'var(--color-gold)',
-            border: '1px solid rgba(230,161,90,0.30)',
-            borderRadius: '999px',
-            padding: '12px 32px',
-            background: 'transparent',
-            marginTop: '8px',
-          }}
+          style={{ marginTop: '8px' }}
         >
           Let&apos;s Talk
-        </button>
+        </Button>
       </div>
     </>
   )

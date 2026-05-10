@@ -1,11 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+import { CaseStudyMedia } from '@/components/case-study-media'
 
 const accent = '#E6A15A'
-
-// ─── Shared primitives ──────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -26,12 +24,9 @@ function Divider() {
   return <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', margin: 'clamp(48px, 6vw, 64px) 0' }} />
 }
 
-
-// ─── Page ───────────────────────────────────────────────────────────────────
-
 export default function QLessPage() {
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div id="case-study-top" style={{ minHeight: '100vh' }}>
       <main style={{
         maxWidth: '860px',
         margin: '0 auto',
@@ -74,12 +69,13 @@ export default function QLessPage() {
           </h1>
           <p style={{
             fontSize: 'clamp(15px, 1.5vw, 18px)',
-            color: 'rgba(255,255,255,0.45)',
+            color: 'rgba(255,255,255,0.82)',
             lineHeight: 1.75,
             maxWidth: '580px',
-            marginBottom: '36px',
+            marginBottom: '48px',
+            whiteSpace: 'pre-line',
           }}>
-            A digital queue management platform designed to simplify waiting experiences through real-time queue tracking and smarter user flow.
+            {`Waiting is a feeling, not a fact.\nI designed an interface that replaces uncertainty with clarity — and makes the wait feel shorter by making it feel honest.`}
           </p>
 
           {/* Meta */}
@@ -108,12 +104,22 @@ export default function QLessPage() {
               </div>
             ))}
           </div>
+
+          {/* ── Top CTA ──────────────────────────────────────────────────── */}
+          <div style={{ marginTop: '32px' }}>
+            <button
+              onClick={() => document.getElementById('project-links')?.scrollIntoView({ behavior: 'smooth' })}
+              className="cs-cta-top"
+              aria-label="Jump to the final build"
+            >
+              See the Final Build
+              <span className="cs-cta-arrow">↓</span>
+            </button>
+          </div>
         </div>
 
-        {/* Visual 1: Queue join screen */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2 / 1' }}>
-          <Image src="/images/q-less-1.png" alt="Q-Less — screen 1" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
-        </div>
+        {/* Visual 1 */}
+        <CaseStudyMedia aspectRatio="2 / 1" video="/projects/q-less/reel-1.mp4" poster="/images/q-less-1.png" alt="Q-Less — screen 1" />
 
         <Divider />
 
@@ -122,10 +128,10 @@ export default function QLessPage() {
           <SectionLabel>My Contribution</SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
-              'Designed a clean and intuitive interface for digital queue interaction',
-              'Developed responsive frontend experiences for smoother usability',
-              'Structured queue joining and tracking flows for clarity and efficiency',
-              'Focused on accessibility, readability, and real-time user feedback',
+              'Designed around the psychology of waiting — the real problem is not duration but uncertainty, and the interface had to address that directly',
+              'Built a real-time state communication system where every status update feels reassuring rather than alarming',
+              'Structured the information hierarchy to surface what users actually need in the moment: position, progress, what comes next — nothing else',
+              'Designed mobile-first for outdoor environments — high contrast, oversized tap targets, minimal reading required under real conditions',
             ].map((item, i) => (
               <div key={i} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
                 <span style={{
@@ -134,7 +140,7 @@ export default function QLessPage() {
                 }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.60)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.76)', lineHeight: 1.7 }}>
                   {item}
                 </p>
               </div>
@@ -144,7 +150,7 @@ export default function QLessPage() {
 
         <Divider />
 
-        {/* ── 3 & 4. Problem + Goal ─────────────────────────────────────── */}
+        {/* ── 3 & 4. Problem + Intent ───────────────────────────────────── */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -154,49 +160,47 @@ export default function QLessPage() {
           <div>
             <SectionLabel>Problem</SectionLabel>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-                Traditional queue systems often create confusion, uncertainty, and long waiting experiences due to the lack of real-time visibility and structured communication.
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
+                Traditional queues fail because they offer no information — not because the wait is long. Uncertainty is more exhausting than waiting itself.
               </p>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
-                Users spend unnecessary time waiting without clear updates on their queue position, estimated wait time, or overall progress.
+              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.52)', lineHeight: 1.75 }}>
+                Most queue tools solve the tracking problem but feel clinical and impersonal. The goal was an experience that felt like it was designed for a person, not a system.
               </p>
             </div>
           </div>
           <div>
-            <SectionLabel>Goal</SectionLabel>
-            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-              To create a digital queue experience that allows users to join, monitor, and manage queues in real time through a simple and user-friendly interface.
+            <SectionLabel>Intent</SectionLabel>
+            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
+              Remove uncertainty from the waiting experience — not through speed, but through honest, calm communication that makes the wait feel manageable.
             </p>
           </div>
         </div>
 
-        {/* Visual 2: Status tracking UI */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2.22 / 1' }}>
-          <Image src="/images/q-less-2.png" alt="Q-Less — screen 2" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
-        </div>
+        {/* Visual 2 */}
+        <CaseStudyMedia aspectRatio="2.22 / 1" video="/projects/q-less/reel-2.mp4" poster="/images/q-less-2.png" alt="Q-Less — screen 2" />
 
         <Divider />
 
-        {/* ── 5. Process ──────────────────────────────────────────────────── */}
+        {/* ── 5. Approach ─────────────────────────────────────────────────── */}
         <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>Process</SectionLabel>
+          <SectionLabel>Approach</SectionLabel>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {[
               {
-                step: 'Research',
-                desc: 'Observed real-world waiting environments and identified common frustrations related to uncertainty, inefficiency, and lack of communication.',
+                step: 'Designing Against Uncertainty',
+                desc: 'I mapped the specific emotions waiting creates: anxiety about position, doubt about whether progress is real, frustration from silence. The design had to address each one — not just display data, but actively reduce anxiety.',
               },
               {
-                step: 'Wireframing',
-                desc: 'Created user flows and low-fidelity wireframes focused on fast interaction and queue visibility.',
+                step: 'Designing for State',
+                desc: 'Real-time interfaces live in multiple states: joining, waiting, progressing, almost there, called. Each needed a distinct hierarchy and emotional register — not just a different number on screen, but a different feeling.',
               },
               {
-                step: 'UI Design',
-                desc: 'Designed a minimal and structured interface optimized for clarity, real-time updates, and ease of navigation.',
+                step: 'Reducing to What Matters',
+                desc: 'Your position. Your estimated time. What happens next. I stripped everything else away. In a waiting context, anything that is not immediately useful becomes noise — and noise compounds anxiety.',
               },
               {
-                step: 'Development',
-                desc: 'Built responsive frontend interactions to support smooth queue tracking across devices.',
+                step: 'Shipped',
+                desc: 'Built responsive and deployed to Netlify. Designed for outdoor conditions: variable signal, glancing posture, one hand on a phone, high ambient distraction.',
               },
             ].map((item, i, arr) => (
               <div key={item.step} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
@@ -221,12 +225,12 @@ export default function QLessPage() {
                 <div style={{ paddingTop: '4px' }}>
                   <p style={{
                     fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em',
-                    color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.65)',
+                    color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.72)',
                     marginBottom: '6px',
                   }}>
                     {item.step}
                   </p>
-                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
+                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.58)', lineHeight: 1.75 }}>
                     {item.desc}
                   </p>
                 </div>
@@ -246,11 +250,11 @@ export default function QLessPage() {
             gap: '16px',
           }}>
             {[
-              'Simplified interaction flow to reduce user confusion',
-              'Prioritized real-time queue visibility and status clarity',
-              'Used strong hierarchy to highlight important updates',
-              'Designed mobile-friendly layouts for quick access on the go',
-              'Reduced unnecessary interface elements to improve efficiency',
+              'Queue position was given the largest visual weight on screen. It is the number users check repeatedly — the hierarchy had to reflect that without making it feel clinical.',
+              'Progress indicators were designed to feel continuous, not stepped. A queue that visually moves creates a calmer experience than one that jumps from number to number.',
+              'Status language was rewritten to be human. "Almost your turn" instead of "Position: 2." Language carries emotional weight — and in a wait, that weight matters.',
+              'Mobile-first for outdoor use: high contrast ratios, oversized tap targets, and no content that requires sustained reading while standing outside.',
+              'The interface was kept sparse intentionally. Anything that is not immediately useful creates cognitive noise during a wait — and noise compounds the anxiety we were trying to reduce.',
             ].map((item, i) => (
               <div key={i} style={{
                 padding: '20px 22px',
@@ -262,7 +266,7 @@ export default function QLessPage() {
                   width: '6px', height: '6px', borderRadius: '50%',
                   background: accent, opacity: 0.55, marginBottom: '12px',
                 }} />
-                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.50)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.68)', lineHeight: 1.7 }}>
                   {item}
                 </p>
               </div>
@@ -270,10 +274,8 @@ export default function QLessPage() {
           </div>
         </div>
 
-        {/* Visual 3: User flow + admin view */}
-        <div style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)', position: 'relative', aspectRatio: '2.67 / 1' }}>
-          <Image src="/images/q-less-3.png" alt="Q-Less — screen 3" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 860px" />
-        </div>
+        {/* Visual 3 */}
+        <CaseStudyMedia aspectRatio="2 / 1" video="/projects/q-less/reel-3.mp4" poster="/images/q-less-3.png" alt="Q-Less — screen 3" />
 
         <Divider />
 
@@ -285,107 +287,63 @@ export default function QLessPage() {
             fontWeight: 600,
             lineHeight: 1.5,
             letterSpacing: '-0.01em',
-            color: 'rgba(255,255,255,0.82)',
+            color: 'rgba(255,255,255,0.88)',
             maxWidth: '620px',
             marginBottom: '20px',
           }}>
-            The final platform creates a more efficient and transparent queue experience by allowing users to track progress digitally in real time.
+            I reframed the design problem: the queue doesn&apos;t need to be faster. It needs to feel honest.
           </p>
           <p style={{
             fontSize: 'clamp(14px, 1.4vw, 16px)',
-            color: 'rgba(255,255,255,0.42)',
+            color: 'rgba(255,255,255,0.58)',
             lineHeight: 1.75,
-            maxWidth: '580px',
+            maxWidth: '560px',
           }}>
-            It reduces uncertainty, improves usability, and helps users manage waiting more comfortably.
+            Waiting feels long because it feels uncertain — not because it is long. I designed for that: clear state, visible progress, no ambiguity about position or what comes next. When the uncertainty is gone, the wait becomes manageable. That was the real design problem, and that&apos;s what I solved.
           </p>
         </div>
 
         <Divider />
 
-        {/* ── 8. Features ─────────────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>Features</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {[
-              'Digital queue joining',
-              'Real-time queue tracking',
-              'Queue status updates',
-              'Mobile-responsive experience',
-              'Simplified user flow',
-            ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
-                <div style={{
-                  width: '5px', height: '5px', borderRadius: '50%',
-                  background: accent, opacity: 0.5, flexShrink: 0,
-                }} />
-                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.52)', lineHeight: 1.6 }}>
-                  {item}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Divider />
-
-        {/* ── 9. UX Considerations ────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>UX Considerations</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
-            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.75 }}>
-              The interface was designed around reducing uncertainty during waiting experiences.
-            </p>
-            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.38)', lineHeight: 1.75 }}>
-              Special focus was placed on visibility, quick interaction, and reducing cognitive load through simple status communication.
-            </p>
-          </div>
-        </div>
-
-        <Divider />
-
-        {/* ── 10. Project Links ───────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
-          <SectionLabel>Project Links</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {/* ── 8. Project Links ────────────────────────────────────────────── */}
+        <div id="project-links" style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
+          <div style={{
+            position: 'relative',
+            padding: 'clamp(28px, 4vw, 44px)',
+            border: '1px solid rgba(230,161,90,0.10)',
+            borderRadius: '20px',
+            background: 'rgba(230,161,90,0.025)',
+            overflow: 'hidden',
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: '50%', left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '480px', height: '200px',
+              background: 'radial-gradient(ellipse, rgba(230,161,90,0.07) 0%, transparent 70%)',
+              pointerEvents: 'none',
+            }} />
+            <SectionLabel>The Final Build</SectionLabel>
             <a
               href="https://q-leess.netlify.app/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '16px 20px',
-                border: '1px solid rgba(255,255,255,0.07)',
-                borderRadius: '12px',
-                background: 'rgba(255,255,255,0.02)',
-                textDecoration: 'none',
-                transition: 'border-color 0.2s ease, background 0.2s ease',
-                maxWidth: '400px',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(230,161,90,0.30)'
-                e.currentTarget.style.background = 'rgba(230,161,90,0.04)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
-                e.currentTarget.style.background = 'rgba(255,255,255,0.02)'
-              }}
+              className="cs-live-btn"
+              aria-label="View Q-Less live build — opens in new tab"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0, opacity: 0.65 }}>
-                <circle cx="12" cy="12" r="10" stroke={accent} strokeWidth="1.5" />
-                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke={accent} strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-              <div>
-                <p style={{ fontSize: '13px', fontWeight: 600, color: 'rgba(255,255,255,0.72)', marginBottom: '2px' }}>
-                  View Live Experience
-                </p>
-                <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)', letterSpacing: '0.02em' }}>
-                  q-leess.netlify.app ↗
-                </p>
-              </div>
+              <span>View the Live Build</span>
+              <span className="cs-live-arrow">↗</span>
             </a>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '28px' }}>
+            <button
+              onClick={() => document.getElementById('case-study-top')?.scrollIntoView({ behavior: 'smooth' })}
+              className="cs-back-top"
+              aria-label="Return to top of case study"
+            >
+              <span className="cs-back-arrow">↑</span>
+              Return to overview
+            </button>
           </div>
         </div>
 

@@ -1,7 +1,10 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useReveal } from '@/hooks/use-reveal'
+import { Container } from '@/components/ui/container'
+import { SectionLabel } from '@/components/ui/section-label'
+import { Modal } from '@/components/ui/modal'
 
 const logos = [
   {
@@ -61,34 +64,20 @@ function SYMark({ size = 80 }: { size?: number }) {
     <svg viewBox="0 0 120 120" fill="none" style={{ width: size, height: size }}>
       <polygon points="60,10 102,34 102,86 60,110 18,86 18,34" stroke="#E6A15A" strokeWidth="1.5" fill="rgba(230,161,90,0.08)" />
       <polygon points="60,25 88,40 88,70 60,85 32,70 32,40" stroke="rgba(230,161,90,0.35)" strokeWidth="0.5" fill="none" />
-      <text x="60" y="68" textAnchor="middle" fill="#E6A15A" fontSize="20" fontWeight="700" fontFamily="serif" letterSpacing="2">SY</text>
+      <text x="60" y="68" textAnchor="middle" fill="#E6A15A" fontSize="20" fontWeight="700" style={{ fontFamily: 'var(--font-cormorant)' }} letterSpacing="2">SY</text>
     </svg>
   )
 }
 
-function ImageModal({ logo, onClose, isClosing }: { logo: Logo; onClose: () => void; isClosing: boolean }) {
+function LogoModalContent({ logo, onClose }: { logo: Logo; onClose: () => void }) {
   const [imgHovered, setImgHovered] = useState(false)
   const isFeatured = 'featured' in logo && logo.featured
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={`${logo.name} logo preview`}
-      style={{
-        position: 'fixed', inset: 0, zIndex: 9999,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'rgba(0,0,0,0.92)',
-        backdropFilter: 'blur(22px)',
-        WebkitBackdropFilter: 'blur(22px)',
-        animation: isClosing ? 'imgModalFadeOut 0.24s ease forwards' : 'modalFadeIn 0.28s ease',
-        cursor: 'pointer',
-      }}
-      onClick={onClose}
-    >
-      {/* Close button — always top-right, independent of image position */}
+    <>
+      {/* Close button */}
       <button
-        onClick={(e) => { e.stopPropagation(); onClose() }}
+        onClick={onClose}
         aria-label="Close preview"
         style={{
           position: 'fixed', top: '20px', right: '20px', zIndex: 10001,
@@ -115,16 +104,13 @@ function ImageModal({ logo, onClose, isClosing }: { logo: Logo; onClose: () => v
         ✕
       </button>
 
-      {/* Image wrapper — stops backdrop click from firing */}
+      {/* Image wrapper */}
       <div
         style={{
-          animation: isClosing
-            ? 'imgModalScaleOut 0.24s cubic-bezier(0.4, 0, 1, 1) forwards'
-            : 'imgModalScaleIn 0.34s cubic-bezier(0.22, 1, 0.36, 1)',
+          animation: 'modal-content-scale 0.34s cubic-bezier(0.22, 1, 0.36, 1)',
           cursor: 'default',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
-        onClick={(e) => e.stopPropagation()}
       >
         {logo.src ? (
           <img
@@ -167,7 +153,7 @@ function ImageModal({ logo, onClose, isClosing }: { logo: Logo; onClose: () => v
           </div>
         )}
       </div>
-    </div>
+    </>
   )
 }
 
@@ -276,7 +262,7 @@ function LogoCard({
             <p style={{
               fontSize: '10px', fontWeight: 500,
               letterSpacing: '0.10em', textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.22)',
+              color: 'rgba(255,255,255,0.36)',
             }}>
               {logo.category}
             </p>
@@ -311,8 +297,8 @@ function LogoCard({
             }}>
               {logo.category}
             </p>
-            <p className="logo-back-name" style={{
-              fontFamily: 'serif', fontSize: '22px', fontWeight: 700,
+            <p className="logo-back-name font-serif" style={{
+              fontSize: '22px', fontWeight: 700,
               color: 'rgba(255,255,255,0.90)', letterSpacing: '-0.01em',
               marginBottom: '14px',
             }}>
@@ -320,7 +306,7 @@ function LogoCard({
             </p>
             <p className="logo-back-desc" style={{
               fontSize: '12px', lineHeight: 1.7,
-              color: 'rgba(255,255,255,0.36)',
+              color: 'rgba(255,255,255,0.65)',
               maxWidth: '190px', margin: '0 auto',
             }}>
               {logo.desc}
@@ -341,7 +327,7 @@ function LogoCard({
                   fontSize: '10px',
                   fontWeight: 600,
                   letterSpacing: '0.07em',
-                  color: linkHovered ? '#E6A15A' : 'rgba(255,255,255,0.30)',
+                  color: linkHovered ? '#E6A15A' : 'rgba(255,255,255,0.48)',
                   textDecoration: 'none',
                   padding: '6px 13px',
                   border: `1px solid ${linkHovered ? 'rgba(230,161,90,0.38)' : 'rgba(255,255,255,0.09)'}`,
@@ -390,32 +376,10 @@ export function LogoSection() {
   const { ref, revealed } = useReveal()
   const [isTouchDevice, setIsTouchDevice] = useState(false)
   const [modalLogo, setModalLogo] = useState<Logo | null>(null)
-  const [isClosing, setIsClosing] = useState(false)
 
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0)
   }, [])
-
-  const handleClose = useCallback(() => {
-    setIsClosing(true)
-    setTimeout(() => {
-      setModalLogo(null)
-      setIsClosing(false)
-    }, 240)
-  }, [])
-
-  // ESC to close
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') handleClose() }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [handleClose])
-
-  // Lock scroll when modal open
-  useEffect(() => {
-    document.body.style.overflow = modalLogo ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [modalLogo])
 
   return (
     <>
@@ -443,47 +407,21 @@ export function LogoSection() {
         .flip-face-back {
           transform: rotateY(180deg);
         }
-        @keyframes modalFadeIn {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-        @keyframes modalScaleIn {
-          from { opacity: 0; transform: scale(0.94) translateY(8px); }
-          to   { opacity: 1; transform: scale(1)    translateY(0);   }
-        }
-        @keyframes imgModalScaleIn {
-          from { opacity: 0; transform: scale(0.92); }
-          to   { opacity: 1; transform: scale(1); }
-        }
-        @keyframes imgModalFadeOut {
-          from { opacity: 1; }
-          to   { opacity: 0; }
-        }
-        @keyframes imgModalScaleOut {
-          from { opacity: 1; transform: scale(1); }
-          to   { opacity: 0; transform: scale(0.94); }
-        }
       `}</style>
 
       <section id="logos" className="py-24" style={{ background: 'transparent' }}>
-        <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
+        <Container>
 
           {/* Header */}
           <div ref={ref} className={`mb-12 reveal ${revealed ? 'revealed' : ''}`}>
-            <span style={{
-              fontSize: '11px', fontWeight: 500, letterSpacing: '0.16em',
-              textTransform: 'uppercase', color: '#E6A15A',
-              display: 'block', marginBottom: '14px',
-            }}>
-              Visual Identity
-            </span>
+            <SectionLabel>Visual Identity</SectionLabel>
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-balance" style={{ marginBottom: '12px' }}>
               Marks that define{' '}
               <span style={{ color: '#E6A15A', textShadow: '0 0 24px rgba(230,161,90,0.22)' }}>identity</span>
             </h2>
-            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.30)', lineHeight: 1.65, maxWidth: '460px' }}>
+            <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.56)', lineHeight: 1.65, maxWidth: '460px' }}>
               Minimal marks built to carry meaning, memory, and identity.{' '}
-              <span style={{ color: 'rgba(255,255,255,0.18)' }}>
+              <span style={{ color: 'rgba(255,255,255,0.30)' }}>
                 {isTouchDevice ? 'Tap to explore.' : 'Hover to explore, click to preview.'}
               </span>
             </p>
@@ -502,12 +440,14 @@ export function LogoSection() {
             ))}
           </div>
 
-        </div>
+        </Container>
       </section>
 
       {/* Image modal */}
       {modalLogo && (
-        <ImageModal logo={modalLogo} onClose={handleClose} isClosing={isClosing} />
+        <Modal onClose={() => setModalLogo(null)} label={`${modalLogo.name} logo preview`}>
+          <LogoModalContent logo={modalLogo} onClose={() => setModalLogo(null)} />
+        </Modal>
       )}
     </>
   )

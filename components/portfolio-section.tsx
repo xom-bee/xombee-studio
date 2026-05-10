@@ -3,9 +3,9 @@
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, ExternalLink, Award, Wrench, Users } from 'lucide-react'
+import { Container } from '@/components/ui/container'
 
-// ─── Procedural visuals (unchanged) ───────────────────────────────────────────
+// ─── Procedural visuals ───────────────────────────────────────────────────────
 
 function ProceduralVisual({ projectId, color, variant }: { projectId: string; color: string; variant: number }) {
   const patterns: Record<string, React.ReactNode[]> = {
@@ -94,17 +94,17 @@ const projects = [
     id: 'druk-art-hub',
     title: 'Druk Art Hub',
     category: 'UI/UX Design · Branding',
-    tagline: 'A digital platform for Bhutanese artists',
+    tagline: 'I designed the identity before I designed the platform.\nEvery surface was built to hold Bhutanese artistry with clarity — and carry it globally without losing what it is.',
     award: null,
     color: 'oklch(0.75 0.15 55)',
     accent: '#C8884A',
     logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Druk%20Art%20Hub%20White-trOMxor0aJQS5vMDg7UA5eQLGxTDp7.png',
-    shortDesc: 'A digital platform for Bhutanese artists to showcase and connect through art.\nFocused on cultural identity and creative community.',
+    shortDesc: 'Cultural identity is the hardest thing to hold in a digital system.\nI built one that holds it — so Bhutanese artistry reaches the world without losing what it is.',
     situation: 'Bhutanese artists had no dedicated platform to reach beyond local buyers.\nTheir work existed. Their audience did not.',
-    action: 'Designed a culturally-sensitive marketplace from scratch.\nCelebrates Bhutanese artistry while enabling global discovery and transactions.',
-    result: 'A platform that empowers independent artists to earn sustainably.\nBridges traditional craft and modern commerce through intentional design.',
+    action: 'I designed a culturally-sensitive system from scratch.\nEvery decision — the marks, the navigation, the visual hierarchy — was made to let the art lead and the platform disappear.',
+    result: 'A platform that gives independent artists a sustainable stage.\nTraditional craft, made globally visible through intentional design.',
     problem: 'How do you build a platform that feels culturally authentic\nwhile remaining globally accessible?',
-    solution: 'Cultural visual cues. Accessible navigation. Artist-first features.\nThe work leads. The platform follows.',
+    solution: 'Cultural visual cues. Accessible navigation. Artist-first architecture.\nThe work leads. The platform disappears.',
     tools: ['Figma', 'Adobe Photoshop', 'Wireframing', 'Brand Identity', 'Frontend'],
     team: ['Sangay Yoesel – UI/UX Lead', 'Collaborative team of 3'],
     liveUrl: undefined,
@@ -113,23 +113,23 @@ const projects = [
     imagePosition: '72% center',
     ongoing: true,
     compositeUi: undefined,
-    preLine: 'Designed to help artists express identity and be seen',
+    preLine: 'I designed the foundation they were missing.',
   },
   {
     id: 'xom-bee',
     title: 'Xom Bee Official',
     category: 'UI/UX Design · Frontend Development',
-    tagline: 'Personal website for a music artist',
+    tagline: 'The brief was the feeling, not the features.\nI designed and built a space where the artist\'s presence arrives before the sound does.',
     award: null,
     color: 'oklch(0.75 0.15 55)',
     accent: '#C8884A',
     logo: undefined,
-    shortDesc: 'A personal website for a music artist to showcase songs and music videos.\nDesigned to express identity through sound and visuals.',
+    shortDesc: 'The music was the brief.\nI designed and built a space that makes you feel the artist before a single note plays.',
     situation: 'Independent artists struggle to present their music and identity in one cohesive space.\nSocial platforms exist, but none truly belong to the artist.',
-    action: 'Designed and built a personal website from concept to code.\nEvery detail — layout, motion, color — built to reflect the artist\'s sound.',
-    result: 'A living digital stage that the artist fully owns.\nA space that feels like the music before a single note plays.',
-    problem: 'How do you design a website that makes someone\nfeel the music before they press play?',
-    solution: 'Dark, cinematic atmosphere. Intentional motion. Emotional hierarchy.\nThe design becomes part of the listening experience.',
+    action: 'I designed and built this from concept to code.\nEvery detail — the atmosphere, the motion, the silence — was shaped to feel like the music before it plays.',
+    result: 'A digital stage the artist fully owns.\nThe design arrives before the sound does.',
+    problem: 'How do you design a space that makes someone\nfeel the music before they press play?',
+    solution: 'Dark atmosphere. Intentional motion. Deliberate restraint.\nI disappeared the interface so the sound could arrive first.',
     tools: ['Figma', 'Next.js', 'Tailwind CSS', 'Brand Identity', 'Frontend'],
     team: ['Sangay Yoesel – Designer & Developer'],
     liveUrl: undefined,
@@ -138,218 +138,20 @@ const projects = [
     imagePosition: 'center center',
     ongoing: true,
     compositeUi: undefined,
-    preLine: 'Your sound deserves its own stage.',
+    preLine: 'Design and code. End to end.',
   },
 ]
-
-// ─── Project detail overlay (unchanged) ───────────────────────────────────────
-
-function PreviewCard({ projectId, color, variant }: { projectId: string; color: string; variant: number }) {
-  const [hovered, setHovered] = useState(false)
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        position: 'relative',
-        aspectRatio: '4/3',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        border: `1px solid ${hovered ? 'rgba(200,136,74,0.30)' : 'rgba(255,255,255,0.07)'}`,
-        boxShadow: hovered
-          ? '0 8px 32px rgba(0,0,0,0.55), 0 0 16px rgba(200,136,74,0.12)'
-          : '0 4px 16px rgba(0,0,0,0.40)',
-        transform: hovered ? 'scale(1.025)' : 'scale(1)',
-        transition: 'transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease',
-        cursor: 'default',
-      }}
-    >
-      <div className="absolute inset-0 scale-95 sm:scale-100 origin-center">
-        <ProceduralVisual projectId={projectId} color={color} variant={variant} />
-      </div>
-    </div>
-  )
-}
-
-function ProjectDetail({ project, onClose }: { project: typeof projects[0]; onClose: () => void }) {
-  return (
-    <div className="fixed inset-0 z-100 bg-background/98 backdrop-blur-xl overflow-y-auto overlay-enter">
-      <div
-        className="max-w-250 mx-auto px-3 sm:px-6 pt-10 sm:pt-16 pb-24 sm:pb-32"
-      >
-        {/* Back */}
-        <button
-          onClick={onClose}
-          className="flex items-center gap-2 mb-8 sm:mb-14"
-          style={{
-            fontSize: '13px', color: 'rgba(255,255,255,0.35)',
-            background: 'none', border: 'none', cursor: 'pointer',
-            transition: 'color 0.2s',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.80)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.35)' }}
-        >
-          <ChevronLeft size={14} />
-          Back to work
-        </button>
-
-        {/* All sections separated by consistent space */}
-        <div className="space-y-6 sm:space-y-10">
-
-          {/* Header */}
-          <div>
-            <span style={{ fontSize: '11px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, display: 'block', marginBottom: '16px' }}>
-              {project.category}
-            </span>
-            <h2 style={{ fontSize: 'clamp(32px, 6vw, 72px)', fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.02em', color: '#FFFFFF', marginBottom: '12px' }}>
-              {project.title}
-            </h2>
-            <p className="text-sm sm:text-base" style={{ color: 'rgba(255,255,255,0.40)', lineHeight: 1.6, marginBottom: '20px' }}>
-              {project.tagline}
-            </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-              {project.award && (
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: project.accent, border: `1px solid ${project.accent}50`, borderRadius: '999px', padding: '7px 16px', boxShadow: `0 0 10px ${project.accent}1A` }}>
-                  <Award size={9} />{project.award}
-                </div>
-              )}
-              {project.liveUrl && (
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: project.accent, border: `1px solid ${project.accent}40`, borderRadius: '999px', padding: '7px 16px', textDecoration: 'none' }}>
-                  <ExternalLink size={9} />View Live Site
-                </a>
-              )}
-            </div>
-          </div>
-
-          {/* Preview cards */}
-          <div className="grid grid-cols-1 space-y-5 sm:space-y-0 sm:grid-cols-3 sm:gap-8">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="mx-auto w-full max-w-72 sm:max-w-none px-2 sm:px-0">
-                <PreviewCard projectId={project.id} color={project.color} variant={i} />
-              </div>
-            ))}
-          </div>
-
-          {/* Situation + Action */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
-            <div>
-              <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Situation</h3>
-              <p className="text-sm sm:text-base" style={{ lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.situation}</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Action</h3>
-              <p className="text-sm sm:text-base" style={{ lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.action}</p>
-            </div>
-          </div>
-
-          {/* The Problem — pull quote */}
-          <div style={{ borderLeft: `2px solid ${project.accent}`, paddingLeft: '20px' }}>
-            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Problem</h3>
-            <p className="text-lg sm:text-xl" style={{ fontWeight: 600, lineHeight: 1.5, color: '#FFFFFF', whiteSpace: 'pre-line' }}>
-              {project.problem}
-            </p>
-          </div>
-
-          {/* The Solution */}
-          <div>
-            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '14px' }}>The Solution</h3>
-            <p className="text-sm sm:text-base" style={{ lineHeight: 1.8, color: 'rgba(255,255,255,0.45)', whiteSpace: 'pre-line' }}>{project.solution}</p>
-          </div>
-
-          {/* Final Outcome */}
-          <div className="rounded-xl p-4 sm:p-6 shadow-sm" style={{ border: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.025)' }}>
-            <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent, marginBottom: '20px' }}>Final Outcome</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              {project.result.split('\n').map((line, i) => (
-                <p key={i} className={i === 0 ? 'text-base sm:text-lg' : 'text-sm sm:text-base'} style={{
-                  fontWeight: i === 0 ? 600 : 400,
-                  lineHeight: 1.55,
-                  color: i === 0 ? '#FFFFFF' : 'rgba(255,255,255,0.55)',
-                }}>
-                  {line.includes('%') ? (
-                    <>
-                      {line.split(/(\d+%)/g).map((part, j) =>
-                        /\d+%/.test(part)
-                          ? <span key={j} style={{ color: project.accent, fontWeight: 700 }}>{part}</span>
-                          : part
-                      )}
-                    </>
-                  ) : line}
-                </p>
-              ))}
-            </div>
-          </div>
-
-          {/* Tools + Team */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12">
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-                <Wrench size={12} style={{ color: project.accent }} />
-                <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent }}>Tools Used</h3>
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                {project.tools.map((tool) => (
-                  <ToolPill key={tool} label={tool} accent={project.accent} />
-                ))}
-              </div>
-            </div>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-                <Users size={12} style={{ color: project.accent }} />
-                <h3 style={{ fontSize: '10px', letterSpacing: '0.16em', textTransform: 'uppercase', color: project.accent }}>Team</h3>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {project.team.map((member) => (
-                  <span key={member} className="text-sm" style={{ color: 'rgba(255,255,255,0.45)', lineHeight: 1.5 }}>{member}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function ToolPill({ label, accent }: { label: string; accent: string }) {
-  const [hovered, setHovered] = useState(false)
-  return (
-    <span
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{
-        fontSize: '11px',
-        letterSpacing: '0.06em',
-        color: hovered ? accent : 'rgba(255,255,255,0.45)',
-        border: `1px solid ${hovered ? `${accent}55` : 'rgba(255,255,255,0.12)'}`,
-        borderRadius: '999px',
-        padding: '6px 14px',
-        cursor: 'default',
-        boxShadow: hovered ? `0 0 10px ${accent}20` : 'none',
-        transition: 'color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
-      }}
-    >
-      {label}
-    </span>
-  )
-}
 
 // ─── Project row ───────────────────────────────────────────────────────────────
 
 function ProjectRow({
   project,
-  index,
-  onClick,
 }: {
   project: typeof projects[0]
-  index: number
-  onClick: () => void
 }) {
   const rowRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const [imgHovered, setImgHovered] = useState(false)
-  const isReversed = false
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -359,18 +161,20 @@ function ProjectRow({
           observer.disconnect()
         }
       },
-      { threshold: 0.12 }
+      { threshold: 0.16 }
     )
     if (rowRef.current) observer.observe(rowRef.current)
     return () => observer.disconnect()
   }, [])
+
+  const href = project.caseStudyHref ?? '/work'
 
   return (
     <div
       ref={rowRef}
       style={{
         display: 'flex',
-        flexDirection: isReversed ? 'row-reverse' : 'row',
+        flexDirection: 'row',
         alignItems: 'center',
         gap: 'clamp(40px, 6vw, 96px)',
         padding: 'clamp(48px, 7vw, 80px) 0',
@@ -384,7 +188,7 @@ function ProjectRow({
           flex: '1 1 320px',
           opacity: visible ? 1 : 0,
           transform: visible ? 'translateY(0)' : 'translateY(24px)',
-          transition: 'opacity 0.75s 0s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s 0s cubic-bezier(0.22, 1, 0.36, 1)',
+          transition: 'opacity 1.1s 0s cubic-bezier(0.22, 1, 0.36, 1), transform 1.1s 0s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
         {/* Ongoing badge */}
@@ -431,7 +235,6 @@ function ProjectRow({
             marginBottom: '20px',
             boxShadow: `0 0 12px ${project.accent}22, inset 0 0 8px ${project.accent}08`,
           }}>
-            <Award size={9} />
             {project.award}
           </div>
         )}
@@ -442,7 +245,7 @@ function ProjectRow({
             fontSize: 'clamp(11px, 1vw, 13px)',
             fontWeight: 400,
             letterSpacing: '0.04em',
-            color: 'rgba(255,255,255,0.22)',
+            color: 'rgba(255,255,255,0.40)',
             marginBottom: '10px',
             lineHeight: 1.5,
           }}>
@@ -450,24 +253,41 @@ function ProjectRow({
           </p>
         )}
 
-        {/* Title */}
-        <h3 style={{
-          fontSize: 'clamp(36px, 5.5vw, 72px)',
-          fontWeight: 700,
-          lineHeight: 1.05,
-          letterSpacing: '-0.02em',
-          color: '#FFFFFF',
-          marginBottom: '24px',
-        }}>
-          {project.title}
-        </h3>
+        {/* Title — navigates directly to case study */}
+        <Link
+          href={href}
+          onMouseEnter={(e) => {
+            const h3 = e.currentTarget.querySelector('h3') as HTMLElement
+            if (h3) h3.style.color = 'rgba(255,255,255,0.76)'
+          }}
+          onMouseLeave={(e) => {
+            const h3 = e.currentTarget.querySelector('h3') as HTMLElement
+            if (h3) h3.style.color = '#FFFFFF'
+          }}
+          style={{
+            textDecoration: 'none',
+            display: 'block',
+            marginBottom: '24px',
+          }}
+        >
+          <h3 style={{
+            fontSize: 'clamp(36px, 5.5vw, 72px)',
+            fontWeight: 700,
+            lineHeight: 1.05,
+            letterSpacing: '-0.02em',
+            color: '#FFFFFF',
+            transition: 'color 0.40s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}>
+            {project.title}
+          </h3>
+        </Link>
 
         {/* Description */}
         <p style={{
           fontSize: 'clamp(14px, 1.3vw, 16px)',
           fontWeight: 400,
           lineHeight: 1.85,
-          color: '#7A7A84',
+          color: 'rgba(255,255,255,0.65)',
           maxWidth: '360px',
           marginBottom: '16px',
           whiteSpace: 'pre-line',
@@ -489,81 +309,63 @@ function ProjectRow({
           {project.category}
         </p>
 
-        {/* CTA */}
-        {project.caseStudyHref ? (
-          <Link
-            href={project.caseStudyHref}
-            style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '10px', fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', color: '#FFFFFF', transition: 'gap 0.3s ease' }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.gap = '16px'
-              const arrow = e.currentTarget.querySelector('span') as HTMLElement
-              if (arrow) arrow.style.transform = 'translateX(4px)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.gap = '10px'
-              const arrow = e.currentTarget.querySelector('span') as HTMLElement
-              if (arrow) arrow.style.transform = 'translateX(0)'
-            }}
-          >
-            View Case Study
-            <span style={{ fontSize: '18px', lineHeight: 1, color: '#C8884A', transition: 'transform 0.3s ease' }}>→</span>
-          </Link>
-        ) : (
-          <button
-            onClick={onClick}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              fontSize: '13px',
-              fontWeight: 600,
-              letterSpacing: '0.04em',
-              color: '#FFFFFF',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: 0,
-              transition: 'gap 0.3s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.gap = '16px'
-              const arrow = e.currentTarget.querySelector('span') as HTMLElement
-              if (arrow) arrow.style.transform = 'translateX(4px)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.gap = '10px'
-              const arrow = e.currentTarget.querySelector('span') as HTMLElement
-              if (arrow) arrow.style.transform = 'translateX(0)'
-            }}
-          >
-            View Case Study
-            <span style={{ fontSize: '18px', lineHeight: 1, color: '#C8884A', transition: 'transform 0.3s ease' }}>→</span>
-          </button>
-        )}
+        {/* CTA — navigates directly to case study */}
+        <Link
+          href={href}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontSize: '13px',
+            fontWeight: 600,
+            letterSpacing: '0.04em',
+            color: '#FFFFFF',
+            textDecoration: 'none',
+            transition: 'gap 0.3s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.gap = '16px'
+            const arrow = e.currentTarget.querySelector('.cta-view-arrow') as HTMLElement
+            if (arrow) { arrow.style.animation = 'none'; arrow.style.transform = 'translateX(4px)' }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.gap = '10px'
+            const arrow = e.currentTarget.querySelector('.cta-view-arrow') as HTMLElement
+            if (arrow) { arrow.style.animation = ''; arrow.style.transform = '' }
+          }}
+        >
+          View Case Study
+          <span className="cta-view-arrow">→</span>
+        </Link>
       </div>
 
-      {/* Visual side */}
-      <div
+      {/* Visual side — navigates directly to case study */}
+      <Link
+        href={href}
         onMouseEnter={() => setImgHovered(true)}
         onMouseLeave={() => setImgHovered(false)}
         style={{
+          display: 'block',
           flex: '1 1 340px',
           aspectRatio: '4 / 3',
           borderRadius: '20px',
           overflow: 'hidden',
           position: 'relative',
           background: '#06060A',
+          cursor: 'pointer',
           opacity: visible ? 1 : 0,
           transform: visible ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(20px)',
-          transition: 'opacity 0.85s 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s 0.2s cubic-bezier(0.22, 1, 0.36, 1)',
-          boxShadow: project.image
-            ? `0 32px 80px rgba(0,0,0,0.7), 0 0 72px ${project.accent}30, 0 0 0 1px rgba(255,255,255,0.04)`
-            : '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)',
+          transition: 'opacity 0.85s 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1)',
+          boxShadow: imgHovered
+            ? `0 40px 96px rgba(0,0,0,0.75), 0 0 80px ${project.accent}38, 0 0 0 1px rgba(255,255,255,0.08)`
+            : project.image
+              ? `0 32px 80px rgba(0,0,0,0.7), 0 0 72px ${project.accent}30, 0 0 0 1px rgba(255,255,255,0.04)`
+              : '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)',
         }}
       >
         {project.image && project.compositeUi ? (
           <>
-            {/* Background — dining scene, pushed back with more blur */}
+            {/* Background — pushed back with blur */}
             <Image
               src={project.image}
               alt=""
@@ -575,15 +377,13 @@ function ProjectRow({
                 filter: 'brightness(0.42) blur(3px) saturate(0.85)',
               }}
             />
-
             {/* Dark warm scrim */}
             <div style={{
               position: 'absolute', inset: 0,
               background: 'linear-gradient(180deg, rgba(6,5,4,0.50) 0%, rgba(8,6,4,0.25) 100%)',
               pointerEvents: 'none',
             }} />
-
-            {/* Gradient plate — dark base behind UI, gives it ground */}
+            {/* Gradient plate */}
             <div style={{
               position: 'absolute',
               top: '50%', left: '50%',
@@ -593,8 +393,7 @@ function ProjectRow({
               filter: 'blur(12px)',
               pointerEvents: 'none',
             }} />
-
-            {/* Secondary UI — smaller, receded, low opacity */}
+            {/* Secondary UI */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={project.compositeUi[1]}
@@ -610,8 +409,7 @@ function ProjectRow({
                 filter: 'brightness(0.75)',
               }}
             />
-
-            {/* Primary UI — centered with equal breathing room top/bottom */}
+            {/* Primary UI */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={project.compositeUi[0]}
@@ -627,8 +425,7 @@ function ProjectRow({
                 filter: 'brightness(1.02)',
               }}
             />
-
-            {/* Amber glow — sits behind primary UI */}
+            {/* Amber glow */}
             <div style={{
               position: 'absolute',
               top: '50%', left: '50%',
@@ -638,7 +435,6 @@ function ProjectRow({
               filter: 'blur(28px)',
               pointerEvents: 'none',
             }} />
-
             {/* Edge vignette */}
             <div style={{
               position: 'absolute', inset: 0,
@@ -656,13 +452,13 @@ function ProjectRow({
               style={{
                 objectFit: 'cover',
                 objectPosition: project.imagePosition ?? 'center center',
-                filter: 'brightness(0.78) contrast(0.92)',
+                filter: imgHovered ? 'brightness(0.88) contrast(0.94)' : 'brightness(0.78) contrast(0.92)',
                 transform: imgHovered ? 'scale(1.06)' : 'scale(1)',
-                transition: 'transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
+                transition: 'transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.55s cubic-bezier(0.16, 1, 0.3, 1)',
                 transformOrigin: 'center center',
               }}
             />
-            {/* Inner dark shadow — top and bottom edges */}
+            {/* Inner dark shadow */}
             <div style={{
               position: 'absolute', inset: 0,
               background: 'linear-gradient(to bottom, rgba(6,6,10,0.28) 0%, transparent 30%, transparent 70%, rgba(6,6,10,0.38) 100%)',
@@ -679,7 +475,6 @@ function ProjectRow({
               background: `${project.accent}0A`,
               pointerEvents: 'none',
             }} />
-
             {/* Noise texture — cinematic grain */}
             <svg aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.28, mixBlendMode: 'overlay', pointerEvents: 'none' }}>
               <filter id="img-grain">
@@ -699,7 +494,7 @@ function ProjectRow({
             }} />
           </>
         )}
-      </div>
+      </Link>
     </div>
   )
 }
@@ -755,35 +550,42 @@ function SectionHeader() {
 // ─── Main export ───────────────────────────────────────────────────────────────
 
 export function PortfolioSection() {
-  const [activeProject, setActiveProject] = useState<typeof projects[0] | null>(null)
-
   return (
-    <>
-      {activeProject && (
-        <ProjectDetail project={activeProject} onClose={() => setActiveProject(null)} />
-      )}
-
-      <section
-        id="portfolio"
+    <section
+      id="portfolio"
+      style={{
+        background: 'transparent',
+        position: 'relative',
+        paddingTop: 'clamp(56px, 8vw, 96px)',
+        paddingBottom: 'clamp(40px, 6vw, 72px)',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Atmospheric trace — amber warmth carried from the hero into the work */}
+      <div
+        aria-hidden="true"
         style={{
-          background: 'transparent',
-          paddingTop: 'clamp(56px, 8vw, 96px)',
-          paddingBottom: 'clamp(40px, 6vw, 72px)',
+          position: 'absolute',
+          top: 0,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '80%',
+          height: '35%',
+          background: 'radial-gradient(ellipse, rgba(230,161,90,0.018) 0%, transparent 72%)',
+          pointerEvents: 'none',
         }}
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
-          <SectionHeader />
+      />
 
-          {projects.map((project, index) => (
-            <ProjectRow
-              key={project.id}
-              project={project}
-              index={index}
-              onClick={() => setActiveProject(project)}
-            />
-          ))}
-        </div>
-      </section>
-    </>
+      <Container>
+        <SectionHeader />
+
+        {projects.map((project) => (
+          <ProjectRow
+            key={project.id}
+            project={project}
+          />
+        ))}
+      </Container>
+    </section>
   )
 }
