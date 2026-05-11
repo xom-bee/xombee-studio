@@ -1,0 +1,176 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+
+const links = [
+  { label: 'Work', href: '/work' },
+  { label: 'About', href: '/about' },
+]
+
+export function Navbar() {
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const s = window.scrollY > 60
+      setScrolled(prev => (prev === s ? prev : s))
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const handleLogoClick = () => {
+    setMenuOpen(false)
+    if (pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      router.push('/')
+    }
+  }
+
+  const scrollTo = (href: string) => {
+    setMenuOpen(false)
+    if (href.startsWith('/')) {
+      router.push(href)
+      return
+    }
+    if (pathname !== '/') {
+      router.push(`/${href}`)
+      return
+    }
+    const el = document.querySelector(href)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  return (
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+          scrolled
+            ? 'bg-(--color-bg)/80 backdrop-blur-xl border-b border-white/4'
+            : 'bg-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-5 flex items-center justify-between">
+
+          {/* Logo */}
+          <button
+            onClick={handleLogoClick}
+            className="flex items-center gap-2.5 group"
+          >
+            <div className="relative w-7 h-7">
+              <svg width="28" height="28" viewBox="0 0 80 80" fill="none">
+                <polygon
+                  points="40,8 70,24 70,56 40,72 10,56 10,24"
+                  stroke="var(--color-gold)"
+                  strokeWidth="2"
+                  fill="rgba(230, 161, 90, 0.08)"
+                  className="transition-all duration-300 group-hover:fill-[rgba(230,161,90,0.2)]"
+                />
+                <text x="40" y="47" textAnchor="middle" fill="var(--color-gold)" fontSize="18" fontWeight="700" letterSpacing="2">
+                  SY
+                </text>
+              </svg>
+            </div>
+            <span
+              className="font-serif font-bold tracking-[0.12em] text-sm hidden sm:block transition-opacity duration-300 group-hover:opacity-80"
+              style={{ color: 'rgba(255,255,255,0.88)' }}
+            >
+              Yoesel
+            </span>
+          </button>
+
+          {/* Desktop nav — wider spacing, subtler */}
+          <nav aria-label="Main navigation" className="hidden md:flex items-center gap-12">
+            {links.map((link) => {
+              const active = pathname === link.href
+              return (
+                <button
+                  key={link.label}
+                  onClick={() => scrollTo(link.href)}
+                  className="relative group transition-colors duration-300"
+                  style={{
+                    color: active ? 'var(--color-gold)' : 'rgba(255,255,255,0.55)',
+                    fontSize: '11px',
+                    letterSpacing: '0.14em',
+                    textTransform: 'uppercase',
+                  }}
+                  onMouseEnter={(e) => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.92)' }}
+                  onMouseLeave={(e) => { if (!active) e.currentTarget.style.color = 'rgba(255,255,255,0.55)' }}
+                >
+                  {link.label}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-px transition-all duration-300 ${active ? 'w-full' : 'w-0 group-hover:w-full'}`}
+                    style={{ background: 'var(--color-gold)' }}
+                  />
+                </button>
+              )
+            })}
+          </nav>
+
+          {/* CTA */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => scrollTo('#contact')}
+            className="hidden md:flex"
+          >
+            Let&apos;s Talk
+          </Button>
+
+          {/* Mobile menu toggle */}
+          <button
+            className="md:hidden flex flex-col gap-1.5 p-2"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            <span
+              className={`w-5 h-px transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`}
+              style={{ background: 'rgba(255,255,255,0.6)' }}
+            />
+            <span
+              className={`w-5 h-px transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}
+              style={{ background: 'rgba(255,255,255,0.6)' }}
+            />
+            <span
+              className={`w-5 h-px transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}
+              style={{ background: 'rgba(255,255,255,0.6)' }}
+            />
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile menu */}
+      <div
+        className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-10 transition-all duration-500 md:hidden ${
+          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        style={{ background: 'rgba(11, 11, 15, 0.97)' }}
+      >
+        {links.map((link) => (
+          <button
+            key={link.label}
+            onClick={() => scrollTo(link.href)}
+            className="font-sans font-bold text-white transition-colors duration-300 hover:text-(--color-gold)"
+            style={{ fontSize: '36px', letterSpacing: '-0.01em' }}
+          >
+            {link.label}
+          </button>
+        ))}
+        <Button
+          variant="ghost"
+          onClick={() => scrollTo('#contact')}
+          style={{ marginTop: '8px' }}
+        >
+          Let&apos;s Talk
+        </Button>
+      </div>
+    </>
+  )
+}

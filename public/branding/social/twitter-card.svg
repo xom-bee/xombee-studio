@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 628" width="1200" height="628">
+  <defs>
+    <radialGradient id="twGlow" cx="50%" cy="46%" r="38%">
+      <stop offset="0%" stop-color="#E6A15A" stop-opacity="0.11"/>
+      <stop offset="65%" stop-color="#E6A15A" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#E6A15A" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="twSymGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="628" fill="#0B0B0F"/>
+  <rect width="1200" height="628" fill="url(#twGlow)"/>
+  <g filter="url(#twSymGlow)">
+    <polygon points="600,196 649,222 649,286 600,312 551,286 551,222"
+      stroke="#E6A15A" stroke-width="1.2" fill="none" opacity="0.25"/>
+    <polygon points="600,202 645,228 645,280 600,306 555,280 555,228"
+      stroke="#E6A15A" stroke-width="2.2" fill="#E6A15A" fill-opacity="0.09"/>
+    <text x="600" y="264" text-anchor="middle"
+      fill="#E6A15A" font-size="29" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="3">SY</text>
+  </g>
+  <text x="600" y="397" text-anchor="middle"
+    fill="#FFFFFF" fill-opacity="0.92" font-size="62" font-weight="700"
+    font-family="Georgia,'Times New Roman',serif" letter-spacing="-1">Yoesel</text>
+  <text x="600" y="435" text-anchor="middle"
+    fill="#FFFFFF" fill-opacity="0.34" font-size="19" font-weight="400"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="5">DESIGN &amp; MUSIC</text>
+  <line x1="576" y1="522" x2="624" y2="522"
+    stroke="#E6A15A" stroke-width="1" stroke-opacity="0.40"/>
+</svg>

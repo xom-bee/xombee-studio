@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="avGlow" cx="50%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="#E6A15A" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#E6A15A" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="avSymGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="circle">
+      <circle cx="200" cy="200" r="200"/>
+    </clipPath>
+  </defs>
+  <!-- Circular background -->
+  <circle cx="200" cy="200" r="200" fill="#0B0B0F"/>
+  <circle cx="200" cy="200" r="200" fill="url(#avGlow)"/>
+  <!-- Symbol centered in 400x400 — scale 3x from original 80x80 -->
+  <!-- Original center (40,40), now center (200,200): offset = (160,160) -->
+  <!-- Original vertical_r=32, horizontal=30 → scale 3.4: v=108, h=102 -->
+  <g filter="url(#avSymGlow)">
+    <!-- Outer ghost ring, scale 3.4, center (200,200) -->
+    <polygon points="200,93 302,148 302,252 200,307 98,252 98,148"
+      stroke="#E6A15A" stroke-width="1.5" fill="none" opacity="0.25"/>
+    <!-- Primary hex -->
+    <polygon points="200,110 290,162 290,238 200,290 110,238 110,162"
+      stroke="#E6A15A" stroke-width="3.5" fill="#E6A15A" fill-opacity="0.09"/>
+    <!-- SY monogram -->
+    <text x="200" y="213" text-anchor="middle"
+      fill="#E6A15A" font-size="56" font-weight="700"
+      font-family="Georgia,'Times New Roman',serif" letter-spacing="6">SY</text>
+  </g>
+</svg>

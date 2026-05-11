@@ -1,0 +1,404 @@
+'use client'
+
+import { useState } from 'react'
+import { useReveal } from '@/hooks/use-reveal'
+import { Mail, Phone, MapPin, Send, Download } from 'lucide-react'
+import { Container } from '@/components/ui/container'
+import { SectionLabel } from '@/components/ui/section-label'
+import { Card } from '@/components/ui/card'
+
+const socialLinks = [
+  {
+    name: 'Instagram',
+    handle: '@itsxombee',
+    href: 'https://instagram.com/itsxombee',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
+        <rect x="2" y="2" width="20" height="20" rx="6" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    name: 'TikTok',
+    handle: '@itsxombee',
+    href: 'https://tiktok.com/@itsxombee',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
+        <path d="M9 12a4 4 0 1 0 4 4V6a5 5 0 0 0 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    name: 'LinkedIn',
+    handle: 'Sangay Yoesel',
+    href: 'https://www.linkedin.com/in/sangayyoesel/',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
+        <rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M7 10v7M7 7v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M11 17v-4c0-1.7 1.3-3 3-3s3 1.3 3 3v4M11 10v7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    name: 'YouTube',
+    handle: '@itsxombee',
+    href: 'https://www.youtube.com/@itsxombee',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
+        <rect x="2" y="5" width="20" height="14" rx="5" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M10 9l5 3-5 3V9z" fill="currentColor" />
+      </svg>
+    ),
+  },
+]
+
+export function ContactSection() {
+  const { ref, revealed } = useReveal()
+  const [formState, setFormState] = useState({ name: '', email: '', message: '' })
+  const [submitted, setSubmitted] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSending(true)
+    setError(null)
+
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formState),
+    })
+
+    const data = await res.json()
+    setSending(false)
+
+    if (!res.ok) {
+      setError(data.error ?? 'Something went wrong. Please try again.')
+      return
+    }
+
+    setSubmitted(true)
+  }
+
+  return (
+    <section
+      id="contact"
+      className="relative overflow-hidden"
+      style={{ background: 'transparent', paddingTop: 'var(--section-padding)', paddingBottom: 'var(--section-padding)' }}
+    >
+      <style>{`
+        #contact input:focus,
+        #contact textarea:focus {
+          border-color: rgba(230,161,90,0.50) !important;
+          box-shadow: 0 0 0 4px rgba(230,161,90,0.07), 0 0 24px rgba(230,161,90,0.10);
+          outline: none;
+          background: rgba(0,0,0,0.35) !important;
+          transition: border-color 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
+        }
+        #contact input,
+        #contact textarea {
+          transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+        }
+        .contact-social-link {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 12px;
+          border-radius: 10px;
+          text-decoration: none;
+          transition: background 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .contact-social-link:hover {
+          background: rgba(255,255,255,0.03);
+          transform: translateY(-1px);
+        }
+        .contact-social-icon {
+          width: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: rgba(255,255,255,0.28);
+          flex-shrink: 0;
+          transition: color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .contact-social-link:hover .contact-social-icon {
+          color: oklch(0.78 0.12 55);
+        }
+      `}</style>
+
+      {/* Contact atmosphere — quiet ending scene. Warmth rises from the floor,
+          like an invitation glow. Three orbs with independent phases, never in sync. */}
+
+      {/* Primary floor warmth — rises and breathes like a warm invitation */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 72% 58% at 50% 92%, rgba(230,161,90,0.068) 0%, rgba(230,161,90,0.024) 40%, transparent 68%)',
+          animation: 'section-breathe-a 24s ease-in-out infinite',
+        }}
+      />
+
+      {/* Left ambient — quiet, very faint, holds the space from collapsing */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 50% 45% at 8% 55%, rgba(230,161,90,0.020) 0%, transparent 70%)',
+          animation: 'section-breathe-c 36s ease-in-out infinite 8s',
+        }}
+      />
+
+      {/* Top ambient trace — memory of the journey above, very faint */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 48% 32% at 78% 8%, rgba(230,161,90,0.016) 0%, transparent 72%)',
+          animation: 'section-breathe-b 44s ease-in-out infinite 14s',
+        }}
+      />
+
+
+      <Container>
+        {/* Header */}
+        <div ref={ref} className={`mb-12 text-center reveal ${revealed ? 'revealed' : ''}`}>
+          <SectionLabel>Get in Touch</SectionLabel>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance">
+            Let&apos;s build your <span style={{ color: 'oklch(0.74 0.10 55)', textShadow: '0 0 16px oklch(0.78 0.12 55 / 0.18)' }}>digital stage</span>
+          </h2>
+          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.65)', maxWidth: '440px', margin: '0 auto', lineHeight: 1.75, textAlign: 'center' }}>
+            Your work deserves a strong digital presence that people can see and remember.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Contact info */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+
+            {/* 1. Contact */}
+            <div>
+              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Contact</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {[
+                  { icon: <Mail size={14} />, label: 'Email', value: 'sangayyoesel@gmail.com', href: 'mailto:sangayyoesel@gmail.com', note: 'Open for freelance and collaborations' },
+                  { icon: <Phone size={14} />, label: 'Phone', value: '+975 77287812', href: 'tel:+97577287812' },
+                ].map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="flex items-center gap-3 py-2 transition-all duration-300 group"
+                    style={{ color: 'inherit', textDecoration: 'none' }}
+                  >
+                    <div className="transition-all duration-300" style={{ color: 'rgba(255,255,255,0.25)' }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = 'oklch(0.78 0.12 55)' }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.25)' }}
+                    >{item.icon}</div>
+                    <div>
+                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.28)', marginBottom: '2px' }}>{item.label}</p>
+                      <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.78)' }}>{item.value}</p>
+                      {'note' in item && item.note && (
+                        <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.22)', marginTop: '2px' }}>{item.note}</p>
+                      )}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* 2. Location */}
+            <div>
+              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Location</p>
+              <div className="flex items-center gap-3 py-2">
+                <div style={{ color: 'rgba(255,255,255,0.25)' }}><MapPin size={14} /></div>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.65)' }}>Thimphu, Bhutan</p>
+              </div>
+            </div>
+
+            {/* 3. Documents */}
+            <div>
+              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Documents</p>
+              <div style={{ display: 'flex' }}>
+                {[
+                  { label: 'Download CV', file: '/CV-Sangay-Yoesel.pdf' },
+                ].map((doc) => (
+                  <a
+                    key={doc.label}
+                    href={doc.file}
+                    download
+                    className="flex items-center justify-center gap-2 rounded-xl border font-medium transition-all duration-300"
+                    style={{
+                      background: 'oklch(0.78 0.12 55 / 0.06)',
+                      borderColor: 'oklch(0.78 0.12 55 / 0.20)',
+                      color: 'oklch(0.78 0.12 55)',
+                      fontSize: '12px',
+                      padding: '8px 20px',
+                    }}
+                    onMouseEnter={(e) => {
+                      ;(e.currentTarget as HTMLAnchorElement).style.background = 'oklch(0.78 0.12 55 / 0.12)'
+                      ;(e.currentTarget as HTMLAnchorElement).style.borderColor = 'oklch(0.78 0.12 55 / 0.35)'
+                    }}
+                    onMouseLeave={(e) => {
+                      ;(e.currentTarget as HTMLAnchorElement).style.background = 'oklch(0.78 0.12 55 / 0.06)'
+                      ;(e.currentTarget as HTMLAnchorElement).style.borderColor = 'oklch(0.78 0.12 55 / 0.20)'
+                    }}
+                  >
+                    <Download size={12} />
+                    {doc.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* 4. Social */}
+            <div>
+              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Social</p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-social-link"
+                  >
+                    <div className="contact-social-icon">
+                      {social.icon}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
+                      <p style={{ fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.68)', lineHeight: 1.3 }}>{social.name}</p>
+                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.25)', lineHeight: 1.3 }}>{social.handle}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          {/* Contact form */}
+          <Card
+            surface="glass"
+            radius="lg"
+            className="p-5 sm:p-8"
+            style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.02), inset 0 1px 0 rgba(255,255,255,0.04)' }}
+          >
+            {submitted ? (
+              <div role="alert" aria-live="polite" className="flex flex-col items-center justify-center h-full py-12 text-center gap-6">
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center animate-pulse-glow"
+                  style={{ background: 'oklch(0.78 0.12 55 / 0.15)', border: '1px solid oklch(0.78 0.12 55 / 0.5)' }}
+                >
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <polyline points="5,14 11,20 23,8" stroke="oklch(0.78 0.12 55)" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-serif text-2xl font-bold mb-2">Message received</h3>
+                  <p className="text-muted-foreground">I&apos;ll be in touch soon. Your stage awaits.</p>
+                </div>
+                <button
+                  onClick={() => {
+                    setSubmitted(false)
+                    setFormState({ name: '', email: '', message: '' })
+                  }}
+                  className="flex items-center gap-2 px-6 py-3 rounded-full text-xs tracking-widest uppercase font-medium transition-all duration-300 hover:scale-105"
+                  style={{
+                    border: '1px solid oklch(0.78 0.12 55 / 0.5)',
+                    color: 'oklch(0.78 0.12 55)',
+                    background: 'oklch(0.78 0.12 55 / 0.08)',
+                  }}
+                >
+                  <Send size={12} />
+                  Send Another Message
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }} aria-label="Contact form">
+                <div>
+                  <label htmlFor="contact-name" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', display: 'block', marginBottom: '10px' }}>Your Name</label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    value={formState.name}
+                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                    placeholder="What do they call you?"
+                    required
+                    aria-required="true"
+                    className="w-full text-foreground placeholder:text-muted-foreground/40 focus:outline-none transition-colors"
+                    style={{ background: 'rgba(0,0,0,0.25)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: '12px', padding: '14px 18px', fontSize: '14px' }}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-email" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', display: 'block', marginBottom: '10px' }}>Email</label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    value={formState.email}
+                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                    placeholder="Where can I reach you?"
+                    required
+                    aria-required="true"
+                    className="w-full text-foreground placeholder:text-muted-foreground/40 focus:outline-none transition-colors"
+                    style={{ background: 'rgba(0,0,0,0.25)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: '12px', padding: '14px 18px', fontSize: '14px' }}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-message" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', display: 'block', marginBottom: '10px' }}>Message</label>
+                  <textarea
+                    id="contact-message"
+                    value={formState.message}
+                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                    placeholder="Tell me about your sound, your vision, your world..."
+                    required
+                    aria-required="true"
+                    rows={5}
+                    className="w-full text-foreground placeholder:text-muted-foreground/40 focus:outline-none transition-colors resize-none"
+                    style={{ background: 'rgba(0,0,0,0.25)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: '12px', padding: '14px 18px', fontSize: '14px' }}
+                  />
+                </div>
+                {error && (
+                  <p className="text-sm text-red-400 text-center">{error}</p>
+                )}
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-medium text-sm disabled:opacity-60 disabled:cursor-not-allowed shimmer-surface"
+                  style={{
+                    background: 'oklch(0.78 0.12 55)',
+                    color: 'oklch(0.06 0 0)',
+                    boxShadow: '0 4px 20px oklch(0.78 0.12 55 / 0.18)',
+                    transition: 'background 0.55s cubic-bezier(0.16,1,0.30,1), box-shadow 0.55s cubic-bezier(0.16,1,0.30,1), transform 0.55s cubic-bezier(0.16,1,0.30,1)',
+                    overflow: 'hidden',
+                    position: 'relative',
+                  }}
+                  onMouseEnter={(e) => {
+                    ;(e.currentTarget as HTMLButtonElement).style.background = 'oklch(0.82 0.12 55)'
+                    ;(e.currentTarget as HTMLButtonElement).style.boxShadow = '0 12px 44px oklch(0.78 0.12 55 / 0.32), 0 0 60px oklch(0.78 0.12 55 / 0.08)'
+                    ;(e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.04) translateY(-2px)'
+                  }}
+                  onMouseLeave={(e) => {
+                    ;(e.currentTarget as HTMLButtonElement).style.background = 'oklch(0.78 0.12 55)'
+                    ;(e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 20px oklch(0.78 0.12 55 / 0.18)'
+                    ;(e.currentTarget as HTMLButtonElement).style.transform = 'scale(1) translateY(0)'
+                  }}
+                >
+                  <Send size={14} />
+                  {sending ? 'Sending...' : 'Send Message'}
+                </button>
+                <p style={{ textAlign: 'center', fontSize: '11px', color: 'rgba(255,255,255,0.22)' }}>
+                  Usually replies within 24 hours
+                </p>
+              </form>
+            )}
+          </Card>
+        </div>
+      </Container>
+    </section>
+  )
+}
