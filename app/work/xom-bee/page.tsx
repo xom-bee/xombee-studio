@@ -9,12 +9,12 @@ const accent = '#E6A15A'
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <p style={{
-      fontSize: '11px',
+      fontSize: '12px',
       fontWeight: 500,
-      letterSpacing: '0.16em',
+      letterSpacing: '0.20em',
       textTransform: 'uppercase',
       color: accent,
-      marginBottom: '16px',
+      marginBottom: '22px',
     }}>
       {children}
     </p>
@@ -23,8 +23,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function Divider() {
   return (
-    <div style={{ paddingTop: 'clamp(16px, 2.5vw, 28px)' }}>
-      <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)' }} />
+    <div style={{ paddingTop: 'clamp(20px, 3vw, 32px)' }}>
+      <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', marginBottom: 'clamp(52px, 6.5vw, 68px)' }} />
     </div>
   )
 }
@@ -60,7 +60,7 @@ export default function XomBeePage() {
         </Link>
 
         {/* ── 1. Project Overview ──────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
+        <div style={{ marginBottom: 'clamp(52px, 6.5vw, 68px)' }}>
           <SectionLabel>Case Study</SectionLabel>
           <h1 style={{
             fontSize: 'clamp(36px, 6vw, 64px)',
@@ -68,19 +68,19 @@ export default function XomBeePage() {
             letterSpacing: '-0.025em',
             lineHeight: 1.06,
             color: '#FFFFFF',
-            marginBottom: '24px',
+            marginBottom: '14px',
           }}>
             Xom Bee Official
           </h1>
           <p style={{
-            fontSize: 'clamp(15px, 1.5vw, 18px)',
-            color: 'rgba(255,255,255,0.82)',
-            lineHeight: 1.75,
-            maxWidth: '580px',
-            marginBottom: '48px',
-            whiteSpace: 'pre-line',
+            fontSize: 'clamp(15px, 1.5vw, 17px)',
+            fontWeight: 500,
+            color: accent,
+            letterSpacing: '-0.005em',
+            lineHeight: 1.4,
+            marginBottom: '44px',
           }}>
-            {`The brief was the feeling, not the features.\nI designed and built a space where the artist's presence arrives before the sound does.`}
+            A digital stage where the artist&rsquo;s presence speaks before the first note plays.
           </p>
 
           {/* Meta */}
@@ -100,10 +100,10 @@ export default function XomBeePage() {
                 padding: '20px 24px',
                 borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none',
               }}>
-                <p style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)', marginBottom: '8px' }}>
+                <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)', marginBottom: '10px' }}>
                   {item.label}
                 </p>
-                <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.72)', lineHeight: 1.5 }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.74)', lineHeight: 1.5 }}>
                   {item.value}
                 </p>
               </div>
@@ -128,24 +128,25 @@ export default function XomBeePage() {
 
         <Divider />
 
-        {/* ── 2. My Contribution ──────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>My Contribution</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        {/* ── 2. What I Designed ──────────────────────────────────────────── */}
+        <div style={{ marginBottom: 'clamp(52px, 6.5vw, 68px)' }}>
+          <SectionLabel>What I Designed</SectionLabel>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {[
-              'Translated an emotional brief — "feel the music before it plays" — into a complete designed and built system, alone, from concept to deployed product',
-              'Designed and developed the full frontend in Next.js and TypeScript — every implementation decision was also a design decision',
-              'Built a motion language where every transition, hover state, and pause communicates the artist\'s tempo — unhurried, cinematic, controlled',
-              'Used deliberate restraint as the primary design tool: what to leave out, where to hold silence, was as considered as what to include',
+              'Translated the concept of “feeling the music before it plays” into a fully designed and developed digital platform from idea to deployment.',
+              'Designed and developed the complete frontend using Next.js and TypeScript with design and functionality built together as one system.',
+              'Created a refined motion system where transitions, hover states, and interactions supported the artist’s mood and visual rhythm.',
+              'Applied a minimal and intentional design approach by removing unnecessary elements and focusing on clarity, balance, and user experience.',
             ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+              <div key={i} style={{ display: 'flex', gap: '18px', alignItems: 'flex-start' }}>
                 <span style={{
-                  fontSize: '10px', fontWeight: 500, letterSpacing: '0.10em',
-                  color: accent, paddingTop: '5px', flexShrink: 0, opacity: 0.7,
+                  fontSize: '11px', fontWeight: 500, letterSpacing: '0.10em',
+                  color: 'rgba(255,255,255,0.30)', paddingTop: '5px', flexShrink: 0,
+                  fontVariantNumeric: 'tabular-nums',
                 }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.76)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.74)', lineHeight: 1.7, maxWidth: '600px' }}>
                   {item}
                 </p>
               </div>
@@ -159,24 +160,19 @@ export default function XomBeePage() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 'clamp(32px, 5vw, 56px)',
-          marginBottom: 'clamp(48px, 6vw, 64px)',
+          gap: 'clamp(36px, 5vw, 56px)',
+          marginBottom: 'clamp(52px, 6.5vw, 68px)',
         }}>
           <div>
             <SectionLabel>Problem</SectionLabel>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
-                The artist had a presence scattered across platforms that did not belong to her. None of them felt like her.
-              </p>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.52)', lineHeight: 1.75 }}>
-                When identity is fragmented, audiences connect with the platform — not the artist. The space itself needed to feel like Xom Bee.
-              </p>
-            </div>
+            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.74)', lineHeight: 1.7, maxWidth: '440px' }}>
+              The artist’s identity was fragmented across platforms that lacked consistency, personality, and emotional connection.
+            </p>
           </div>
           <div>
             <SectionLabel>Intent</SectionLabel>
-            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
-              Design and build a space where the artist's emotional presence arrives before any content does — and where every interaction extends that feeling rather than interrupting it.
+            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.74)', lineHeight: 1.7, maxWidth: '440px' }}>
+              Designed and developed a unified digital platform where the artist’s presence, emotion, and identity lead every interaction.
             </p>
           </div>
         </div>
@@ -187,55 +183,56 @@ export default function XomBeePage() {
         <Divider />
 
         {/* ── 5. Approach ─────────────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
+        <div style={{ marginBottom: 'clamp(52px, 6.5vw, 68px)' }}>
           <SectionLabel>Approach</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
             {[
               {
-                step: 'Starting with the Feeling',
-                desc: 'I asked: what does this music feel like before it plays? Dark. Still. Present. That became the brief — and the constraint every decision was measured against.',
+                step: 'Designing Through Emotion',
+                desc: 'Defined the platform direction by focusing on the emotional tone of the artist’s music before designing the interface and user experience.',
               },
               {
-                step: 'Making the Interface Disappear',
-                desc: 'Every element was evaluated against one standard: does this add presence, or does it add noise? Noise was removed. The interface had to earn its invisibility.',
+                step: 'Minimal Interface Design',
+                desc: 'Removed unnecessary elements and distractions to create a clean interface that keeps attention on the artist and content.',
               },
               {
-                step: 'Building the Motion Language',
-                desc: 'Transitions are slow. Hover states are deliberate. Motion communicates the artist\'s tempo — not a generic "smooth" feel, but specifically unhurried, arriving, controlled.',
+                step: 'Motion and Interaction System',
+                desc: 'Designed slow and intentional transitions, hover states, and animations to match the artist’s visual rhythm and mood.',
               },
               {
-                step: 'Development as Creative Direction',
-                desc: 'I built this in Next.js and TypeScript, alone. Every implementation choice — animation timing, spacing units, performance tradeoffs — was made in service of the feeling, not convenience.',
+                step: 'Development Driven by Design',
+                desc: 'Built the full platform independently using Next.js and TypeScript with every frontend and performance decision supporting the overall experience and identity.',
               },
             ].map((item, i, arr) => (
               <div key={item.step} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
                 <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    border: i === arr.length - 1 ? `1.5px solid ${accent}` : '1px solid rgba(255,255,255,0.14)',
-                    background: i === arr.length - 1 ? 'rgba(230,161,90,0.10)' : 'transparent',
+                    border: '1px solid rgba(255,255,255,0.14)',
+                    background: 'transparent',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
                     <span style={{
-                      fontSize: '10px', fontWeight: 600, letterSpacing: '0.05em',
-                      color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.30)',
+                      fontSize: '10px', fontWeight: 600, letterSpacing: '0.06em',
+                      color: 'rgba(255,255,255,0.30)',
+                      fontVariantNumeric: 'tabular-nums',
                     }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
                   {i < arr.length - 1 && (
-                    <div style={{ width: '1px', height: '28px', background: 'rgba(255,255,255,0.07)', marginTop: '4px' }} />
+                    <div style={{ width: '1px', height: '36px', background: 'rgba(255,255,255,0.06)', marginTop: '6px' }} />
                   )}
                 </div>
-                <div style={{ paddingTop: '4px' }}>
+                <div style={{ paddingTop: '5px', flex: 1 }}>
                   <p style={{
                     fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em',
-                    color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.72)',
-                    marginBottom: '6px',
+                    color: 'rgba(255,255,255,0.74)',
+                    marginBottom: '8px',
                   }}>
                     {item.step}
                   </p>
-                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.58)', lineHeight: 1.75 }}>
+                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.56)', lineHeight: 1.7, maxWidth: '560px' }}>
                     {item.desc}
                   </p>
                 </div>
@@ -247,31 +244,42 @@ export default function XomBeePage() {
         <Divider />
 
         {/* ── 6. Design Decisions ─────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
+        <div style={{ marginBottom: 'clamp(52px, 6.5vw, 68px)' }}>
           <SectionLabel>Design Decisions</SectionLabel>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '16px',
-          }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {[
-              'Dark atmosphere was not a style choice — it was the only honest response to the music\'s emotional register. Anything lighter would have felt dishonest.',
-              'Interactions were slowed intentionally. Fast UI signals urgency. This needed to signal arrival — something coming toward you, not demanding your attention.',
-              'The artist\'s name and image lead everything. All other content recedes until it is needed. Hierarchy as a form of respect.',
-              'Typography was set wide and quiet — editorial spacing, minimal weight contrast. Not promotional. The music is the promotion.',
-              'Embedded media was structured to feel discovered, not advertised. The sound arrives; it is not pushed.',
+              'The dark visual atmosphere was chosen to reflect the emotional tone of the artist’s music and identity.',
+              'Interactions and animations were intentionally slowed to create a calm and immersive browsing experience.',
+              'The artist’s name, imagery, and presence were given visual priority through clear hierarchy and minimal interface distractions.',
+              'Typography and spacing were kept clean and editorial to support readability without overpowering the content.',
+              'Embedded music and media were integrated naturally so discovery felt intentional rather than promotional.',
             ].map((item, i) => (
               <div key={i} style={{
-                padding: '20px 22px',
-                border: '1px solid rgba(255,255,255,0.07)',
-                borderRadius: '12px',
-                background: 'rgba(255,255,255,0.02)',
+                display: 'flex',
+                gap: '24px',
+                alignItems: 'flex-start',
+                padding: '22px 0',
+                borderTop: i === 0 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                borderBottom: '1px solid rgba(255,255,255,0.05)',
               }}>
-                <div style={{
-                  width: '6px', height: '6px', borderRadius: '50%',
-                  background: accent, opacity: 0.55, marginBottom: '12px',
-                }} />
-                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.68)', lineHeight: 1.7 }}>
+                <span style={{
+                  fontSize: '11px',
+                  fontWeight: 500,
+                  letterSpacing: '0.10em',
+                  color: 'rgba(255,255,255,0.30)',
+                  paddingTop: '5px',
+                  flexShrink: 0,
+                  fontVariantNumeric: 'tabular-nums',
+                  minWidth: '20px',
+                }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <p style={{
+                  fontSize: 'clamp(14px, 1.3vw, 15px)',
+                  color: 'rgba(255,255,255,0.74)',
+                  lineHeight: 1.7,
+                  maxWidth: '600px',
+                }}>
                   {item}
                 </p>
               </div>
@@ -288,47 +296,24 @@ export default function XomBeePage() {
         <div style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
           <SectionLabel>Outcome</SectionLabel>
           <p style={{
-            fontSize: 'clamp(18px, 2.5vw, 26px)',
+            fontSize: 'clamp(18px, 2.4vw, 24px)',
             fontWeight: 600,
-            lineHeight: 1.5,
+            lineHeight: 1.4,
             letterSpacing: '-0.01em',
-            color: 'rgba(255,255,255,0.88)',
-            maxWidth: '620px',
-            marginBottom: '20px',
+            color: 'rgba(255,255,255,0.92)',
+            maxWidth: '600px',
+            marginBottom: '14px',
           }}>
-            I designed and built the entire experience end-to-end. The mood was the brief. Every decision traces back to one question: does this feel like the artist?
+            Designed and developed the complete platform from concept to deployment with the artist’s identity shaping every design and development decision.
           </p>
           <p style={{
             fontSize: 'clamp(14px, 1.4vw, 16px)',
-            color: 'rgba(255,255,255,0.58)',
-            lineHeight: 1.75,
-            maxWidth: '560px',
+            color: 'rgba(255,255,255,0.56)',
+            lineHeight: 1.7,
+            maxWidth: '600px',
           }}>
-            The dark atmosphere, the motion pacing, the typographic weight — authored, not assembled. I kept design and development as one continuous act so nothing was lost in translation. What shipped is what I intended.
+            Visual atmosphere, motion, typography, and interface behavior were crafted as one unified and intentional experience.
           </p>
-        </div>
-
-        <Divider />
-
-        {/* ── 8. Tech Stack ───────────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>Built With</SectionLabel>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            {['Next.js', 'TypeScript', 'Tailwind CSS', 'Figma'].map((tech) => (
-              <span key={tech} style={{
-                fontSize: '12px',
-                fontWeight: 500,
-                letterSpacing: '0.04em',
-                color: 'rgba(255,255,255,0.55)',
-                padding: '8px 16px',
-                border: '1px solid rgba(255,255,255,0.09)',
-                borderRadius: '999px',
-                background: 'rgba(255,255,255,0.03)',
-              }}>
-                {tech}
-              </span>
-            ))}
-          </div>
         </div>
 
         <Divider />
@@ -337,9 +322,9 @@ export default function XomBeePage() {
         <div id="project-links" style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
           <div style={{
             position: 'relative',
-            padding: 'clamp(28px, 4vw, 44px)',
+            padding: 'clamp(24px, 3.4vw, 36px)',
             border: '1px solid rgba(230,161,90,0.10)',
-            borderRadius: '20px',
+            borderRadius: '18px',
             background: 'rgba(230,161,90,0.025)',
             overflow: 'hidden',
           }}>
@@ -347,7 +332,7 @@ export default function XomBeePage() {
               position: 'absolute',
               top: '50%', left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: '480px', height: '200px',
+              width: '440px', height: '180px',
               background: 'radial-gradient(ellipse, rgba(230,161,90,0.07) 0%, transparent 70%)',
               pointerEvents: 'none',
             }} />

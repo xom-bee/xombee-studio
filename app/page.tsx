@@ -5,7 +5,7 @@ import { LoadingScreen } from '@/components/loading-screen'
 import { HeroSection } from '@/components/hero-section'
 import { PortfolioSection } from '@/components/portfolio-section'
 import { AboutPreviewSection } from '@/components/about-preview-section'
-import { ProcessSection } from '@/components/process-section'
+import { LongListenSection } from '@/components/long-listen-section'
 import { ContactSection } from '@/components/contact-section'
 import { Footer } from '@/components/footer'
 
@@ -31,7 +31,7 @@ export default function Home() {
           <HeroSection />
           <PortfolioSection />
           <AboutPreviewSection />
-          <ProcessSection />
+          <LongListenSection />
           <ContactSection />
         </main>
 

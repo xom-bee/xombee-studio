@@ -9,12 +9,12 @@ const accent = '#E6A15A'
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <p style={{
-      fontSize: '11px',
+      fontSize: '12px',
       fontWeight: 500,
-      letterSpacing: '0.16em',
+      letterSpacing: '0.20em',
       textTransform: 'uppercase',
       color: accent,
-      marginBottom: '16px',
+      marginBottom: '22px',
     }}>
       {children}
     </p>
@@ -23,8 +23,8 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function Divider() {
   return (
-    <div style={{ paddingTop: 'clamp(16px, 2.5vw, 28px)' }}>
-      <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', marginBottom: 'clamp(48px, 6vw, 64px)' }} />
+    <div style={{ paddingTop: 'clamp(20px, 3vw, 32px)' }}>
+      <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', marginBottom: 'clamp(52px, 6.5vw, 68px)' }} />
     </div>
   )
 }
@@ -60,7 +60,7 @@ export default function Scan2DinePage() {
         </Link>
 
         {/* ── 1. Project Overview ──────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
+        <div style={{ marginBottom: 'clamp(52px, 6.5vw, 68px)' }}>
           <SectionLabel>Case Study</SectionLabel>
           <h1 style={{
             fontSize: 'clamp(36px, 6vw, 64px)',
@@ -68,25 +68,26 @@ export default function Scan2DinePage() {
             letterSpacing: '-0.025em',
             lineHeight: 1.06,
             color: '#FFFFFF',
-            marginBottom: '24px',
+            marginBottom: '14px',
           }}>
             Scan2Dine
           </h1>
           <p style={{
-            fontSize: 'clamp(15px, 1.5vw, 18px)',
-            color: 'rgba(255,255,255,0.82)',
-            lineHeight: 1.75,
-            maxWidth: '580px',
-            marginBottom: '48px',
-            whiteSpace: 'pre-line',
+            fontSize: 'clamp(15px, 1.5vw, 17px)',
+            fontWeight: 500,
+            color: accent,
+            letterSpacing: '-0.005em',
+            lineHeight: 1.4,
+            marginBottom: '44px',
           }}>
-            {`The menu is a moment of decision under pressure.\nI designed an interface that clears the noise and makes the choice obvious.`}
+            A menu interface designed for decisions made under pressure.
           </p>
 
           {/* Meta */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+            gap: '0',
             border: '1px solid rgba(255,255,255,0.07)',
             borderRadius: '12px',
             overflow: 'hidden',
@@ -100,10 +101,10 @@ export default function Scan2DinePage() {
                 padding: '20px 24px',
                 borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none',
               }}>
-                <p style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.22)', marginBottom: '8px' }}>
+                <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)', marginBottom: '10px' }}>
                   {item.label}
                 </p>
-                <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.72)', lineHeight: 1.5 }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.74)', lineHeight: 1.5 }}>
                   {item.value}
                 </p>
               </div>
@@ -115,9 +116,9 @@ export default function Scan2DinePage() {
             <button
               onClick={() => document.getElementById('project-links')?.scrollIntoView({ behavior: 'smooth' })}
               className="cs-cta-top"
-              aria-label="Jump to the final build"
+              aria-label="Jump to the live build"
             >
-              See the Final Build
+              View the Live Build
               <span className="cs-cta-arrow">↓</span>
             </button>
           </div>
@@ -128,24 +129,25 @@ export default function Scan2DinePage() {
 
         <Divider />
 
-        {/* ── 2. My Contribution ──────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
-          <SectionLabel>My Contribution</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        {/* ── 2. What I Designed ──────────────────────────────────────────── */}
+        <div style={{ marginBottom: 'clamp(52px, 6.5vw, 68px)' }}>
+          <SectionLabel>What I Designed</SectionLabel>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {[
-              'Designed specifically for the restaurant environment — standing users, divided attention, time pressure, varying light — not for an ideal user in ideal conditions',
-              'Built the information architecture so food discovery happens by scanning, not reading — category first, item second, detail only on demand',
-              'Reduced the interaction flow to its minimum: the fewest taps between QR scan and a decision made',
-              'Applied visual hierarchy as a precision tool — strong enough to guide a distracted eye in under two seconds',
+              'A QR-first ordering interface built for one-handed use at a seated table.',
+              'A menu hierarchy readable in a single glance, even in low light.',
+              'An order flow reduced to the fewest taps needed to complete a decision.',
+              'A shipped frontend, deployed and tested against real restaurant conditions.',
             ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+              <div key={i} style={{ display: 'flex', gap: '18px', alignItems: 'flex-start' }}>
                 <span style={{
-                  fontSize: '10px', fontWeight: 500, letterSpacing: '0.10em',
-                  color: accent, paddingTop: '5px', flexShrink: 0, opacity: 0.7,
+                  fontSize: '11px', fontWeight: 500, letterSpacing: '0.10em',
+                  color: 'rgba(255,255,255,0.30)', paddingTop: '5px', flexShrink: 0,
+                  fontVariantNumeric: 'tabular-nums',
                 }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.76)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.74)', lineHeight: 1.7, maxWidth: '600px' }}>
                   {item}
                 </p>
               </div>
@@ -159,24 +161,19 @@ export default function Scan2DinePage() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: 'clamp(32px, 5vw, 56px)',
-          marginBottom: 'clamp(48px, 6vw, 64px)',
+          gap: 'clamp(36px, 5vw, 56px)',
+          marginBottom: 'clamp(52px, 6.5vw, 68px)',
         }}>
           <div>
             <SectionLabel>Problem</SectionLabel>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
-                Physical menus create friction before the experience begins. The problem was not access — it was the cognitive load around choosing while hungry, distracted, and in a hurry.
-              </p>
-              <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.52)', lineHeight: 1.75 }}>
-                Most digital solutions digitize the menu without reimagining it. A cluttered screen is harder to navigate than paper.
-              </p>
-            </div>
+            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.74)', lineHeight: 1.7, maxWidth: '440px' }}>
+              Restaurant menus are designed to be read in calm; they are used in noise, hunger, and hesitation.
+            </p>
           </div>
           <div>
             <SectionLabel>Intent</SectionLabel>
-            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.72)', lineHeight: 1.75 }}>
-              Design an interface fast enough to work under cognitive load — and clear enough that the right choice feels obvious, not effortful.
+            <p style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(255,255,255,0.74)', lineHeight: 1.7, maxWidth: '440px' }}>
+              Build a menu interface that absorbs the pressure of the moment instead of adding to it.
             </p>
           </div>
         </div>
@@ -187,55 +184,57 @@ export default function Scan2DinePage() {
         <Divider />
 
         {/* ── 5. Approach ─────────────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
+        <div style={{ marginBottom: 'clamp(52px, 6.5vw, 68px)' }}>
           <SectionLabel>Approach</SectionLabel>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
             {[
               {
-                step: 'Designing for Real Conditions',
-                desc: 'Restaurant users are not browsing at a desk. They are scanning on a phone — possibly standing, in variable light, with ambient noise and divided attention. I designed for that person, not an ideal one.',
+                step: 'Designing Real Conditions',
+                desc: 'The interface was tested against the table, not the desktop. Type sizes, contrast, and tap zones were sized for low light and a held phone.',
               },
               {
-                step: 'Mapping to Minimum Interaction',
-                desc: 'I traced every step from QR scan to menu decision and eliminated anything that did not serve forward momentum. The measure of success was tap count — fewer is better, always.',
+                step: 'Minimum Interaction Path',
+                desc: 'Every tap between hunger and order was traced and challenged. What remained is the shortest path possible without losing clarity.',
               },
               {
-                step: 'Hierarchy as Clarity',
-                desc: 'Strong category headers. Compressed copy. Tap targets sized for thumbs under real-world constraints — standing posture, one hand, imprecise tapping. The screen needed to read in two seconds, not twenty.',
+                step: 'Hierarchy Through Clarity',
+                desc: 'Categories carry the structure; items carry the decision. Nothing competes for the eye that does not also carry weight in the choice.',
               },
               {
-                step: 'Shipped',
-                desc: 'Built and deployed to Netlify. The design met its test on real devices, in real restaurant conditions — which is the only test that matters.',
+                step: 'Built And Shipped',
+                desc: 'The design was carried through to a deployed frontend, not handed off as a file. Production constraints shaped the final interface as much as the research did.',
               },
             ].map((item, i, arr) => (
               <div key={item.step} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start' }}>
-                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0' }}>
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '50%',
-                    border: i === arr.length - 1 ? `1.5px solid ${accent}` : '1px solid rgba(255,255,255,0.14)',
-                    background: i === arr.length - 1 ? 'rgba(230,161,90,0.10)' : 'transparent',
+                    border: '1px solid rgba(255,255,255,0.14)',
+                    background: 'transparent',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flexShrink: 0,
                   }}>
                     <span style={{
-                      fontSize: '10px', fontWeight: 600, letterSpacing: '0.05em',
-                      color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.30)',
+                      fontSize: '10px', fontWeight: 600, letterSpacing: '0.06em',
+                      color: 'rgba(255,255,255,0.30)',
+                      fontVariantNumeric: 'tabular-nums',
                     }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
                   {i < arr.length - 1 && (
-                    <div style={{ width: '1px', height: '28px', background: 'rgba(255,255,255,0.07)', marginTop: '4px' }} />
+                    <div style={{ width: '1px', height: '36px', background: 'rgba(255,255,255,0.06)', marginTop: '6px' }} />
                   )}
                 </div>
-                <div style={{ paddingTop: '4px' }}>
+                <div style={{ paddingTop: '5px', flex: 1 }}>
                   <p style={{
                     fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em',
-                    color: i === arr.length - 1 ? accent : 'rgba(255,255,255,0.72)',
-                    marginBottom: '6px',
+                    color: 'rgba(255,255,255,0.74)',
+                    marginBottom: '8px',
                   }}>
                     {item.step}
                   </p>
-                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.58)', lineHeight: 1.75 }}>
+                  <p style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', color: 'rgba(255,255,255,0.56)', lineHeight: 1.7, maxWidth: '560px' }}>
                     {item.desc}
                   </p>
                 </div>
@@ -247,31 +246,42 @@ export default function Scan2DinePage() {
         <Divider />
 
         {/* ── 6. Design Decisions ─────────────────────────────────────────── */}
-        <div style={{ marginBottom: 'clamp(48px, 6vw, 64px)' }}>
+        <div style={{ marginBottom: 'clamp(52px, 6.5vw, 68px)' }}>
           <SectionLabel>Design Decisions</SectionLabel>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '16px',
-          }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {[
-              'Mobile-first was non-negotiable. The QR scan opens on a phone — this is a phone interface, always. Desktop was a secondary consideration.',
-              'Category navigation was elevated to top-level visibility. Food discovery starts by type, not scroll. Burying categories was the first thing cut.',
-              'Tap targets were sized beyond standard guidance — restaurant light, standing posture, and one-handed interaction reduce precision significantly.',
-              'Copy was compressed throughout. More name, more image, less description. Decisions happen faster with less to read, not more.',
-              'The interface stayed visually neutral so food photography could do the persuading. The design\'s job was to step back.',
+              "Type was sized for arm’s-length reading, not for screen review.",
+              'Categories were reduced until the full menu could be understood in one scroll.',
+              'The cart was kept persistent so the order never had to be remembered.',
+              'Imagery was reserved for dishes that carried decision weight.',
+              'Confirmation was made unmistakable so no guest leaves the screen unsure.',
             ].map((item, i) => (
               <div key={i} style={{
-                padding: '20px 22px',
-                border: '1px solid rgba(255,255,255,0.07)',
-                borderRadius: '12px',
-                background: 'rgba(255,255,255,0.02)',
+                display: 'flex',
+                gap: '24px',
+                alignItems: 'flex-start',
+                padding: '22px 0',
+                borderTop: i === 0 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                borderBottom: '1px solid rgba(255,255,255,0.05)',
               }}>
-                <div style={{
-                  width: '6px', height: '6px', borderRadius: '50%',
-                  background: accent, opacity: 0.55, marginBottom: '12px',
-                }} />
-                <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.68)', lineHeight: 1.7 }}>
+                <span style={{
+                  fontSize: '11px',
+                  fontWeight: 500,
+                  letterSpacing: '0.10em',
+                  color: 'rgba(255,255,255,0.30)',
+                  paddingTop: '5px',
+                  flexShrink: 0,
+                  fontVariantNumeric: 'tabular-nums',
+                  minWidth: '20px',
+                }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <p style={{
+                  fontSize: 'clamp(14px, 1.3vw, 15px)',
+                  color: 'rgba(255,255,255,0.74)',
+                  lineHeight: 1.7,
+                  maxWidth: '600px',
+                }}>
                   {item}
                 </p>
               </div>
@@ -288,23 +298,23 @@ export default function Scan2DinePage() {
         <div style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
           <SectionLabel>Outcome</SectionLabel>
           <p style={{
-            fontSize: 'clamp(18px, 2.5vw, 26px)',
+            fontSize: 'clamp(18px, 2.4vw, 24px)',
             fontWeight: 600,
-            lineHeight: 1.5,
+            lineHeight: 1.4,
             letterSpacing: '-0.01em',
-            color: 'rgba(255,255,255,0.88)',
-            maxWidth: '620px',
-            marginBottom: '20px',
+            color: 'rgba(255,255,255,0.92)',
+            maxWidth: '600px',
+            marginBottom: '14px',
           }}>
-            I reduced the interaction model to what was strictly load-bearing. Everything else was removed.
+            A live ordering interface that holds its clarity under the conditions a real table actually creates.
           </p>
           <p style={{
             fontSize: 'clamp(14px, 1.4vw, 16px)',
-            color: 'rgba(255,255,255,0.58)',
-            lineHeight: 1.75,
-            maxWidth: '560px',
+            color: 'rgba(255,255,255,0.56)',
+            lineHeight: 1.7,
+            maxWidth: '600px',
           }}>
-            The clarity came from designing in the real context, not the comfortable one — standing users, partial attention, varying light. I rebuilt the information hierarchy around those constraints. What remained was an interface that doesn&apos;t ask anything of the user beyond what the moment requires.
+            Deployed and in use. The interface carried its restraint from prototype through production.
           </p>
         </div>
 
@@ -314,9 +324,9 @@ export default function Scan2DinePage() {
         <div id="project-links" style={{ marginBottom: 'clamp(56px, 7vw, 80px)' }}>
           <div style={{
             position: 'relative',
-            padding: 'clamp(28px, 4vw, 44px)',
+            padding: 'clamp(24px, 3.4vw, 36px)',
             border: '1px solid rgba(230,161,90,0.10)',
-            borderRadius: '20px',
+            borderRadius: '18px',
             background: 'rgba(230,161,90,0.025)',
             overflow: 'hidden',
           }}>
@@ -324,17 +334,17 @@ export default function Scan2DinePage() {
               position: 'absolute',
               top: '50%', left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: '480px', height: '200px',
+              width: '440px', height: '180px',
               background: 'radial-gradient(ellipse, rgba(230,161,90,0.07) 0%, transparent 70%)',
               pointerEvents: 'none',
             }} />
-            <SectionLabel>The Final Build</SectionLabel>
+            <SectionLabel>The Live Build</SectionLabel>
             <a
               href="https://scan2dinee.netlify.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="cs-live-btn"
-              aria-label="View Scan2Dine live build — opens in new tab"
+              aria-label="Visit Scan2Dine live build — opens in new tab"
             >
               <span>View the Live Build</span>
               <span className="cs-live-arrow">↗</span>

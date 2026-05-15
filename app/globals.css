@@ -191,6 +191,70 @@
   50% { transform: translateX(25%) skewX(6deg); opacity: 0.16; }
 }
 
+/* ── Hero showreel — atmospheric ghost-silhouette drift ──────────────────────── */
+@keyframes showreel-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 0.55; }
+}
+/* Each silhouette drifts on a different rhythm — feels like memories surfacing */
+@keyframes showreel-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1);        opacity: 0.70; }
+  35%       { transform: translate(40px, -22px) scale(1.06); opacity: 1.00; }
+  70%       { transform: translate(-18px, 14px) scale(0.96); opacity: 0.55; }
+}
+@keyframes showreel-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1);          opacity: 0.55; }
+  40%       { transform: translate(-32px, 18px) scale(1.05); opacity: 0.95; }
+  75%       { transform: translate(22px, -10px) scale(0.98); opacity: 0.70; }
+}
+@keyframes showreel-drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1);          opacity: 0.60; }
+  45%       { transform: translate(28px, -16px) scale(1.04); opacity: 0.90; }
+  80%       { transform: translate(-20px, 8px) scale(0.97);  opacity: 0.50; }
+}
+@keyframes showreel-drift-d {
+  0%, 100% { transform: translate(0, 0) scale(1);          opacity: 0.45; }
+  30%       { transform: translate(-24px, 20px) scale(1.07); opacity: 0.85; }
+  65%       { transform: translate(18px, -12px) scale(0.99); opacity: 0.55; }
+}
+/* Light leaks — long opacity breaths with gentle rotation drift */
+@keyframes showreel-leak-a {
+  0%, 100% { opacity: 0.00; transform: rotate(-6deg) translateY(0); }
+  20%       { opacity: 0.85; transform: rotate(-5deg) translateY(-8px); }
+  50%       { opacity: 0.40; transform: rotate(-7deg) translateY(6px); }
+  80%       { opacity: 0.00; transform: rotate(-6deg) translateY(0); }
+}
+@keyframes showreel-leak-b {
+  0%, 100% { opacity: 0.00; transform: rotate(8deg) translateY(0); }
+  25%       { opacity: 0.30; transform: rotate(9deg) translateY(10px); }
+  55%       { opacity: 0.80; transform: rotate(7deg) translateY(-6px); }
+  85%       { opacity: 0.10; transform: rotate(8deg) translateY(0); }
+}
+
+/* Hero video — slow Ken-Burns drift to mask the loop seam.
+   Scale never returns to a clean 1.0, so the brain reads it as continuous motion. */
+@keyframes hero-video-drift {
+  0%   { transform: scale(1.04) translate(0, 0); }
+  50%  { transform: scale(1.08) translate(-1.2%, 0.6%); }
+  100% { transform: scale(1.04) translate(0, 0); }
+}
+
+/* Mobile — keep the atmosphere but lighter and softer */
+@media (max-width: 768px) {
+  .hero-showreel {
+    opacity: 0.42 !important;
+    filter: blur(56px) saturate(0.80) !important;
+  }
+  /* Video is already dimmed in component (opacity 0.12), soften blur further */
+  .hero-video-layer video {
+    filter: blur(14px) saturate(0.50) brightness(0.70) contrast(0.92) sepia(0.20) hue-rotate(-8deg) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video-layer video { animation: none !important; }
+}
+
 .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
 .animate-spin-slow { animation: spin-slow 20s linear infinite; }
 .animate-logo-glow { animation: logo-glow 2s ease-in-out infinite; }
@@ -403,13 +467,6 @@
 @keyframes modal-content-scale {
   from { opacity: 0; transform: scale(0.92); }
   to   { opacity: 1; transform: scale(1);    }
-}
-
-/* ── Process section — tighter padding on small mobile ──────────────────────── */
-@media (max-width: 480px) {
-  .process-card {
-    padding: 16px 16px 48px !important;
-  }
 }
 
 /* ── Logo section back-face — reduce font on 2-col mobile ───────────────────── */

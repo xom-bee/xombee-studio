@@ -12,8 +12,8 @@ const FOCUS_Y_RATIO = 0.42
 // Sigma = avg line spacing × this multiplier. Controls spotlight tightness.
 // 1.2 makes adjacent lines clearly dimmer while still feeling organic.
 const SIGMA_SCALE   = 1.2
-const BASE_PAST     = 0.52   // lines the reader has passed — remembered, not gone
-const BASE_FUTURE   = 0.22   // lines ahead — atmospheric, not yet spoken
+const BASE_PAST     = 0.58   // lines the reader has passed — remembered, not gone
+const BASE_FUTURE   = 0.34   // lines ahead — atmospheric, not yet spoken
 const PEAK          = 0.94   // brightness at focus center
 const EASING        = 'color 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
 
@@ -32,7 +32,7 @@ export function AboutPreviewSection() {
 
     // Reduced-motion: flat readable opacity, no animation
     if (reduced) {
-      lines.forEach(el => { el.style.color = 'rgba(255, 255, 255, 0.68)' })
+      lines.forEach(el => { el.style.color = 'rgba(255, 255, 255, 0.78)' })
       return
     }
 

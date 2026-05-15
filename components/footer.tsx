@@ -23,26 +23,26 @@ export function Footer() {
       <style>{`
 .ft-nav-link {
           font-size: 13px;
-          color: rgba(255,255,255,0.35);
+          color: rgba(255,255,255,0.52);
           text-decoration: none;
           transition: color 0.42s cubic-bezier(0.22, 1, 0.36, 1);
           display: block;
         }
-        .ft-nav-link:hover { color: rgba(255,255,255,0.72); }
+        .ft-nav-link:hover { color: rgba(255,255,255,0.88); }
 .ft-back-top {
           display: flex;
           align-items: center;
           gap: 4px;
           font-size: 11px;
           letter-spacing: 0.05em;
-          color: rgba(255,255,255,0.22);
+          color: rgba(255,255,255,0.42);
           background: none;
           border: none;
           cursor: pointer;
           padding: 0;
           transition: color 0.42s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .ft-back-top:hover { color: rgba(255,255,255,0.70); }
+        .ft-back-top:hover { color: rgba(255,255,255,0.85); }
         .ft-back-top:hover .ft-arrow { transform: translateY(-3px); }
         .ft-arrow {
           display: inline-block;
@@ -134,7 +134,7 @@ export function Footer() {
               fontWeight: 400,
               fontStyle: 'italic',
               lineHeight: 1.5,
-              color: 'rgba(255,255,255,0.44)',
+              color: 'rgba(255,247,235,0.55)',
               letterSpacing: '0.02em',
             }}>
               Let&apos;s make it unforgettable.
@@ -203,10 +203,10 @@ export function Footer() {
               {/* Location */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
-                  <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.20)" strokeWidth="0.8" />
-                  <circle cx="5" cy="5" r="1.4" fill="rgba(255,255,255,0.20)" />
+                  <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.42)" strokeWidth="0.8" />
+                  <circle cx="5" cy="5" r="1.4" fill="rgba(255,255,255,0.42)" />
                 </svg>
-                <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.20)', letterSpacing: '0.02em' }}>
+                <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.42)', letterSpacing: '0.02em' }}>
                   Thimphu, Bhutan
                 </span>
               </div>
@@ -219,7 +219,7 @@ export function Footer() {
                 fontWeight: 500,
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.22)',
+                color: 'rgba(255,255,255,0.42)',
                 marginBottom: '16px',
               }}>
                 Navigation
@@ -235,10 +235,10 @@ export function Footer() {
 
           {/* ── 3. BOTTOM BAR ── */}
           <div className="ft-bottom-bar">
-            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.18)', letterSpacing: '0.02em' }}>
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.38)', letterSpacing: '0.02em' }}>
               &copy; 2026 Yoesel
             </p>
-            <p className="ft-tagline" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)', fontStyle: 'italic', letterSpacing: '0.02em' }}>
+            <p className="ft-tagline" style={{ fontSize: '11px', color: 'rgba(255,247,235,0.42)', fontStyle: 'italic', letterSpacing: '0.02em' }}>
               Your sound deserves to be felt
             </p>
             <button

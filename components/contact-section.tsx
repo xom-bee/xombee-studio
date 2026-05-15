@@ -122,7 +122,7 @@ export function ContactSection() {
           display: flex;
           align-items: center;
           justify-content: center;
-          color: rgba(255,255,255,0.28);
+          color: rgba(255,255,255,0.48);
           flex-shrink: 0;
           transition: color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         }
@@ -172,7 +172,7 @@ export function ContactSection() {
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-balance">
             Let&apos;s build your <span style={{ color: 'oklch(0.74 0.10 55)', textShadow: '0 0 16px oklch(0.78 0.12 55 / 0.18)' }}>digital stage</span>
           </h2>
-          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.65)', maxWidth: '440px', margin: '0 auto', lineHeight: 1.75, textAlign: 'center' }}>
+          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.78)', maxWidth: '440px', margin: '0 auto', lineHeight: 1.75, textAlign: 'center' }}>
             Your work deserves a strong digital presence that people can see and remember.
           </p>
         </div>
@@ -183,7 +183,7 @@ export function ContactSection() {
 
             {/* 1. Contact */}
             <div>
-              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Contact</p>
+              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.48)', marginBottom: '14px' }}>Contact</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {[
                   { icon: <Mail size={14} />, label: 'Email', value: 'sangayyoesel@gmail.com', href: 'mailto:sangayyoesel@gmail.com', note: 'Open for freelance and collaborations' },
@@ -195,15 +195,15 @@ export function ContactSection() {
                     className="flex items-center gap-3 py-2 transition-all duration-300 group"
                     style={{ color: 'inherit', textDecoration: 'none' }}
                   >
-                    <div className="transition-all duration-300" style={{ color: 'rgba(255,255,255,0.25)' }}
+                    <div className="transition-all duration-300" style={{ color: 'rgba(255,255,255,0.42)' }}
                       onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = 'oklch(0.78 0.12 55)' }}
-                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.25)' }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.42)' }}
                     >{item.icon}</div>
                     <div>
-                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.28)', marginBottom: '2px' }}>{item.label}</p>
-                      <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.78)' }}>{item.value}</p>
+                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.48)', marginBottom: '2px' }}>{item.label}</p>
+                      <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.82)' }}>{item.value}</p>
                       {'note' in item && item.note && (
-                        <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.22)', marginTop: '2px' }}>{item.note}</p>
+                        <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.42)', marginTop: '2px' }}>{item.note}</p>
                       )}
                     </div>
                   </a>
@@ -213,16 +213,16 @@ export function ContactSection() {
 
             {/* 2. Location */}
             <div>
-              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Location</p>
+              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.48)', marginBottom: '14px' }}>Location</p>
               <div className="flex items-center gap-3 py-2">
-                <div style={{ color: 'rgba(255,255,255,0.25)' }}><MapPin size={14} /></div>
-                <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.65)' }}>Thimphu, Bhutan</p>
+                <div style={{ color: 'rgba(255,255,255,0.42)' }}><MapPin size={14} /></div>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.78)' }}>Thimphu, Bhutan</p>
               </div>
             </div>
 
             {/* 3. Documents */}
             <div>
-              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Documents</p>
+              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.48)', marginBottom: '14px' }}>Documents</p>
               <div style={{ display: 'flex' }}>
                 {[
                   { label: 'Download CV', file: '/CV-Sangay-Yoesel.pdf' },
@@ -257,7 +257,7 @@ export function ContactSection() {
 
             {/* 4. Social */}
             <div>
-              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '14px' }}>Social</p>
+              <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.48)', marginBottom: '14px' }}>Social</p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                 {socialLinks.map((social) => (
                   <a
@@ -271,8 +271,8 @@ export function ContactSection() {
                       {social.icon}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
-                      <p style={{ fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.68)', lineHeight: 1.3 }}>{social.name}</p>
-                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.25)', lineHeight: 1.3 }}>{social.handle}</p>
+                      <p style={{ fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.82)', lineHeight: 1.3 }}>{social.name}</p>
+                      <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.48)', lineHeight: 1.3 }}>{social.handle}</p>
                     </div>
                   </a>
                 ))}
@@ -321,7 +321,7 @@ export function ContactSection() {
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }} aria-label="Contact form">
                 <div>
-                  <label htmlFor="contact-name" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', display: 'block', marginBottom: '10px' }}>Your Name</label>
+                  <label htmlFor="contact-name" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.62)', display: 'block', marginBottom: '10px' }}>Your Name</label>
                   <input
                     id="contact-name"
                     type="text"
@@ -335,7 +335,7 @@ export function ContactSection() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="contact-email" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', display: 'block', marginBottom: '10px' }}>Email</label>
+                  <label htmlFor="contact-email" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.62)', display: 'block', marginBottom: '10px' }}>Email</label>
                   <input
                     id="contact-email"
                     type="email"
@@ -349,7 +349,7 @@ export function ContactSection() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="contact-message" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)', display: 'block', marginBottom: '10px' }}>Message</label>
+                  <label htmlFor="contact-message" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.62)', display: 'block', marginBottom: '10px' }}>Message</label>
                   <textarea
                     id="contact-message"
                     value={formState.message}
@@ -391,7 +391,7 @@ export function ContactSection() {
                   <Send size={14} />
                   {sending ? 'Sending...' : 'Send Message'}
                 </button>
-                <p style={{ textAlign: 'center', fontSize: '11px', color: 'rgba(255,255,255,0.22)' }}>
+                <p style={{ textAlign: 'center', fontSize: '11px', color: 'rgba(255,255,255,0.48)' }}>
                   Usually replies within 24 hours
                 </p>
               </form>

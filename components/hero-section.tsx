@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { HeroCanvas } from './hero-canvas'
+import { HeroVideo } from './hero-video'
 
 export function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -56,6 +57,11 @@ export function HeroSection() {
 
       {/* Cinematic canvas — particles, waveforms, floating planes, volumetric glow */}
       <HeroCanvas />
+
+      {/* Atmospheric hero media — primary capability layer.
+          Real artist footage, cinematic treatment, screen-blended into the darkness.
+          Sits below grain + glow + vignette so readability is always protected. */}
+      <HeroVideo />
 
       {/* Film grain — static, rendered once, no animation cost */}
       <div
@@ -123,7 +129,7 @@ export function HeroSection() {
             fontSize: 'clamp(32px, 11vw, 92px)',
             animation: 'fade-in-up 1s 0.45s ease-out forwards',
             opacity: 0,
-            marginBottom: 'clamp(32px, 6vw, 64px)',
+            marginBottom: 'clamp(40px, 7vw, 72px)',
           }}
         >
           But are you{' '}
@@ -141,20 +147,28 @@ export function HeroSection() {
           </span>
         </div>
 
-        {/* Support line */}
+        {/* Support line — elevated service statement */}
         <p
           style={{
-            fontSize: 'clamp(14px, 1.6vw, 17px)',
-            lineHeight: 1.75,
-            color: 'rgba(255,255,255,0.68)',
-            maxWidth: '600px',
-            margin: '0 auto clamp(28px, 5vw, 56px)',
+            fontSize: 'clamp(17px, 2.05vw, 22px)',
+            lineHeight: 1.55,
+            letterSpacing: '-0.005em',
+            color: 'rgba(255,255,255,0.82)',
+            fontWeight: 350,
+            maxWidth: '680px',
+            margin: '0 auto clamp(40px, 6.5vw, 72px)',
             animation: 'fade-in-up 1s 0.75s ease-out forwards',
             opacity: 0,
           }}
         >
           I design professional personal websites for{' '}
-          <span style={{ color: '#E6A15A', fontWeight: 600 }}>
+          <span
+            style={{
+              color: '#E6A15A',
+              fontWeight: 500,
+              letterSpacing: '0.005em',
+            }}
+          >
             Creative Artists
           </span>
         </p>
@@ -201,7 +215,7 @@ export function HeroSection() {
             fontSize: '8px',
             letterSpacing: '0.5em',
             textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.18)',
+            color: 'rgba(255,255,255,0.32)',
           }}
         >
           Scroll
