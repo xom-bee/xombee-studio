@@ -293,7 +293,7 @@ function ProjectRow({
             fontWeight: 500,
             letterSpacing: '0.18em',
             textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.40)',
+            color: 'rgba(255,255,255,0.62)',
             flexShrink: 0,
           }}>
             Role

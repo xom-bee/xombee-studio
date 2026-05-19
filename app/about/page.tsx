@@ -126,7 +126,7 @@ export default function AboutPage() {
               color: 'rgba(255,255,255,0.72)',
               marginBottom: '16px',
             }}>
-              I design professional personal websites for creative artists.
+              I design professional personal websites that help creative artists express their identity online.
             </p>
             <p style={{
               fontSize: 'clamp(14px, 1.2vw, 15px)',
@@ -615,7 +615,7 @@ export default function AboutPage() {
           <p style={{
             marginTop: '16px',
             fontSize: '12px',
-            color: 'rgba(255,255,255,0.22)',
+            color: 'rgba(255,255,255,0.60)',
             letterSpacing: '0.03em',
           }}>
             Usually reply within 24 hours

@@ -74,7 +74,7 @@ export async function GET() {
         <div
           style={{
             fontSize: '20px',
-            color: 'rgba(255,255,255,0.35)',
+            color: 'rgba(255,255,255,0.55)',
             letterSpacing: '0.18em',
             textTransform: 'uppercase',
             fontFamily: 'sans-serif',
@@ -82,7 +82,7 @@ export async function GET() {
             display: 'flex',
           }}
         >
-          Design &amp; Music
+          Digital Designer for Creative Artists
         </div>
 
         {/* Bottom rule */}

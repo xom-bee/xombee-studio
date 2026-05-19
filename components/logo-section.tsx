@@ -86,7 +86,7 @@ function LogoModalContent({ logo, onClose }: { logo: Logo; onClose: () => void }
           borderRadius: '50%',
           background: 'rgba(255,255,255,0.06)',
           border: '1px solid rgba(255,255,255,0.10)',
-          color: 'rgba(255,255,255,0.45)',
+          color: 'rgba(255,255,255,0.62)',
           cursor: 'pointer', fontSize: '14px',
           transition: 'background 0.42s cubic-bezier(0.22, 1, 0.36, 1), color 0.42s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
@@ -262,7 +262,7 @@ function LogoCard({
             <p style={{
               fontSize: '10px', fontWeight: 500,
               letterSpacing: '0.10em', textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.36)',
+              color: 'rgba(255,255,255,0.62)',
             }}>
               {logo.category}
             </p>
@@ -421,7 +421,7 @@ export function LogoSection() {
             </h2>
             <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.56)', lineHeight: 1.65, maxWidth: '460px' }}>
               Each mark here was built to hold character — recognisable before a word is spoken.{' '}
-              <span style={{ color: 'rgba(255,255,255,0.30)' }}>
+              <span style={{ color: 'rgba(255,255,255,0.62)' }}>
                 {isTouchDevice ? 'Tap to explore.' : 'Hover to explore, click to preview.'}
               </span>
             </p>

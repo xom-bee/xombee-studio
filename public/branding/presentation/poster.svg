@@ -35,8 +35,8 @@
     font-family="Georgia,'Times New Roman',serif" letter-spacing="10">YOESEL</text>
   <!-- Tagline -->
   <text x="400" y="718" text-anchor="middle"
-    fill="#FFFFFF" fill-opacity="0.32" font-size="15" font-weight="400"
-    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="5">DESIGN &amp; MUSIC</text>
+    fill="#FFFFFF" fill-opacity="0.38" font-size="12" font-weight="400"
+    font-family="'Helvetica Neue',Arial,sans-serif" letter-spacing="3.5">DIGITAL DESIGNER FOR CREATIVE ARTISTS</text>
   <!-- Decorative rule -->
   <line x1="376" y1="754" x2="424" y2="754"
     stroke="#E6A15A" stroke-width="0.75" stroke-opacity="0.38"/>

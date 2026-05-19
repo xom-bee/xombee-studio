@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: '%s — Yoesel',
   },
   description:
-    'I design personal websites that help artists be seen and remembered. Visual identity, UI/UX, and brand design by Sangay Yoesel.',
+    'I design professional personal websites that help creative artists express their identity online.',
   keywords: ['visual identity', 'music artist branding', 'UI/UX design', 'Bhutan', 'Yoesel', 'Sangay Yoesel', 'portfolio', 'web design'],
   authors: [{ name: 'Sangay Yoesel' }],
   creator: 'Sangay Yoesel',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     siteName: 'Yoesel',
     title: 'Yoesel — Digital Designer for Creative Artists',
-    description: 'Personal websites for creative artists. Visual identity, UI/UX, and brand design.',
+    description: 'I design professional personal websites that help creative artists express their identity online.',
     images: [
       {
         url: '/api/og',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Yoesel — Digital Designer for Creative Artists',
-    description: 'Personal websites for creative artists. Visual identity, UI/UX, and brand design.',
+    description: 'I design professional personal websites that help creative artists express their identity online.',
     images: ['/api/og'],
   },
   robots: {

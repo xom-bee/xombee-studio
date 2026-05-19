@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReveal } from '@/hooks/use-reveal'
 import { Mail, Phone, MapPin, Send, Download } from 'lucide-react'
 import { Container } from '@/components/ui/container'
@@ -57,32 +57,53 @@ const socialLinks = [
 
 export function ContactSection() {
   const { ref, revealed } = useReveal()
-  const [formState, setFormState] = useState({ name: '', email: '', message: '' })
+  // `company` is the honeypot — kept in state but never shown to humans.
+  const [formState, setFormState] = useState({ name: '', email: '', message: '', company: '' })
   const [submitted, setSubmitted] = useState(false)
   const [sending, setSending] = useState(false)
+  const [cooldown, setCooldown] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const cooldownTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  useEffect(() => () => {
+    if (cooldownTimer.current) clearTimeout(cooldownTimer.current)
+  }, [])
+
+  // After any completed attempt, briefly lock the button so a frustrated user
+  // (or a script) can't hammer submit. Mirrors the server's min-gap throttle.
+  const startCooldown = (seconds = 15) => {
+    setCooldown(true)
+    if (cooldownTimer.current) clearTimeout(cooldownTimer.current)
+    cooldownTimer.current = setTimeout(() => setCooldown(false), seconds * 1000)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (sending || cooldown) return
     setSending(true)
     setError(null)
 
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formState),
-    })
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formState),
+      })
+      const data = await res.json().catch(() => ({}))
 
-    const data = await res.json()
-    setSending(false)
+      if (!res.ok) {
+        setError(data.error ?? 'Something went wrong on our end. Please try again, or email me directly below.')
+        startCooldown()
+        return
+      }
 
-    if (!res.ok) {
-      setError(data.error ?? 'Something went wrong. Please try again.')
-      return
+      setSubmitted(true)
+    } catch {
+      setError('Couldn’t reach the server — please check your connection, or email me directly below.')
+      startCooldown()
+    } finally {
+      setSending(false)
     }
-
-    setSubmitted(true)
   }
 
   return (
@@ -203,7 +224,7 @@ export function ContactSection() {
                       <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.48)', marginBottom: '2px' }}>{item.label}</p>
                       <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.82)' }}>{item.value}</p>
                       {'note' in item && item.note && (
-                        <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.42)', marginTop: '2px' }}>{item.note}</p>
+                        <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.62)', marginTop: '2px' }}>{item.note}</p>
                       )}
                     </div>
                   </a>
@@ -320,6 +341,23 @@ export function ContactSection() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }} aria-label="Contact form">
+                {/* Honeypot — must stay empty. Off-screen (not display:none, which
+                    bots skip) and removed from tab order + the a11y tree. */}
+                <div
+                  aria-hidden="true"
+                  style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap', border: 0 }}
+                >
+                  <label htmlFor="contact-company">Company</label>
+                  <input
+                    id="contact-company"
+                    type="text"
+                    name="company"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={formState.company}
+                    onChange={(e) => setFormState({ ...formState, company: e.target.value })}
+                  />
+                </div>
                 <div>
                   <label htmlFor="contact-name" style={{ fontSize: '10px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.62)', display: 'block', marginBottom: '10px' }}>Your Name</label>
                   <input
@@ -363,11 +401,19 @@ export function ContactSection() {
                   />
                 </div>
                 {error && (
-                  <p className="text-sm text-red-400 text-center">{error}</p>
+                  <div role="alert" aria-live="assertive" style={{ textAlign: 'center' }}>
+                    <p className="text-sm text-red-400">{error}</p>
+                    <a
+                      href="mailto:sangayyoesel@gmail.com"
+                      style={{ fontSize: '12px', color: 'oklch(0.78 0.12 55)', textDecoration: 'none', letterSpacing: '0.02em' }}
+                    >
+                      sangayyoesel@gmail.com
+                    </a>
+                  </div>
                 )}
                 <button
                   type="submit"
-                  disabled={sending}
+                  disabled={sending || cooldown}
                   className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-medium text-sm disabled:opacity-60 disabled:cursor-not-allowed shimmer-surface"
                   style={{
                     background: 'oklch(0.78 0.12 55)',
@@ -389,7 +435,7 @@ export function ContactSection() {
                   }}
                 >
                   <Send size={14} />
-                  {sending ? 'Sending...' : 'Send Message'}
+                  {sending ? 'Sending...' : cooldown ? 'Please wait…' : 'Send Message'}
                 </button>
                 <p style={{ textAlign: 'center', fontSize: '11px', color: 'rgba(255,255,255,0.48)' }}>
                   Usually replies within 24 hours

@@ -154,12 +154,14 @@ export function HeroCanvas() {
     }
     const onCtaLeave = () => { ctaHovered = false }
 
-    // Wait for CTA's 1.05s fade-in animation to complete before attaching
+    // Bind to a stable hook id, not user-facing copy. The CTA element exists
+    // immediately (only its opacity is animated), so resolving it on the next
+    // frame is enough — no dependency on the 1.05s fade-in finishing.
     const ctaTimer = window.setTimeout(() => {
-      ctaEl = document.querySelector('[aria-label="View my portfolio work"]')
+      ctaEl = document.getElementById('hero-cta')
       ctaEl?.addEventListener('mouseenter', onCtaEnter)
       ctaEl?.addEventListener('mouseleave', onCtaLeave)
-    }, 1400)
+    }, 0)
 
     const onVisibility = () => {
       if (document.hidden) {

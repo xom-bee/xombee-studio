@@ -23,7 +23,7 @@ export function Footer() {
       <style>{`
 .ft-nav-link {
           font-size: 13px;
-          color: rgba(255,255,255,0.52);
+          color: var(--text-secondary);
           text-decoration: none;
           transition: color 0.42s cubic-bezier(0.22, 1, 0.36, 1);
           display: block;
@@ -35,7 +35,7 @@ export function Footer() {
           gap: 4px;
           font-size: 11px;
           letter-spacing: 0.05em;
-          color: rgba(255,255,255,0.42);
+          color: var(--text-meta);
           background: none;
           border: none;
           cursor: pointer;
@@ -197,7 +197,7 @@ export function Footer() {
                 color: 'rgba(255,255,255,0.52)',
                 marginBottom: '16px',
               }}>
-                I design personal websites that help artists be seen and remembered.
+                I design professional personal websites that help creative artists express their identity online.
               </p>
 
               {/* Location */}
@@ -206,7 +206,7 @@ export function Footer() {
                   <circle cx="5" cy="5" r="4" stroke="rgba(255,255,255,0.42)" strokeWidth="0.8" />
                   <circle cx="5" cy="5" r="1.4" fill="rgba(255,255,255,0.42)" />
                 </svg>
-                <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.42)', letterSpacing: '0.02em' }}>
+                <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.66)', letterSpacing: '0.02em' }}>
                   Thimphu, Bhutan
                 </span>
               </div>
@@ -219,7 +219,7 @@ export function Footer() {
                 fontWeight: 500,
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.42)',
+                color: 'rgba(255,255,255,0.62)',
                 marginBottom: '16px',
               }}>
                 Navigation
@@ -235,10 +235,10 @@ export function Footer() {
 
           {/* ── 3. BOTTOM BAR ── */}
           <div className="ft-bottom-bar">
-            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.38)', letterSpacing: '0.02em' }}>
+            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.62)', letterSpacing: '0.02em' }}>
               &copy; 2026 Yoesel
             </p>
-            <p className="ft-tagline" style={{ fontSize: '11px', color: 'rgba(255,247,235,0.42)', fontStyle: 'italic', letterSpacing: '0.02em' }}>
+            <p className="ft-tagline" style={{ fontSize: '11px', color: 'rgba(255,247,235,0.62)', fontStyle: 'italic', letterSpacing: '0.02em' }}>
               Your sound deserves to be felt
             </p>
             <button

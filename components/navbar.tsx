@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 
@@ -14,6 +14,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
+  const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +24,63 @@ export function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Mobile menu: focus trap + Escape-to-close + focus restoration.
+  // Runs only while the menu is open, so closed-state renders cost nothing.
+  useEffect(() => {
+    if (!menuOpen) return
+    const menuEl = menuRef.current
+    if (!menuEl) return
+
+    // Remember what had focus (the hamburger trigger) to restore on close.
+    const trigger = document.activeElement as HTMLElement | null
+
+    const focusable = () =>
+      Array.from(
+        menuEl.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')
+      )
+
+    // Move focus into the menu on the next tick — after the open state has
+    // committed so the items are focusable.
+    const focusTimer = window.setTimeout(() => focusable()[0]?.focus(), 0)
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        setMenuOpen(false)
+        return
+      }
+      if (e.key !== 'Tab') return
+
+      const items = focusable()
+      if (items.length === 0) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      const active = document.activeElement
+
+      // Wrap the Tab cycle at the edges (and pull focus back if it ever
+      // escapes the menu), so keyboard users stay within the open overlay.
+      if (e.shiftKey && (active === first || !menuEl.contains(active))) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && (active === last || !menuEl.contains(active))) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    // Lock background scroll while the full-screen menu is open.
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      window.clearTimeout(focusTimer)
+      document.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = prevOverflow
+      trigger?.focus?.()
+    }
+  }, [menuOpen])
 
   const handleLogoClick = () => {
     setMenuOpen(false)
@@ -127,7 +185,9 @@ export function Navbar() {
           <button
             className="md:hidden flex flex-col gap-1.5 p-2"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-haspopup="dialog"
+            aria-controls="mobile-menu"
             aria-expanded={menuOpen}
           >
             <span
@@ -148,6 +208,13 @@ export function Navbar() {
 
       {/* Mobile menu */}
       <div
+        ref={menuRef}
+        id="mobile-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+        aria-hidden={!menuOpen}
+        inert={!menuOpen}
         className={`fixed inset-0 z-40 flex flex-col items-center justify-center gap-10 transition-all duration-500 md:hidden ${
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}

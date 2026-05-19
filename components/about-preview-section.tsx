@@ -12,9 +12,13 @@ const FOCUS_Y_RATIO = 0.42
 // Sigma = avg line spacing × this multiplier. Controls spotlight tightness.
 // 1.2 makes adjacent lines clearly dimmer while still feeling organic.
 const SIGMA_SCALE   = 1.2
-const BASE_PAST     = 0.58   // lines the reader has passed — remembered, not gone
-const BASE_FUTURE   = 0.34   // lines ahead — atmospheric, not yet spoken
-const PEAK          = 0.94   // brightness at focus center
+// Floors kept AA-legible: even the dimmest (future) line clears 4.5:1 on the
+// dark bg. The spotlight is still strongly felt — peak .95 vs future .60 is a
+// wide, clearly perceptible gradient — it just no longer renders un-focused
+// copy as sub-legible atmosphere.
+const BASE_PAST     = 0.66   // lines the reader has passed — remembered, not gone
+const BASE_FUTURE   = 0.60   // lines ahead — quieter, but still readable
+const PEAK          = 0.95   // brightness at focus center
 const EASING        = 'color 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
 
 export function AboutPreviewSection() {
@@ -157,7 +161,7 @@ export function AboutPreviewSection() {
                 fontSize: 'clamp(26px, 3.2vw, 38px)',
                 fontWeight: 700,
                 lineHeight: 1.1,
-                color: 'rgba(255,255,255,0.45)',
+                color: 'rgba(255,255,255,0.60)',
                 letterSpacing: '-0.01em',
                 marginBottom: '24px',
               }}
@@ -169,7 +173,7 @@ export function AboutPreviewSection() {
             <div style={{ marginBottom: '20px' }}>
               <p
                 ref={el => { lineRefs.current[1] = el }}
-                style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.80, color: 'rgba(255,255,255,0.45)' }}
+                style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.80, color: 'rgba(255,255,255,0.60)' }}
               >
                 It was the first way I expressed myself.<br />
                 But I realized something was missing.
@@ -180,7 +184,7 @@ export function AboutPreviewSection() {
             <div style={{ marginBottom: '20px' }}>
               <p
                 ref={el => { lineRefs.current[2] = el }}
-                style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.80, color: 'rgba(255,255,255,0.45)' }}
+                style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.80, color: 'rgba(255,255,255,0.60)' }}
               >
                 The feeling was there.<br />
                 The identity was not.
@@ -193,7 +197,7 @@ export function AboutPreviewSection() {
             <div style={{ marginBottom: '20px' }}>
               <p
                 ref={el => { lineRefs.current[3] = el }}
-                style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 600, lineHeight: 1.80, color: 'rgba(255,255,255,0.45)' }}
+                style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 600, lineHeight: 1.80, color: 'rgba(255,255,255,0.60)' }}
               >
                 That is where{' '}
                 <span style={{ color: '#E6A15A' }}>design</span>
@@ -205,9 +209,9 @@ export function AboutPreviewSection() {
             <div style={{ marginBottom: '36px' }}>
               <p
                 ref={el => { lineRefs.current[4] = el }}
-                style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.80, color: 'rgba(255,255,255,0.45)' }}
+                style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', fontWeight: 400, lineHeight: 1.80, color: 'rgba(255,255,255,0.60)' }}
               >
-                Today, I design digital experiences that help creative artists express who they are and be remembered.
+                Today, I design professional personal websites that help creative artists express their identity online.
               </p>
             </div>
 

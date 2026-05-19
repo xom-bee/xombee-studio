@@ -105,7 +105,7 @@ export function HeroSection() {
 
       {/* ── CONTENT ────────────────────────────────────────────────────────── */}
       <div
-        className="relative z-10 text-center px-3 sm:px-6 max-w-4xl mx-auto w-full"
+        className="relative z-10 text-center px-3 sm:px-6 max-w-6xl mx-auto w-full"
         style={{ marginTop: '6vh' }}
       >
 
@@ -155,13 +155,13 @@ export function HeroSection() {
             letterSpacing: '-0.005em',
             color: 'rgba(255,255,255,0.82)',
             fontWeight: 350,
-            maxWidth: '680px',
-            margin: '0 auto clamp(40px, 6.5vw, 72px)',
+            maxWidth: '1000px',
+            margin: '0 auto clamp(28px, 4vw, 52px)',
             animation: 'fade-in-up 1s 0.75s ease-out forwards',
             opacity: 0,
           }}
         >
-          I design professional personal websites for{' '}
+          I design professional personal websites that help{' '}
           <span
             style={{
               color: '#E6A15A',
@@ -169,18 +169,20 @@ export function HeroSection() {
               letterSpacing: '0.005em',
             }}
           >
-            Creative Artists
+            creative artists
           </span>
+          {' '}express their identity online.
         </p>
 
         {/* CTA */}
         <div style={{ animation: 'fade-in-up 1s 1.05s ease-out forwards', opacity: 0 }}>
           <Button
             variant="filled"
-            aria-label="View my portfolio work"
+            id="hero-cta"
+            aria-label="Explore my portfolio work"
             onClick={() => document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            View My Work
+            Explore My Work
           </Button>
         </div>
 

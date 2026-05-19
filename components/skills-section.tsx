@@ -204,7 +204,7 @@ function CapabilityPanel({
               fontSize: '11px',
               letterSpacing: '0.10em',
               textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.26)',
+              color: 'rgba(255,255,255,0.60)',
               fontWeight: 400,
               lineHeight: 1.5,
             }}

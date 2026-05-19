@@ -48,13 +48,13 @@ export default function QLessPage() {
             fontSize: '12px',
             letterSpacing: '0.08em',
             textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.30)',
+            color: 'rgba(255,255,255,0.62)',
             textDecoration: 'none',
             marginBottom: 'clamp(40px, 5vw, 56px)',
             transition: 'color 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
           onMouseEnter={(e) => { e.currentTarget.style.color = accent }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.30)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.62)' }}
         >
           ← View All Projects
         </Link>
@@ -101,7 +101,7 @@ export default function QLessPage() {
                 padding: '20px 24px',
                 borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.07)' : 'none',
               }}>
-                <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.30)', marginBottom: '10px' }}>
+                <p style={{ fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.62)', marginBottom: '10px' }}>
                   {item.label}
                 </p>
                 <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.74)', lineHeight: 1.5 }}>
@@ -142,7 +142,7 @@ export default function QLessPage() {
               <div key={i} style={{ display: 'flex', gap: '18px', alignItems: 'flex-start' }}>
                 <span style={{
                   fontSize: '11px', fontWeight: 500, letterSpacing: '0.10em',
-                  color: 'rgba(255,255,255,0.30)', paddingTop: '5px', flexShrink: 0,
+                  color: 'rgba(255,255,255,0.62)', paddingTop: '5px', flexShrink: 0,
                   fontVariantNumeric: 'tabular-nums',
                 }}>
                   {String(i + 1).padStart(2, '0')}
@@ -216,7 +216,7 @@ export default function QLessPage() {
                   }}>
                     <span style={{
                       fontSize: '10px', fontWeight: 600, letterSpacing: '0.06em',
-                      color: 'rgba(255,255,255,0.30)',
+                      color: 'rgba(255,255,255,0.62)',
                       fontVariantNumeric: 'tabular-nums',
                     }}>
                       {String(i + 1).padStart(2, '0')}
@@ -268,7 +268,7 @@ export default function QLessPage() {
                   fontSize: '11px',
                   fontWeight: 500,
                   letterSpacing: '0.10em',
-                  color: 'rgba(255,255,255,0.30)',
+                  color: 'rgba(255,255,255,0.62)',
                   paddingTop: '5px',
                   flexShrink: 0,
                   fontVariantNumeric: 'tabular-nums',

@@ -326,7 +326,7 @@ export function CaseStudyMedia({
         <figcaption style={{
           marginTop: '16px',
           fontSize: '12px',
-          color: 'rgba(255,255,255,0.26)',
+          color: 'rgba(255,255,255,0.62)',
           letterSpacing: '0.05em',
           textAlign: 'center',
           lineHeight: 1.55,

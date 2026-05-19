@@ -99,7 +99,7 @@ export default function WorkPage() {
           flexWrap: 'wrap',
           gap: '16px',
         }}>
-          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.32)', letterSpacing: '0.02em' }}>
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.66)', letterSpacing: '0.02em' }}>
             More projects available on request.
           </p>
           <Link
@@ -108,12 +108,12 @@ export default function WorkPage() {
               fontSize: '12px',
               letterSpacing: '0.10em',
               textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.35)',
+              color: 'rgba(255,255,255,0.62)',
               textDecoration: 'none',
               transition: 'color 0.42s cubic-bezier(0.22, 1, 0.36, 1)',
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = '#E6A15A' }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.35)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(255,255,255,0.62)' }}
           >
             ← Back to Home
           </Link>
@@ -149,7 +149,7 @@ function ProjectCard({
           fontSize: '12px',
           fontWeight: 500,
           letterSpacing: '0.10em',
-          color: 'rgba(255,255,255,0.30)',
+          color: 'rgba(255,255,255,0.62)',
           paddingTop: '6px',
           flexShrink: 0,
           minWidth: '28px',
@@ -199,7 +199,7 @@ function ProjectCard({
             textTransform: 'uppercase',
             color: '#E6A15A',
           }}>
-            <span style={{ color: 'rgba(255,255,255,0.20)', fontWeight: 400, marginRight: '7px' }}>Role</span>
+            <span style={{ color: 'rgba(255,255,255,0.62)', fontWeight: 400, marginRight: '7px' }}>Role</span>
             {project.role}
           </p>
         </div>
